@@ -1,0 +1,52 @@
+// set "icon" as default prefix
+$prefix: icon !default;
+$display_colored: true !default;
+$font_path: "../font" !default;
+
+@mixin font_face {
+  @font-face {
+    font-family: 'OpenWeb Icons';
+    src: url("#{$font_path}/openwebicons.eot");
+    src: url("#{$font_path}/openwebicons.eot?#iefix") format("embedded-opentype"),
+         url("#{$font_path}/openwebicons.woff") format("woff"),
+         url("#{$font_path}/openwebicons.ttf") format("truetype"),
+         url("#{$font_path}/openwebicons.svg#openweb_iconsregular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+@mixin simple_mapper {
+  [class^="#{$prefix}-"]:before, [class*=" #{$prefix}-"]:before {
+    font-family: 'OpenWeb Icons';
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    text-decoration: inherit;
+    vertical-align: center;
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+  }
+  a [class^="#{$prefix}-"], a [class*=" #{$prefix}-"] {
+    display: inline-block;
+    text-decoration: inherit;
+  }
+  li[class^="#{$prefix}-"], li[class*=" #{$prefix}-"] {
+    display: block;
+  }
+}
+
+@mixin icon_list {
+  // iterate icons
+  @each $icon in $icons {
+    // check if colored icons should be displayed or not
+    @if $display_colored == true or (nth($icon, 3) == "monochrome" and $display_colored == false) {
+      .#{$prefix}-#{nth($icon, 1)}:before {
+        content: "#{nth($icon, 2)}";
+        @if nth($icon, 3) != "monochrome" {
+          color: #{nth($icon, 3)};
+        }
+      }
+    }
+  }
+}

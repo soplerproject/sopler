@@ -1,0 +1,36 @@
+{% load socialaccount %}
+<div align="center"style="margin:0 auto; max-width:57em; " class="row">
+<div class="col-md-3">
+<h2 class="choose">Choose a network:</h2>
+</div>
+{% for provider in socialaccount.providers %}
+  {% if provider.id == "facebook" %}
+    <div class="col-md-2">
+    <h2><a title="{{provider.name}}" href="JavaScript:newPopup('{% provider_login_url provider.id process=process %}');"><i class="fa fa-facebook"></i> Facebook</a></h2>
+    </div>
+  {% endif %}
+  {% if provider.id == "twitter" %}
+    <div class="col-md-2">
+    <h2><a title="{{provider.name}}" href="JavaScript:newPopup('{% provider_login_url provider.id process=process %}');"><i class="fa fa-twitter"></i> Twitter</a></h2>
+    </div>
+  {% endif %}
+  {% if provider.id == "persona" %}
+    <div class="col-md-2">
+    <h2 style="margin-top:1.1em;"><a title="{{provider.name}}" href="{% provider_login_url provider.id process=process %}"><i class="icon-persona"></i> Persona</a></h2>
+    </div>
+  {% endif %}
+  {% if provider.id == "google" %}
+  <div class="col-md-2">
+  <h2 style="border:0 none;"><a title="{{provider.name}}" href="JavaScript:newPopup('{% provider_login_url provider.id process=process %}');"><i class="fa fa-google-plus"></i> Google </a></h2>
+  </div>
+  {% endif %}
+{% endfor %}
+</div>
+
+<script type="text/javascript">
+// Popup window code
+function newPopup(url) {
+	popupWindow = window.open(
+		url,'popUpWindow','height=700,width=800,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no')
+}
+</script>

@@ -1,0 +1,53 @@
+{% if user %}
+  {% for account in user.socialaccount_set.all %}
+    {% if account.provider == "facebook" %}
+      <script type="text/javascript">
+      function closeWindow() {
+      setTimeout(function() {
+      window.close();
+      }, 1000);
+      }
+      window.onload = closeWindow();
+      onload = function() { 
+	setTimeout(window.opener.history.go(0), 3000);
+      }
+      </script>
+    {% endif %}
+
+    {% if account.provider == "twitter" %}
+      <script type="text/javascript">
+      function closeWindow() {
+      setTimeout(function() {
+      window.close();
+      }, 1000);
+      }
+      window.onload = closeWindow();
+      onload = function() { 
+	setTimeout(window.opener.history.go(0), 3000);
+      }
+      </script>
+    {% endif %}
+
+    {% if account.provider == "google" %}
+      <script type="text/javascript">
+      function closeWindow() {
+      setTimeout(function() {
+      window.close();
+      }, 1000);
+      }
+      window.onload = closeWindow();
+      onload = function() { 
+	setTimeout(window.opener.history.go(0), 3000);
+      }
+      </script>
+    {% endif %}
+    {% if account.provider == "persona" %}
+      <script language='javascript'>
+	onload = function() 
+	{ 
+	    history.go(-1);
+	}
+      </script>
+    {% endif %}
+  {% endfor %}
+{% endif %}

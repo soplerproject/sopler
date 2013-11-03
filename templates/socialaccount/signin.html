@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load account %}
+{% load url from future %}
+
+{% block head_title %}{% endblock %}
+{% block content %}
+
+{% if socialaccount.providers  %}
+<p>{% blocktrans with site.name as site_name %} {% endblocktrans %}</p>
+<span class="socialaccount_ballot">
+  <span class="socialaccount_providers">
+    {% include "socialaccount/login_extra.html" with process="login" %}
+  </span>
+</span>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+{% endif %}
+{% endblock %}

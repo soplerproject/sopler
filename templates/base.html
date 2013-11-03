@@ -1,0 +1,336 @@
+{% load url from future %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      
+<html class="no-js lt-ie9 lt-ie8 lt-ie7">
+   <![endif]-->
+   <!--[if IE 7]>         
+   <html class="no-js lt-ie9 lt-ie8">
+      <![endif]-->
+      <!--[if IE 8]>         
+      <html class="no-js lt-ie9">
+         <![endif]-->
+         <!--[if gt IE 8]><!--> 
+         <html class="no-js">
+            <!--<![endif]-->
+            <title>{% block head_title %} Sopler - Think. Create. Share. {% endblock %}</title>
+            {% block extra_head %}
+            {% endblock %}
+            {% load staticfiles %}
+            <head>
+               <meta charset="utf-8">
+               <meta name="description" content="A free/open source, social and collaborative web application. It helps you make lists!">
+               <meta name="keywords" content="Sopler,lists,collaboration">
+               <meta name="author" content="Sopler">
+               <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+               <meta property="og:image" content="{% static "img/fb_sopler.jpeg" %}"/>
+               <meta property="og:title" content="Sopler - Think. Create. Share."/>
+
+               <!-- Bootstrap core CSS -->
+               <link href='http://fonts.googleapis.com/css?family=Open+Sans:600,700' rel='stylesheet' type='text/css'>
+               <link href='http://fonts.googleapis.com/css?family=Karla' rel='stylesheet' type='text/css'>
+               <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+
+               <!-- Favicon -->
+               <link rel="shortcut icon" href="{% static "buttons/favicon.ico" %}">
+
+               <!-- Custom styles for this template -->
+               <link rel="stylesheet" type="text/css" href="{% static "css/custom.css" %}">
+               <link rel="stylesheet" type="text/css" href="{% static "css/font-awesome.min.css" %}">
+               <link rel="stylesheet" type="text/css" href="{% static "css/openwebicons-bootstrap.css" %}">
+
+               <!-- Javascript-->
+               <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+               <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+               <script type="text/javascript" src="{% static "js/bootstrap.input-clear.js" %}"></script>
+               <script type="text/javascript" src="{% static "js/jquery.form.js" %}"></script>
+
+               <script type="text/javascript">  
+                  $(function ()  
+                    { $("#besync_popover").popover();  
+                    });  
+               </script>
+
+               <!-- Navigation Bar fix & relative -->
+	       <script type="text/javascript">
+		      $(document).ready(function(){
+		      var isopen="";
+		      $('#signin').click(function(){
+			      if (!isopen){
+			      $('.navbar-fixed-top').css('position','relative');
+			      $('html,body').animate({ scrollTop: 0 }, 'normal');
+			      }else{
+			      $('.navbar-fixed-top').css('position','fixed');
+  
+			      }
+			      isopen=!isopen;
+		      });
+		      $('#nobutton').click(function(){
+				
+			      $('.navbar-fixed-top').css('position','fixed');
+			      isopen=!isopen;
+	  
+		      });
+	       });
+	       </script>
+
+               <!-- Back to TOP -->
+               <script type="text/javascript">
+                  $(document).ready(function(){
+                    $('#backtotop').on("click",function(){
+                      $('html,body').animate({ scrollTop: 0 }, 'slow');
+                    }); 
+                  });
+               </script>
+
+               <!-- Characters counter -->
+               <script type="text/javascript">
+                  $(document).ready(function() {
+                      var text_max = 99;
+                      $('#textarea').keyup(function() {
+                          var text_length = $('#textarea').val().length;
+                          var text_remaining = text_max - text_length;
+                          $('#textarea_feedback').html(text_remaining + '/99');
+                      });
+                  });
+               </script>
+
+               <!-- Do submitions without reload refresh page -->
+               <script type="text/javascript"> 
+                  function doSubmit(){
+                     $(document).ready(function(){ 
+                        $('form.Form').ajaxForm(function() {
+                           $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
+                           $("#appendedInputButton").val("");
+                        }); 
+                     }); 
+                            var value = document.getElementById('username').value
+                            $(".whodone").val(value);
+                  }
+                  function doAuthSubmit(){
+                     $(document).ready(function(){ 
+                        $('form.Form').ajaxForm(function() {
+                           $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
+                           $("#appendedInputButton").val("");
+                        }); 
+                     }); 
+                  }
+                  function doComSubmit(){
+                     $(document).ready(function(){ 
+                        $('form.Form').ajaxForm(function() {
+                           $("#comref").load('{{ request.build_absolute_uri }} #comref');
+                           $("#textarea").val("");
+                        }); 
+                     }); 
+                  }
+               </script>
+
+               <!-- Do sync, on every five sec -->
+               <script type="text/javascript">
+                  var onoff= false;
+                  var time = 5000; // Change this if you want
+                  var refreshId;
+                  function RT() {
+                  	  if(!onoff){
+                  		$("#realtime_button").css("background-color","#7AA948");
+                  		refreshId = setInterval(function(){
+                  		     $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
+                  		     $("#comref").load('{{ request.build_absolute_uri }} #comref');
+                  		}, time);	
+                  		 onoff=!onoff;
+                  	   }else{
+                  	  	clearInterval(refreshId);
+                                  $("#realtime_button").css("background-color","#FFFFFF");
+                  	        onoff=!onoff;
+                  	   }
+                  };
+               </script>
+
+            </head>
+            <body onunload="unloadP('UniquePageNameHereScroll')" onload="loadP('UniquePageNameHereScroll')">
+               <div id="wrap">
+                  <div id="login_box" class="login-box">
+                     <div class="accordion" id="accordion2">
+                        <div class="accordion-group">
+                           <div id="collapseOne" class="accordion-body collapse">
+                              <div class="accordion-inner">
+                                 {% if user.is_authenticated %}
+				  {% include "socialaccount/signout.html"%}
+                                 {% else %}
+				  {% include "socialaccount/signin.html"%}
+                                 {% endif %}
+                                 <br>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <!-- Wrap all page content to push down footer -->
+                  <!-- Fixed navbar -->
+                  <div id="navb" class="navbar navbar-default navbar-fixed-top" style="background-color:transparent;">
+                     <div class="container">
+                        <ul  class="nav navbar-nav list-inline" style="float:right; margin-right: 5em; white-space: nowrap;">
+                           {% if user.is_authenticated %}
+			    {% for account in user.socialaccount_set.all %}
+			      {% if account.provider != "persona" %}
+				<li>
+				    <p class="navbar-text hello">Hi, {{user.first_name | slice:'10' }} {{ user.last_name | slice:'1' }}</p>
+				</li>
+				<li class="hello" ><img class="hidden-xs " src={{user.socialaccount_set.all.0.get_avatar_url}} width="30" height="30"></li>
+				<button type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign Out</button>
+				{% else %}
+				<li>
+				    <p class="navbar-text hello">Hi, {{user.username }}</p>
+				</li>
+				<li class="hello"><img class="hidden-xs" src=/static/buttons/Persona.png width="30" height="30" /></li>
+				<button type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign Out</button>
+			      {% endif %}
+			    {% endfor %}
+                           {% else %}
+                           <div class="accordion-heading">
+                           </div>
+                           <button style="margin-right:-3em;"type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin " data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign in</button>     
+                           {% endif %}
+                        </ul>
+                        <a  class="navbar-brand" href="../../"> <img class="img-responsive" alt="Sopler" src="{% static "img/g69.png" %}""/> </a>
+                     </div>
+                  </div>
+                  <div class="container">
+
+                     <!-- Jumbotron -->
+                     <div class="jumbotron">
+                        {% block content %} {% endblock content%}
+                        <br>
+                        <br>
+                     </div>
+                  </div>
+                  <br><br>
+                  <br>
+               </div>
+
+               <!-- Footer -->
+               <div id="footer">
+                  <div class="container hidden-print">
+                     <h2>
+                        <p class="backtotop"><i id="backtotop" style="cursor:pointer;opacity:0.7;" class="fa fa-arrow-circle-o-up"></i></a></p>
+                     </h2>
+                     <div class="row hidden-xs">
+                        <div class=" col-sm-2 col-sm-offset-1 ">
+                           <ul class="list-unstyled">
+                              <li>Sopler</li>
+                              <li> <a href="../../about/">About</a></li>
+                              <li> <a href="../../team/">Team</a></li>
+                              <li><a href="../../blog/">Blog</a></li>
+                           </ul>
+                        </div>
+                        <div class="col-sm-2 col-md-2" >
+                           <ul class="list-unstyled">
+                              <li>Social</li>
+                              <a href="https://www.facebook.com/Sopler" target="_blank">
+                                 <li id="facebook_footer_icon"> <span class="footer_social">Facebook</span></li>
+                              </a>
+                              <a href="https://twitter.com/soplerproject" target="_blank">
+                                 <li id="twitter_footer_icon"/><span class="footer_social"> Twitter</span>
+                              </a>
+                              </li>
+                              <a href="https://plus.google.com/102570420687118205013" rel="publisher" target="_blank">
+                                 <li id="google_footer_icon"><span class="footer_social">Google+</span></li>
+                              </a>
+                              <a href="http://www.youtube.com/user/soplerproject/" target="_blank">
+                                 <li id="youtube_footer_icon"><span class="footer_social">Youtube</span></li>
+                              </a>
+                              <a href="https://github.com/soplerproject" target="_blank">
+                                 <li id="github_footer_icon"><span class="footer_social">Github</span></li>
+                              </a>
+                           </ul>
+                        </div>
+                        <div class="col-sm-1 col-md-2">
+                           <ul class="list-unstyled">
+                              <li>Support</li>
+                              <li><a href="mailto:info@sopler.net">Contact</a></li>
+                              <li> <a href="../../howto/">How to</a></li>
+                           </ul>
+                        </div>
+                        <div class="col-sm-2 col-md-2  " >
+                           <ul class="list-unstyled">
+                              <li>Legal</li>
+                              <dd><a href="../../terms/">Terms</a></dd>
+                              <dd><a href="../../privacy/">Privacy</a></dd>
+                           </ul>
+                        </div>
+                        <div class="col-sm-3 col-md-2  " >
+                           <ul class="list-unstyled">
+                              <li style="opacity:0.7;">
+                                 <h3><b><i class="icon-cc"></i>
+                                    <i class="icon-cc-nc"></i>
+                                    <i class="icon-cc-by" ></i>
+                                    <i class="icon-cc-sa"></i></b>
+                                 </h3>
+                              </li>
+                              <li><img style="opacity:0.7;" src="/static/buttons/logo_footer.png" width="100" height="38"/></li>
+                              <li><small>Running on <a href="http://okeanos.grnet.gr/" target="_blank">~okeanos</a></small></li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div style="margin-left: 5px;" class="row visible-xs">
+                     <div class=" col-xs-12 ">
+                        <dl class="dl-horizontal">
+                           <dt>Sopler</dt>
+                           <dd> <a href="../../about/">About</a> | <a href="../../team/">Team</a> | <a href="../../blog/">Blog</a></dd>
+                        </dl>
+                        <dl " class="dl-horizontal">
+                           <dt>Social
+                           <dt>
+                           <dd>
+                              <a  href="https://www.facebook.com/Sopler" target="_blank">
+                                 <div id="facebook_footer_icon"> <span class="footer_social">Facebook</span></div>
+                              </a>
+                           </dd>
+                           <a  href="https://twitter.com/soplerproject" target="_blank">
+                              >
+                              <div id="twitter_footer_icon"/><span class="footer_social"> Twitter</span></div>
+                           </a>
+                           <a href="https://plus.google.com/102570420687118205013" rel="publisher" target="_blank">
+                              <div id="google_footer_icon"><span class="footer_social">Google+</span></div>
+                           </a>
+                           <a href="http://www.youtube.com/user/soplerproject/" target="_blank">
+                              <div id="youtube_footer_icon"><span class="footer_social">Youtube</span></div>
+                           </a>
+                           <a href="https://github.com/soplerproject" target="_blank">
+                              <div id="github_footer_icon"><span class="footer_social">Github</span></div>
+                           </a>
+                           </dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                           <dt>Support</dt>
+                           <dd><a href="mailto:info@sopler.net">Contact</a> | <a href="../../howto/">How to</a></dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                           <dt>Legal
+                           <dt>
+                           <dd><a href="../../terms/">Terms</a></dd>
+                           <dd><a href="../../privacy/">Privacy</a></dd>
+                        </dl>
+                        <ul class="list-unstyled">
+                           <li style="opacity:0.7;">
+                              <h3><b><i class="icon-cc"></i>
+                                 <i class="icon-cc-nc"></i>
+                                 <i class="icon-cc-by" ></i>
+                                 <i class="icon-cc-sa"></i></b>
+                              </h3>
+                           </li>
+                           <li><img style="opacity:0.7;" src="/static/buttons/logo_footer.png" width="100" height="38"/></li>
+                           <li><small>Running on <a href="http://okeanos.grnet.gr/" target="_blank">~okeanos</a></small></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <!-------->
+               </div>
+               </div>
+               </div> <!-- /container -->
+               <!-- Bootstrap core JavaScript
+                  ================================================== -->
+               <!-- Placed at the end of the document so the pages load faster -->
+            </body>
+         </html>

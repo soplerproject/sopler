@@ -1,0 +1,324 @@
+<div class="col-md-8">
+   <div class="listbox">
+      <br>
+      <div id="refresh">
+
+         <ul id="comments">
+            {% regroup list.item_set.all by ItemOwner as ItemOwner %}
+            {% if not ItemOwner %}
+	      <div class="empty_list">
+		<div><i class="fa fa-info-circle"></i></div>
+		Your list is empty. <br>Don't waste any more time, add an item!<br>
+	      </div>
+            {% endif %}
+
+            {% for i in ItemOwner %}
+	      <li class="cmmnt">
+		{% for item in i.list|slice:":1" %}
+		<div class="avatar">
+		    {% if item.ItemOwnerAvtr == ""  %}
+		      <img src="/static/buttons/User-Role-Guest-icon.png" width="48" height="48" style="border: 0px solid black; border-radius: 10px;-moz-border-radius: 10px;-khtml-border-radius: 10px;-webkit-border-radius: 10px;">
+		    {% else %}
+		      <img src={{item.ItemOwnerAvtr}} width="48" height="48" style="border: 0px solid black; border-radius: 10px;-moz-border-radius: 10px;-khtml-border-radius: 10px;-webkit-border-radius: 10px;">
+		    {% endif %} 
+		    {% if item.ItemOwnerLink != ""  %}
+		      <a href={{item.ItemOwnerLink}}><b>&nbsp; {{i.grouper}}</b></a>
+		    {% else %}
+		      <b>&nbsp; {{i.grouper}}</b></br>
+		    {% endif %} 
+		</div>
+               {% endfor %}
+
+               {% for item in i.list %}
+		{% if not item.ItemDone %}
+		  <div class="clear entry">
+		      <form  class="Form" action="{% url 'sopler:CheckItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			{% csrf_token %}
+			<input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			<button type="submit" class="btn-custom_green">{{ item.content | slice:'57' }}</button>
+		      </form>
+
+		      <!-- ========================================================================================= -->
+		      <!-- Item owner must lock/ulock, mark/unmark, delete access on items                           -->
+		      <!-- ========================================================================================= -->
+
+		      {% ifequal item.ItemOwner|stringformat:"s" user|stringformat:"s" %}
+			<form class="Form" action="{% url 'sopler:MarkItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			  {% csrf_token %}
+			  {% if item.ItemMarked %}
+			    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			    <button type="submit"  style="margin: -48px 63px; color: #d6a708; opacity:0.6;" class= "close fa fa-star" ></button>
+			  {% else %}
+			    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			    <button type="submit"  style="margin: -48px 63px;" class= "close fa fa-star-o" ></button>
+			  {% endif %}
+			</form>
+
+			<form class="Form" action="{% url 'sopler:LockItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			  {% csrf_token %}
+			  {% if item.ItemLocked %}
+			    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			    <button type="submit" style="margin: -46px 35px; color: red;" class= "close fa fa-lock" ></button>
+			  {% else %}
+			    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			    <button type="submit"  style="margin: -46px 35px;"  class= "close fa fa-unlock-o" ></button>
+			  {% endif %}
+			</form>
+
+			<form class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			  {% csrf_token %}
+			  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			  <button type="submit" style="margin: -47px 7px;" class= "close fa fa-trash-o"></button>
+			</form>
+		      {% endifequal %}
+
+		      {% for account in user.socialaccount_set.all %}
+			{% ifequal item.ItemOwnerFN|stringformat:"s" account.uid|stringformat:"s" %}
+			  <form class="Form" action="{% url 'sopler:MarkItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			    {% csrf_token %}
+			    {% if item.ItemMarked %}
+			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			      <button type="submit"  style="margin: -48px 63px; color: #d6a708; opacity:0.6;" class= "close fa fa-star" ></button>
+			    {% else %}
+			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			      <button type="submit"  style="margin: -48px 63px;" class= "close fa fa-star-o" ></button>
+			    {% endif %}
+			  </form>
+
+			  <form class="Form" action="{% url 'sopler:LockItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			    {% csrf_token %}
+			    {% if item.ItemLocked %}
+			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			      <button type="submit" style="margin: -46px 35px; color: red;" class= "close fa fa-lock" ></button>
+			    {% else %}
+			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			      <button type="submit"  style="margin: -46px 35px;"  class= "close fa fa-unlock-o" ></button>
+			    {% endif %}
+			  </form>
+
+			  <form class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			    {% csrf_token %}
+			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			      <button type="submit" style="margin: -47px 7px;" class= "close fa fa-trash-o"></button>
+			  </form>
+
+			{% endifequal %}
+		      {% endfor %}
+
+		      <!-- ========================================================================================= -->
+		      <!-- List Owner must have unlock / delete access on on lists's items                           -->
+		      <!-- ========================================================================================= -->
+
+		      {% ifequal ItemOwner|stringformat:"s" list.ListOwner|stringformat:"s" %}
+		      <form class="Form" action="{% url 'sopler:LockItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			{% csrf_token %}
+			{% if item.ItemLocked %}
+			  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			  <button type="submit" style="margin: -46px 35px; color: red;" class= "close fa fa-lock" ></button>
+			{% else %}
+			  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			  <button type="submit"  style="margin: -46px 35px;"  class= "close fa fa-unlock-o" ></button>
+			{% endif %}
+		      </form>
+
+		      <form class="Form" style="text-align: left;" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			{% csrf_token %}
+			<input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			<button type="submit" style="margin: -47px 7px;" class= "close fa fa-trash-o"></button>
+		      </form>
+		      {% endifequal %}  
+
+		      <!-- ========================================================================================= -->
+		      <!-- Authenticated user, can (un)lock/(un)mark/delete  Non-Authenticated user's items          -->
+		      <!-- ========================================================================================= -->
+
+		      {% if item.ItemOwnerState == "non-confirmed" %}
+			<form class="Form" action="{% url 'sopler:MarkItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			  {% csrf_token %}
+			  {% if item.ItemMarked %}
+			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			      <button type="submit"  style="margin: -48px 63px; color: #d6a708; opacity:0.6;" class= "close fa fa-star" ></button>
+			    {% else %}
+			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			      <button type="submit"  style="margin: -48px 63px;" class= "close fa fa-star-o" ></button>
+			  {% endif %}
+			</form>
+
+			<form class="Form" action="{% url 'sopler:LockItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			  {% csrf_token %}
+			  {% if item.ItemLocked %}
+			    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			    <button type="submit" style="margin: -46px 35px; color: red;" class= "close fa fa-lock" ></button>
+			  {% else %}
+			    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			    <button type="submit"  style="margin: -46px 35px;"  class= "close fa fa-unlock-o" ></button>
+			  {% endif %}
+			</form>
+
+			<form class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			  {% csrf_token %}
+			  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			  <button type="submit" style="margin: -47px 7px;" class= "close fa fa-trash-o"></button>
+			</form>
+		      {% endif %}
+		    {% endif %}	
+
+
+
+		    {% if item.ItemDone %}
+		      <!-- =============  Details ====================== -->
+
+		      <div class="clear entry">
+			<form class="Form" style="text-align: left;" action="{% url 'sopler:UnCheckItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			      {% csrf_token %}
+			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			      <button type="submit" class="btn-custom_red">{{ item.content | slice:'57' }}</button>
+			      <br>
+			</form>
+
+			<!-- ========================================================================================= -->
+			<!-- Authenticated user, can delete Non-Authenticated user's checked items                     -->
+			<!-- ========================================================================================= -->
+
+			{% if item.ItemOwnerState == "non-confirmed" %}
+			  <form class="Form" style="text-align: left;" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			      {% csrf_token %}
+			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			      <button type="submit" style="margin: -38px 7px;" class= "close fa fa-trash-o"></button>
+			  </form>
+			{% endif %}
+
+			<!-- ========================================================================================= -->
+			<!-- Item owner must delete access on checked items                                            -->
+			<!-- ========================================================================================= -->
+
+			{% ifequal item.ItemOwner|stringformat:"s" user|stringformat:"s" %}
+			  <form class="Form" style="text-align: left;" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			      {% csrf_token %}
+			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			      <button type="submit" style="margin: -38px 7px;" class= "close fa fa-trash-o"></button>
+			  </form>
+			{% endifequal %}    
+
+			{% for account in user.socialaccount_set.all %}
+			  {% ifequal item.ItemOwnerFN|stringformat:"s" account.uid|stringformat:"s" %}
+			    <form class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+				{% csrf_token %}
+				<input type="hidden" name="item_pk" value="{{ item.pk }}" />
+				<button type="submit" style="margin: -38px 7px;" class= "close fa fa-trash-o"></button>
+			    </form>
+			  {% endifequal %}
+			{% endfor %}
+
+			<!-- ========================================================================================= -->
+			<!-- List Owner must delete access on lists's checked items                                    -->
+			<!-- ========================================================================================= -->
+
+			{% ifequal ItemOwner|stringformat:"s" list.ListOwner|stringformat:"s" %}
+			  <form class="Form" style="text-align: left;" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+			      {% csrf_token %}
+			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			      <button type="submit" style="margin: -38px 7px;" class= "close fa fa-trash-o"></button>
+			  </form>
+			{% endifequal %}
+
+			<!-- ========================================================================================= -->
+
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ item.pk }}">
+			<button style="margin: -39px 35px;" class= "close fa fa-info"></button>
+			</a>
+		      </div>
+		      <div id="collapse{{ item.pk }}" class="accordion-body collapse out">
+			<div align="justify" style="margin-left:10px;" class="accordion-inner">
+			    <i class="fa fa-check"></i> Checked by <b>{{ item.WhoDone }}</b> on {{ item.TimeDone }}
+			</div>
+		      </div>
+                      <!-- ============  End of details ====================== -->
+		      {% endif %}
+                  {% endfor %}
+                  <br>
+            </li>
+            {% endfor %}
+
+         </ul>
+         </div> <!--end refresh-->
+      </div>
+   </div>
+</div>
+<br class="clear" />
+<br>
+
+<!-- =============  Comments ====================== -->
+<div class="accordion" id="accordion2">
+   <div  class="about-box">
+      <div id="list_boxes" class="popover bottom roundall">
+         <div class="accordion-group">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#comments_collapse">
+               <div class="accordion-heading popover-title list_box">
+                  <h5 align="left" style="color: #484848; margin-top: 0;font-size:1.4em; text-shadow:none;">
+                     &nbsp;&nbsp;<i class="fa fa-comments"></i>&nbsp;&nbsp;Comments
+                     <button class="btn btn-default box_button" >
+                        <i class="fa fa-chevron-down"></i>
+                  </h5>
+               </div>
+            </a>
+            <div id="comments_collapse" class="accordion-body collapse">
+            <div class="accordion-inner list_box_collapse" >
+            <div id="comref">
+            {% regroup list.comment_set.all by ComOwner as ComOwner %}
+            {% for i in ComOwner %}
+	      {% for comment in i.list %}
+		<div><small>[{{comment.ComPubDate}}] </small><a href=></a><b>{{i.grouper}}</b> : {{comment.ComContent | slice:'100' }}</div>
+
+		<!-- ========================================================================================= -->
+		<!-- Authenticated user, can delete all Non-Authenticated comments                             -->
+		<!-- ========================================================================================= -->
+		{% if comment.ComOwnerState != "confirmed" %}
+		  <form class="Form" action="{% url 'sopler:DeleteComment' list.slug %}" method="post" onclick="doComSubmit();">
+		    {% csrf_token %}
+		    <input type="hidden" name="comment_pk" value="{{ comment.pk }}" />
+		    <button type="submit" style="margin-right: 15px; margin-top:-41px;" class= "close fa fa-trash-o"></button>
+		  </form>
+		{% endif %}
+
+		<!-- ========================================================================================= -->
+		<!-- Authenticated user, can delete own comments only                                          -->
+		<!-- ========================================================================================= -->
+		{% ifequal i.grouper|stringformat:"s" user|stringformat:"s" %}
+		  <form class="Form" action="{% url 'sopler:DeleteComment' list.slug %}" method="post" onclick="doComSubmit();">
+		    {% csrf_token %}
+		    <input type="hidden" name="comment_pk" value="{{ comment.pk }}" />
+		    <button type="submit" style="margin-right: 15px; margin-top:-41px;" class= "close fa fa-trash-o"></button>
+		  </form>
+		{% endifequal %}
+		<!-- ========================================================================================= -->
+
+	      {% endfor %}
+            {% endfor %}
+            </div>
+            <br>
+            <form class="Form" action="{% url 'sopler:AddNewComment' list.slug %}" method="post" onclick="doComSubmit();">
+	      {% csrf_token %}
+	      <input type="hidden" class="input-index" name="ItemOwner"/>	
+	      <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
+	      <div class="row">
+	      <div class="col-md-11">
+	      <textarea  id="textarea" class="form-control" type="text" name="comment" maxlength="99" autofocus="autofocus" required="required" placeholder="Save comment!"></textarea>
+	      </div>
+	      <div class="col-md-1 ">
+	      <button  type="submit" class="btn btn-info pull-right">Save!</button>
+	      <div id="textarea_feedback"></div>
+	      </div>
+	      </div>
+            </form>
+            </div>
+            </a>
+            </div>
+            </a>
+         </div>
+      </div>
+      </ul>
+   </div>
+<!-- ============  End of Comments ====================== -->
+   </section> 
+</div>

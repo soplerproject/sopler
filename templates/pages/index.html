@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+<br><br><br>
+<div align="center" style="width:100%;">
+<!------------------Index page Box----------------------->
+   <div class="about-box">
+      <div id="boxes" class="popover bottom roundall">
+         <div class="popover-title title-main">
+            <h2 style="text-shadow:none;">Create a list<span style="font-size:1.75em;" class="dot">.</span></h2>
+         </div>
+         <div class="popover-content">
+
+            {% if user.is_authenticated %}
+	      <form class="validate-form" action="{% url 'sopler:AddList' %}" method="post">
+		{% csrf_token %}
+		<div  align=left class="accordion" id="accordion2">
+		    <div class="accordion-group">
+		      <div class="accordion-heading">
+			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseExtra">
+			  <b>Extra options</b>
+			  <span class="caret"></span>
+			  </a>
+		      </div>
+		      <div id="CollapseExtra" class="accordion-body collapse out">
+			  <div class="accordion-inner">
+			    <div class="checkbox">
+				<label>
+				<input type="checkbox" name="ListAuthOnly">
+				Allow authenticated users only
+				</label>
+			    </div>
+			  </div>
+		      </div>
+		    </div>
+		    <div class="accordion-group">
+		      <div class="accordion-heading">
+			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapsePrevLists">
+			  <b>Check Previous Lists</b>
+			  <span class="caret"></span>
+			  </a>
+		      </div>
+	      </form>
+	      <div id="CollapsePrevLists" class="accordion-body collapse out">
+	      <div class="accordion-inner">
+
+	      <!-- ========================================================================================= -->
+	      <!-- Check previous Authenticated users's lists                                                -->
+	      <!-- ========================================================================================= -->
+
+	      {% regroup object_list by ListOwner as ListOwner %}
+	      {% for i in ListOwner %}
+		{% ifequal i.grouper|stringformat:"s" user|stringformat:"s" %}
+		  {% for ListName in i.list %}
+		    <ul style="padding-right:10px;" class="list-unstyled">
+		    <li>
+		    <small> <a href=/lists/{{ListName.slug}}> <b>{{ListName}} </b> </a><tiny>({{ListName.ListPubDate}})</tiny>
+		    <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
+		      {% csrf_token %}
+		      <input type="hidden" name="list_pk" value="{{ ListName.pk }}" /></small>
+		      <button type="submit" style="margin-right: 5px; margin-top:-35px;" class= "close fa fa-trash-o"></button>
+		    </form></a>
+		    </li></ul>
+		  {% endfor %}
+		{% endifequal %}
+	      {% endfor %}
+
+	      {% regroup object_list by ListOwnerFN as ListOwnerFN %}
+	      {% for i in ListOwnerFN %}
+		{% for account in user.socialaccount_set.all %}
+		  {% ifequal i.grouper|stringformat:"s" account.uid|stringformat:"s" %}
+		    {% for ListName in i.list %}
+		      <ul style="padding-right:10px;" class="list-unstyled">
+		      <li>
+		      <small> <a href=/lists/{{ListName.slug}}> <b> {{ListName}} </b> </a> ({{ListName.ListPubDate}})
+		      <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="list_pk" value="{{ ListName.pk }}" /></small>
+			<button type="submit" style="margin-right: 5px; margin-top:-35px;"class= "close fa fa-trash-o"></button>
+		      </form></a>
+		      </li></ul>
+		    {% endfor %}
+		  {% endifequal %}
+		{% endfor %}
+	      {% endfor %}
+	      <!-- ========================================================================================= -->
+
+	      </div>
+	      </div>
+	      </div>
+            {% else %}
+	      <form class="validate-form" action="{% url 'sopler:AddList' %}" method="post">
+	      {% csrf_token %}
+		<input type="text" class="sign-up-input" name="ListOwnerName" required="required" placeholder="Who owns the list?">
+            {% endif %}
+	      <input type="text" class="sign-up-input" name="ListName" required="required" placeholder="Give it a name!">
+	      <input type="submit" value="Start!" class="sign-up-button">
+            </form>
+
+            </div>
+         </div>
+         <span id="error"></span>
+      </div>
+   </div>
+<!------------------Text/Icons area----------------------->
+   <div class="jumbotron" style=" padding-top:0; margin-top:40px;" align="center">
+      <h2>List everything on <span class="logocolor spaces">/.</span><span class="changefont">Sopler</span></h2>
+      <h4 >A free/open source, social and collaborative web application that helps you make lists.<br/>Create and share them with others easily in real time!</h4>
+   </div>
+   <div style="clear:both;"></div>
+   <br />
+   <div style="text-shadow: 5px 5px 5px #dddddd; text-align:center;" class="row">
+      <div class="col-sm-4">
+         <h1 style="border: 1px solid #b74f41;" id="main_icons"><i style="color:#b74f41; text-shadow: none;" class="fa fa-lightbulb-o"></i></h1>
+         <h2 >Think<span style="color:#b74f41;"class="dot">.</span></h2>
+         <h5>Think of things you want in a list! Organize a party, go shopping...endless possibilities.</h5>
+      </div>
+      <div class="col-sm-4">
+         <h1 style="border: 1px solid #7aa948;"id="main_icons"><i style="color:#7aa948;text-shadow: none; font-size:0.9em;" class="fa fa-list-ul"></i></h1>
+         <h2  >Create<span style="color:#7aa948;" class="dot">.</span></h2>
+         <h5 > Quickly create or easily modify a list of items you will need. Many options to choose.</h5 >
+      </div>
+      <div class="col-sm-4">
+         <h1  style="border: 1px solid #5294c9;" id="main_icons"><i style="color:#5294c9;text-shadow:none;font-size:1.1em; margin-right:3px;" class="icon-share-simple"></i></h1>
+         <h2 >Share<span class="dot">.</span></h2>
+         <h5>Share your lists with your friends and collaborate with them as you wish.</h5 >
+      </div>
+   </div>
+</div>
+{% endblock %}

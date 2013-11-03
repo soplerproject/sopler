@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+{% autoescape on %}
+<br/>
+<div class="row" style="text-align:justify;">
+   <div class="col-lg-10">
+      <h2>About Sopler<span class="logocolor">.</span></h2>
+      <h3>What is Sopler ?</h3>
+      <p>Sopler is a free/open source, social and collaborative web application for making lists. Create them, share them and collaborate with your friends to organize your everyday life.
+      <p><br />Sopler is based on three principles:</p>
+      <ul class="list-unstyled">
+         <li><span class="logocolor">/.</span> <b>Simplicity - </b> Ease of use for everyday people.</li>
+         <li><span class="logocolor">/.</span> <b>Security - </b> Private data must remain private.</li>
+         <li><span class="logocolor">/.</span> <b>Sociability - </b> Share and collaborate with those you choose, efficiently and fast.</li>
+      </ul>
+      </p>
+      <h3>The main idea behind Sopler<span style="font-size:1.5em;" class="dot">.</span></h3>
+      <p>We wanted the means to organize our everyday life. What we needed was to do it fast, socially and in collaboration with others. All these without any time-wasting registration and with respect to our privacy.</p>
+      <h3>Your privacy and anonymity<span style="font-size:1.5em;" class="dot">.</span></h3>
+      <p>You choose how you want to use Sopler. You can use it with or without any authentication. A non-authenticated user ensures his privacy and ownership of his list. Alternatively, the authenticated user has the ownership over his items and his list. It’s up to you! </p>
+      <h3>Sopler is free, open source or both ?</h3>
+      <p> Definetly both! The creators of Sopler are governed by the principles and values ​​of the open source community. Check out Sopler’s source code on <a target="blank_" href="http://github.com/sopler">GitHub</a> and feel free to fork us. We are open to suggestions, bug or vulnerability reports.</p>
+   </div>
+</div>
+<br>
+<br>
+<div class="row" style="text-align:justify;">
+   <hr>
+   <h2>Behind the scenes<span class="logocolor">.</span></h2>
+   <div class="row" style="text-align:justify;">
+      <div class="col-lg-4">
+         <h3>HTML5 <img src="/static/buttons/html5.png" width="56" height="56" /> / CSS3 <img src="/static/buttons/css3.png" width="56" height="56"/></h3>
+         <p>Sopler is built using HTML5 & CSS3 supporting the latest web standards. It makes Sopler modern, faster and mobile friendly.</p>
+      </div>
+      <div class="col-lg-4">
+         <h3>Python <img src="/static/buttons/python.png" width="56" height="56" /> / Django <img src="/static/buttons/django.png" width="50" height="50" /></h3>
+         <p>Sopler is built on Django, a high-level Python web framework that helps us make Sopler scalable, fast, and maintainable.</p>
+      </div>
+      <div class="col-lg-4">
+         <h3>MySQL  &nbsp;<img src="/static/buttons/mysql.png" width="56" height="56" /></h3>
+         <p>MySQL database server provides high performance and availability, security, scalability and flexibility to the end-users. Sopler uses MySQL to manage the lists.</p>
+      </div>
+   </div>
+   <div class="row" style="text-align:justify;">
+      <div class="col-lg-4 col-lg-offset-2">
+         <h3>Apache Server  &nbsp;<img src="/static/buttons/apache.png" width="56" height="56" /></h3>
+         <p>Sopler uses the Apache server for performance, scalability and security reasons. </p>
+      </div>
+      <div class="col-lg-4">
+         <h3>Bootstrap 3 &nbsp;<img src="/static/buttons/bootstrap.png" width="50" height="50" /></h3>
+         <p>Sopler's front-end design, based on Twitter's Bootstrap. </p>
+      </div>
+   </div>
+</div>
+<br>
+<br>
+<div class="row" style="text-align:justify;">
+   <hr>
+   <h2>Supported technologies<span class="logocolor">.</span></h2>
+   Sopler is a <b>cross-browser</b>, <b>cross-platform</b> and <b>cross-mobile</b> open web application.
+   <br/><br>
+   <div class="col-lg-3 col-lg-offset-2">
+      <img src="/static/buttons/tablet_mobile.svg" width="56" height="56"s/>
+      <img src="/static/buttons/pc.svg" width="56" height="56"s/>
+   </div>
+   <div class="col-lg-3">
+      <img src="/static/buttons/mac.png" width="56" height="56" />
+      <img src="/static/buttons/android.png" width="56" height="56" />
+   </div>
+   <div  class="col-lg-3">
+      <img src="/static/buttons/firefox.png" width="50" height="50" />
+      <img src="/static/buttons/chrome.png" width="50" height="50" />
+      <img src="/static/buttons/safari.png" width="50" height="50" />
+      <img src="/static/buttons/opera.png" width="50" height="50" />
+   </div>
+</div>
+</div>
+{% endautoescape %}
+{% endblock %}

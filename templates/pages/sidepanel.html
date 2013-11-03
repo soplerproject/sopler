@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+{% load staticfiles %}
+
+<script type="text/javascript" src="{% static "js/qrcode.js" %}"></script>
+<div  class="row">
+<!------------------Sidepanel Boxes----------------------->
+   <div class="col-md-4 hidden-print">
+<!------------------Add Box----------------------->
+      <div  class="row">
+         <div class="col-md-12">
+            <form class="Form" action="{% url 'sopler:AddNewItem' list.slug %}" method="post" onclick="doSubmit(this)">
+               {% csrf_token %}
+               <br>
+               <div  class="about-box">
+                  <div id="list_boxes" class="popover bottom roundtop">
+                     <div class="popover-title ">
+                        <h5 align="left" style="margin-top: 0;font-size:1.4em; text-shadow:none;">&nbsp;&nbsp;<i class="fa fa-plus"></i>&nbsp;&nbsp; Add an item </h5>
+                     </div>
+                     <div class="popover-content ">
+                        <div class="form-group">
+
+                           {% if user.is_authenticated %}
+			    <!-- do nothing -->
+                           {% else%}
+			    <input id="username" type="text" class="form-control" name="ItemOwner" required="required" placeholder="Enter username"/>
+                           {% endif %}
+
+                           <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
+                        </div>
+                        <div  class="input-group">
+                           <input  id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onclick="this.value='';" onfocus="this.select()" onsubmit="this.reset()"/>
+                           <span class="input-group-btn">
+                           <button type="submit" class="btn btn-default" >Add</button>
+                           </span>
+                        </div>
+                     </div>
+                  </div>
+            </form>
+            </div>
+         </div>
+      </div>
+<!------------------Information Box----------------------->
+      <div  class="row">
+         <div class="col-md-12">
+            <div class="accordion" id="accordion2">
+               <div class="about-box">
+                  <div id="list_boxes" class="popover bottom ">
+                     <div class="accordion-group">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#info_collapse">
+                           <div class="accordion-heading popover-title list_box">
+                              <h5 align="left" style=" color: #484848; margin-top: 0; font-size:1.4em; text-shadow:none;"> &nbsp;&nbsp;&nbsp; <i class="fa fa-info"></i>&nbsp;&nbsp;Information<button class="btn btn-default box_button" ><i class="fa fa-chevron-down"></i> </button></h5>
+                           </div>
+                        </a>
+                        <div id="info_collapse" class="accordion-body collapse">
+                           <div class="accordion-inner list_box_collapse">
+                              <dl class="dl-horizontal">
+                                 <dt><i class="fa fa-user"></i> &nbsp;Owner:</dt>
+                                 <dd id="info-dd"><a href="{{ list.ListOwnerLink }}">{{list.ListOwner}}</a></b> ({{ list.ListOwnerState }})</dd>
+                                 <dt><i class="fa fa-list-ul"></i> &nbsp;List: </dt>
+                                 <dd id="info-dd">  {{ list.ListName }}</dd>
+                                 <dt><i class="fa fa-clock-o"></i> &nbsp;Created: </dt>
+                                 <dd id="info-dd"> {{list.ListPubDate}}</dd>
+                              </dl>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+<!------------------Share Box----------------------->
+      <div  class="row">
+         <div class="col-md-12">
+            <div class="accordion" id="accordion2">
+               <div  class="about-box">
+                  <div id="list_boxes" class="popover bottom">
+                     <div class="accordion-group">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#share_collapse">
+                           <div class="accordion-heading popover-title list_box">
+                              <h5  style="color: #484848; margin-top: 0;font-size:1.4em; text-shadow:none;">&nbsp;&nbsp;<i class="icon-share-simple"></i>&nbsp;&nbsp;Share<button class="btn btn-default box_button" ><i class="fa fa-chevron-down"></i> </button></button></h5>
+                           </div>
+                        </a>
+                        <div id="share_collapse" class="accordion-body collapse">
+                           <div class="accordion-inner list_box_collapse">
+                              <div align="center">
+                                 <input class="well well-sm" type="text" onClick="this.select();" value="{{ request.build_absolute_uri }}" style="width:100%;" readonly /> 
+                                 <ul id="share_icons"class="list-inline">
+                                    <!-- Facebook -->
+                                    <li id="facebook_share_icon"><a href="JavaScript:newPopup('http://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Btitle%5D=Hey, join my list \'{{list.ListName }}\'&amp;p%5Burl%5D={{ request.build_absolute_uri }}&amp;p%5Bimages%5D%5B0%5D=http://sopler.net/static/buttons/logo.png');"></a></li>
+                                    <!-- Twitter -->
+                                    <li id="twitter_share_icon"><a href="JavaScript:newPopup('http://twitter.com/share?url={{ request.build_absolute_uri }}&text=DM @<TwitterName> Hey, join my list \'{{list.ListName }}\' at:');"></a></li>
+                                    <!-- Google+ -->
+                                    <li id="google_share_icon"><a href="JavaScript:newPopup('https://plus.google.com/share?url={{ request.build_absolute_uri }}');"></a></li>
+                                    <!-- Email -->
+                                    <li id="email_share_icon"><a href="JavaScript:newPopup('mailto:?Subject=New list created!!&Body=Hey, join my list \'{{list.ListName }}\' at: {{ request.build_absolute_uri }}');"></a></li>
+                                    <!-- Print -->
+                                    <li id="print_share_icon"><a href="#"  onclick="window.print();"></a></li>
+                                    <!-- QrCode -->
+                                    <li id="QR_share_icon"><a data-toggle="modal" href="#QRModal"></a></li>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="QRModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog">
+                                          <div class="modal-content">
+                                             <div class="modal-header">
+                                                <h4 class="modal-title">QR Code</h4>
+                                             </div>
+                                             <div class="modal-body">
+                                                <input id="text" type="hidden" value="{{ request.build_absolute_uri }}" />
+                                                <div id="qrcode">
+                                                   <script type="text/javascript" src="/static/js/qrcode2.js" %}"></script>
+                                                </div>
+                                             </div>
+                                             <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                             </div>
+                                          </div>
+                                          <!-- /.modal-content -->
+                                       </div>
+                                       <!-- /.modal-dialog -->
+                                    </div>
+                                    <!-- /.modal -->
+                              </div>
+                              <!--end QRCode-->
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end share box -->
+
+<!------------------Sync Box----------------------->
+      <div  class="row">
+         <div class="col-md-12">
+            <div class="accordion" id="accordion2">
+               <div  class="about-box">
+                  <!-- <div id="list_boxes" class="popover bottom ">-->
+                  <div id="list_boxes" class="popover bottom roundbottom">
+                     <div class="accordion-group">
+                        <div class="accordion-heading popover-title list_box">
+                           <h5  style="color: #484848; margin-top: 0;font-size:1.35em; text-shadow:none;">&nbsp;&nbsp;<i class="fa fa-refresh"></i> &nbsp;Sync 
+                              <small>
+                              <span style="cursor:pointer;"id="besync_popover"  data-content="Work in real-time with your collaborators." data-placement="top" data-toggle="popover" data-container="body" type="button" data-original-title="" title=""> <i class="fa fa-question-circle"></i> </span>
+                              </small>
+                              <button id="realtime_button" class="btn btn-default box_button" onclick="RT()" ><i class="fa fa-power-off"></i> </button>
+                           </h5>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Popup Window -->
+   <script type="text/javascript">
+      function newPopup(url) {
+      	popupWindow = window.open(
+      		url,'popUpWindow','height=700,width=800,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no')
+      }
+   </script>
+<!------------------List Box----------------------->
+   {% if list.ListAuthOnly = True %}
+      {% if user.is_authenticated %}
+	{% include "pages/auth.html"%}
+      {% else %}
+	<div class="col-md-8">
+	    <div class="listbox">
+	      <div class="empty_list">
+		  <br>
+		  <div><i class="fa fa-exclamation-triangle"></i></div>
+		  <h4>Authentication needed</h4>
+		  The owner of this list wants you to sign in to see the list!
+	      </div>
+	    </div>
+	</div>
+	</div>
+      {% endif %}
+    {% else %}
+      {% if user.is_authenticated %}
+	{% include "pages/auth.html"%}
+      {% else %}
+	{% include "pages/nonauth.html"%}
+      {% endif %}
+    {% endif %}
+{% endblock %}
