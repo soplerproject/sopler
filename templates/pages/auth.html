@@ -39,7 +39,7 @@
 		      </form>
 
 		      <!-- ========================================================================================= -->
-		      <!-- Item owner must lock/ulock, mark/unmark, delete access on items                           -->
+		      <!-- Item owner must have lock/ulock, mark/unmark, delete access on items                           -->
 		      <!-- ========================================================================================= -->
 
 		      {% ifequal item.ItemOwner|stringformat:"s" user|stringformat:"s" %}
@@ -106,7 +106,7 @@
 		      {% endfor %}
 
 		      <!-- ========================================================================================= -->
-		      <!-- List Owner must have unlock / delete access on on lists's items                           -->
+		      <!-- List Owner must have unlock / delete access on lists's items                           -->
 		      <!-- ========================================================================================= -->
 
 		      {% ifequal ItemOwner|stringformat:"s" list.ListOwner|stringformat:"s" %}
@@ -189,7 +189,7 @@
 			{% endif %}
 
 			<!-- ========================================================================================= -->
-			<!-- Item owner must delete access on checked items                                            -->
+			<!-- Item owner must have delete access on checked items                                            -->
 			<!-- ========================================================================================= -->
 
 			{% ifequal item.ItemOwner|stringformat:"s" user|stringformat:"s" %}
@@ -211,7 +211,7 @@
 			{% endfor %}
 
 			<!-- ========================================================================================= -->
-			<!-- List Owner must delete access on lists's checked items                                    -->
+			<!-- List Owner must have delete access on lists's checked items                                    -->
 			<!-- ========================================================================================= -->
 
 			{% ifequal ItemOwner|stringformat:"s" list.ListOwner|stringformat:"s" %}
@@ -282,7 +282,7 @@
 		{% endif %}
 
 		<!-- ========================================================================================= -->
-		<!-- Authenticated user, can delete own comments only                                          -->
+		<!-- Authenticated user, can delete his own comments only                                          -->
 		<!-- ========================================================================================= -->
 		{% ifequal i.grouper|stringformat:"s" user|stringformat:"s" %}
 		  <form class="Form" action="{% url 'sopler:DeleteComment' list.slug %}" method="post" onclick="doComSubmit();">
