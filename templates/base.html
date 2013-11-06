@@ -145,6 +145,18 @@
                   };
                </script>
 
+               <!-- Video -->
+	       <script>
+		$(function(){
+			$('#VideoModal').on('show.bs.modal', function () {
+			  $('div.modal-body').html('<iframe width="520" height="293" src="//www.youtube.com/embed/ifKzb7W_uto?html5=1&autoplay=1" frameborder="0" allowfullscreen></iframe>');  
+			});
+			$('#VideoModal').on('hide.bs.modal', function () {
+			  $('div.modal-body').html('');  
+			});
+		});
+		</script>
+
             </head>
             <body onunload="unloadP('UniquePageNameHereScroll')" onload="loadP('UniquePageNameHereScroll')">
                <div id="wrap">
