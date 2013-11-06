@@ -148,7 +148,7 @@
 
                <!-- Count comments -->
 	       <script type="text/javascript">
-                   var time = 100; // Change this if you want
+                   var timer = 100; // Change this if you want
 		   $(window).load(function (){
 		      setInterval(function(){
 			var count = $('div[id*="commentcount"]').length;
@@ -156,7 +156,7 @@
 			  document.getElementById("comments_counter").innerHTML = "("+count+")"; 
                         }else{
 			  document.getElementById("comments_counter").innerHTML = "";}
-		      },time);
+		      },timer);
 		   });
 	       </script>
 
