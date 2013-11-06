@@ -269,6 +269,7 @@ input {
 
 /*****info when the list is empty****/
 .empty_list{
+	margin-left: -2.5em;
 	text-align:center;
 }
 
