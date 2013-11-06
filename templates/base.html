@@ -43,6 +43,7 @@
                <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
                <script type="text/javascript" src="{% static "js/bootstrap.input-clear.js" %}"></script>
                <script type="text/javascript" src="{% static "js/jquery.form.js" %}"></script>
+               <script type="text/javascript" src="{% static "js/jquery.fitvids.js" %}"></script>
 
                <script type="text/javascript">  
                   $(function ()  
@@ -151,6 +152,7 @@
 			$('#VideoModal').on('show.bs.modal', function () {
 			  $('div.modal-body').html('<iframe width="520" height="293" src="//www.youtube.com/embed/ifKzb7W_uto?html5=1&autoplay=1" frameborder="0" allowfullscreen></iframe>');  
 			});
+			  $("div.modal-body").fitVids();  
 			$('#VideoModal').on('hide.bs.modal', function () {
 			  $('div.modal-body').html('');  
 			});
