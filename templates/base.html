@@ -146,18 +146,27 @@
                   };
                </script>
 
-               <!-- Count comments -->
+               <!-- Count comments and previous lists-->
 	       <script type="text/javascript">
-                   var timer = 100; // Change this if you want
-		   $(window).load(function (){
+                  var time = 100; // Change this if you want
+		  $(window).load(function (){
 		      setInterval(function(){
-			var count = $('div[id*="commentcount"]').length;
-                        if (count > 0){
-			  document.getElementById("comments_counter").innerHTML = "("+count+")"; 
+			var comcount = $('div[id*="commentcount"]').length;
+                        if (comcount > 0){
+			  document.getElementById("comments_counter").innerHTML = "("+comcount+")"; 
                         }else{
 			  document.getElementById("comments_counter").innerHTML = "";}
-		      },timer);
-		   });
+		      },time);
+		  });
+		  $(window).load(function (){
+		      setInterval(function(){
+			var lstcount = $('div[id*="listcount"]').length;
+                        if (lstcount > 0){
+			  document.getElementById("list_counter").innerHTML = "("+lstcount+")"; 
+                        }else{
+			  document.getElementById("list_counter").innerHTML = "";}
+		      },time);
+		  });
 	       </script>
 
                <!-- Video -->
