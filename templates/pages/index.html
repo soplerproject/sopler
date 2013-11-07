@@ -36,7 +36,7 @@
 		    <div class="accordion-group">
 		      <div class="accordion-heading">
 			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapsePrevLists">
-			  <b>Check Previous Lists</b>
+			  <b>Check Previous Lists </b><span id="list_counter"></span>
 			  <span class="caret"></span>
 			  </a>
 		      </div>
@@ -54,7 +54,7 @@
 		  {% for ListName in i.list %}
 		    <ul style="padding-right:10px;" class="list-unstyled">
 		    <li>
-		    <small> <a href=/lists/{{ListName.slug}}> <b>{{ListName}} </b> </a><tiny>({{ListName.ListPubDate}})</tiny>
+		    <div id="listcount"><small> <a href=/lists/{{ListName.slug}}> <b>{{ListName}} </b> </a><tiny>({{ListName.ListPubDate}})</tiny></div>
 		    <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
 		      {% csrf_token %}
 		      <input type="hidden" name="list_pk" value="{{ ListName.pk }}" /></small>
