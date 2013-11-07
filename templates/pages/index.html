@@ -72,7 +72,7 @@
 		    {% for ListName in i.list %}
 		      <ul style="padding-right:10px;" class="list-unstyled">
 		      <li>
-		      <small> <a href=/lists/{{ListName.slug}}> <b> {{ListName}} </b> </a> ({{ListName.ListPubDate}})
+		      <div id="listcount"><small> <a href=/lists/{{ListName.slug}}> <b>{{ListName}} </b> </a><tiny>({{ListName.ListPubDate}})</tiny></div>
 		      <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
 			{% csrf_token %}
 			<input type="hidden" name="list_pk" value="{{ ListName.pk }}" /></small>
