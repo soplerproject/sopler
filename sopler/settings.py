@@ -159,6 +159,7 @@ INSTALLED_APPS = (
     'allauth.socialaccount.providers.persona',
     #'allauth.socialaccount.providers.openid',
     'core',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
