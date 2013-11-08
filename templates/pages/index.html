@@ -54,13 +54,15 @@
 		  {% for ListName in i.list %}
 		    <ul style="padding-right:10px;" class="list-unstyled">
 		    <li>
-		    <div id="listcount"><small> <a href=/lists/{{ListName.slug}}> <b>{{ListName}} </b> </a><tiny>({{ListName.ListPubDate}})</tiny></div>
-		    <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
-		      {% csrf_token %}
-		      <input type="hidden" name="list_pk" value="{{ ListName.pk }}" /></small>
-		      <button type="submit" style="margin-right: 5px; margin-top:-35px;" class= "close fa fa-trash-o"></button>
-		    </form></a>
-		    </li></ul>
+                    <div id="listcount"><dt>&nbsp;&nbsp;<i class="fa fa-list-ul"><small><a href=/lists/{{ListName.slug}}> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt></div>
+                    <dd id="info-dd">
+                    <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate}}</i></dt><dd></dd>
+		     <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="list_pk" value="{{ ListName.pk }}" /></small>
+			<button type="submit" style="margin-right: 5px; margin-top:-32px;" class= "close fa fa-trash-o"></button>
+		     </form></a>
+		   </li></ul>
 		  {% endfor %}
 		{% endifequal %}
 	      {% endfor %}
@@ -72,17 +74,20 @@
 		    {% for ListName in i.list %}
 		      <ul style="padding-right:10px;" class="list-unstyled">
 		      <li>
-		      <div id="listcount"><small> <a href=/lists/{{ListName.slug}}> <b>{{ListName}} </b> </a><tiny>({{ListName.ListPubDate}})</tiny></div>
+		      <div id="listcount"><dt>&nbsp;&nbsp;<i class="fa fa-list-ul"><small><a href=/lists/{{ListName.slug}}> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt></div>
+		      <dd id="info-dd">
+		      <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate}}</i></dt><dd></dd>
 		      <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
-			{% csrf_token %}
-			<input type="hidden" name="list_pk" value="{{ ListName.pk }}" /></small>
-			<button type="submit" style="margin-right: 5px; margin-top:-35px;"class= "close fa fa-trash-o"></button>
+			  {% csrf_token %}
+			  <input type="hidden" name="list_pk" value="{{ ListName.pk }}" /></small>
+			  <button type="submit" style="margin-right: 5px; margin-top:-32px;" class= "close fa fa-trash-o"></button>
 		      </form></a>
-		      </li></ul>
+		    </li></ul>
 		    {% endfor %}
 		  {% endifequal %}
 		{% endfor %}
 	      {% endfor %}
+	      
 	      <!-- ========================================================================================= -->
 
 	      </div>
