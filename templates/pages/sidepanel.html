@@ -64,6 +64,68 @@
                                  <dd id="info-dd">  {{ list.ListName | slice:'15' }}</dd>
                                  <dt><i class="fa fa-clock-o"></i> &nbsp;Created: </dt>
                                  <dd id="info-dd"> {{list.ListPubDate}}</dd>
+                                 
+                                 <!-- ========================================================================================= -->
+				 <!-- Check previous Authenticated users's lists                                                -->
+				 <!-- ========================================================================================= -->
+                                 <p>
+				 {% if user.is_authenticated %}
+				  <div class="accordion-group">
+				    <div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapsePrevLists">
+					<b>Check Previous Lists </b><span id="list_counter"></span>
+					<span class="caret"></span>
+					</a>
+				    </div>
+				    <div id="CollapsePrevLists" class="accordion-body collapse out">
+				    <div class="accordion-inner">
+				    {% regroup lists by ListOwner as ListOwner %}
+				    {% for i in ListOwner %}
+				      {% ifequal i.grouper|stringformat:"s" user|stringformat:"s" %}
+					{% for ListName in i.list %}
+					  <ul style="padding-right:10px;" class="list-unstyled">
+					  <li>
+                                          <div id="listcount"><dt>&nbsp;&nbsp;<i class="fa fa-list-ul"><small><a href=/lists/{{ListName.slug}}> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt></div>
+                                          <dd id="info-dd">
+                                          <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{list.ListPubDate}}</i></dt><dd></dd>
+					  <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
+					    {% csrf_token %}
+					    <input type="hidden" name="list_pk" value="{{ ListName.pk }}" /></small>
+					    <button type="submit" style="margin-right: 5px; margin-top:-32px;" class= "close fa fa-trash-o"></button>
+					  </form></a>
+					  </li></ul>
+					{% endfor %}
+				      {% endifequal %}
+				    {% endfor %}
+
+				    {% regroup lists by ListOwnerFN as ListOwnerFN %}
+				    {% for i in ListOwnerFN %}
+				      {% for account in user.socialaccount_set.all %}
+					{% ifequal i.grouper|stringformat:"s" account.uid|stringformat:"s" %}
+					  {% for ListName in i.list %}
+					  <ul style="padding-right:10px;" class="list-unstyled">
+					  <li>
+                                          <div id="listcount"><dt>&nbsp;&nbsp;<i class="fa fa-list-ul"><small><a href=/lists/{{ListName.slug}}> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt></div>
+                                          <dd id="info-dd">
+                                          <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{list.ListPubDate}}</i></dt><dd></dd>
+					  <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
+					    {% csrf_token %}
+					    <input type="hidden" name="list_pk" value="{{ ListName.pk }}" /></small>
+					    <button type="submit" style="margin-right: 5px; margin-top:-32px;" class= "close fa fa-trash-o"></button>
+					  </form></a>
+					  </li></ul>
+					  {% endfor %}
+					{% endifequal %}
+				      {% endfor %}
+				    {% endfor %}
+				    </div>
+				    </div>
+				    </div>
+				  <!-- ========================================================================================= -->
+				  {% else %}
+				    <!-- Do nothing.. yet!! -->
+				  {% endif %}
+                                 
                               </dl>
                            </div>
                         </div>
