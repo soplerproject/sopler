@@ -34,7 +34,11 @@ class ViewProfilePage(TemplateView):
 class ViewList(DetailView):
     model = List
     template_name = pages_dir + "sidepanel.html"
-
+    
+    def get_context_data(self, **kwargs):
+      context = super(ViewList, self).get_context_data(**kwargs)
+      context['lists'] = List.objects.all()
+      return context
 
 #################################################
 # Create A New List
