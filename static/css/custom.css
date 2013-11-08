@@ -6,8 +6,9 @@ body {
 	height: 100%;
 	background: #e3e0ef url('../list_images/bg.png');
 	color:#363636;
-	/* Fix for a Bootstrap issue. It hides the unnecessary horizontal scroll-bar */
-        overflow-x: hidden;
+	/* Fix for a Bootstrap issue. It hides the unnecessary horizontal scroll-bar 
+	It doesn't work well with mobile Firefox*/
+        /*overflow-x: hidden;*/
 }
 
 a:hover { 
