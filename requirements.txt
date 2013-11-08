@@ -1,2 +1,3 @@
 django
 django-allauth
+south
