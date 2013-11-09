@@ -40,10 +40,10 @@ The css, js files and images will load properly, if you set the `DEBUG` paramete
 Data Migration - South
 -------
 
-1. Uncomment [south][south] (``settings.py`` file).
+Uncomment [south][south] (``settings.py`` file).
 [south]: http://south.readthedocs.org/en/latest/
 
-2. Initialization :
+Initialization :
 
 `$ python manage.py schemamigration core --initial`
  
@@ -52,12 +52,12 @@ Data Migration - South
 `$ python manage.py migrate core` (in case of error, add the `--fake` parameter)
 
 
-3. Change the model :
+Change the model :
 
-  Add new field in your model (``models.py`` file).
+Add new field in your model (``models.py`` file).
 
 
-4. Migration :
+Migration :
 
 `$ python manage.py schemamigration core --auto`
  
