@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block title %}{{list.ListName }}{% endblock %}
+{% block content %}
+{% autoescape on %}
+<br />
+<div class="row" style="text-align:justify;">
+   <div class="col-lg-10">
+      <h2>How to use Sopler<span class="logocolor">.</span></h2>
+      <h3> <b><span class="logocolor">/.</span> Intro <small><b>(short video, available in HD)</b></small></b></h3><br/>
+		<div id="how_to_video">
+			<iframe width="520" height="293" src="//www.youtube.com/embed/ifKzb7W_uto?html5=1" frameborder="0" allowfullscreen></iframe>
+		</div>
+   </div>
+</div>
+<br>
+<div class="row" style="text-align:justify;">
+   <div class="col-lg-10">
+      <h3> <b><span class="logocolor">/.</span> Signed-in</b> vs. <b>Non-signed-in</b> users</h3>
+		Sopler will never ask you to register. That's why in case you want Sopler to remember your previous lists and give you more priviledges over your items you need to sign-in with a social network account.
+		<br>
+		We recommend that you sign-in for a better Sopler experience and management of your lists.
+   </div>
+</div>
+<br>
+
+<div class="row" style="text-align:justify;">
+   <div class="col-lg-10">
+      <h3> <b><span class="logocolor">/.</span>How to create a list</b></h3>
+		<ol class="list-unstyled" >
+		<li><i class="fa fa-check"></i> Go to sopler.net</li>
+		<li><i class="fa fa-check"></i> If you are not signed-in, enter a username.</li>
+		<li><i class="fa fa-check"></i> Enter the name of the list you want to create... and press Start!</li>
+		<li> </li>
+		</ul>
+   </div>
+</div>
+<br>
+
+<div class="row">
+   <div class="col-lg-10">
+      <h3>Symbols</h3>
+		
+		<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h4>Sidepanel symbols</h4></div>
+
+	<table class="table table-hover">
+		<tr>
+		<td>
+		<h5>
+			<span class="fa-stack fa-lg">
+			  <i class="fa fa-square-o fa-stack-2x"></i>
+			  <i  class="fa fa-plus fa-stack-1x"></i>
+			  </span>
+		</h5> 
+	  </td>
+	  <td>
+		<h5>Add an item</h5>
+		   </td>
+		   <td>
+			 <h5>If you are not signed-in, enter a name. Then, enter your item and add it to your list.</h5>
+		   </div>
+		   </td>
+		</tr>
+		<tr>
+		<td>
+		<h5>
+			<span class="fa-stack fa-lg">
+			  <i class="fa fa-square-o fa-stack-2x"></i>
+			  <i  class="fa fa-info fa-stack-1x"></i>
+			  </span>
+		</h5> 
+	  </td>
+	  <td>
+		<h5>Information</h5>
+		   </td>
+		   <td>
+			 <h5>Find out the owner of the list and if he's a signed-in user (or not). Check out the name of the list and its creation date.</h5>
+		   </div>
+		   </td>
+		</tr>
+		<tr>
+		<td>
+		<h5>
+			<span class="fa-stack fa-lg">
+			  <i class="fa fa-square-o fa-stack-2x"></i>
+			  <i style="margin:-1px 0 0 9px ;" class="icon-share-simple fa-stack-1x"></i>
+			   </span>
+	  </td><td>
+			 <h5>Share</h5> 
+		   </td>
+				   <td>
+			 <h5>Copy the link or share it via your favourite social network. Print the list or scan the QR Code.</h5>
+		   </div>
+		   </td>
+		   </tr>
+		<tr>
+		<td>
+		<h5>
+			<span class="fa-stack fa-lg">
+			  <i class="fa fa-square-o fa-stack-2x"></i>
+			  <i style="margin:-1px 0 0 1px;" class="fa fa-refresh fa-stack-1x"></i>
+			  </span>
+	  </td>
+	  <td>
+			  <h5>Sync</h5> 
+		 </td>
+		
+				   <td>
+			 <h5>See the changes your collaborators do on your list or their comments in real-time.</h5>
+		   </div>
+		   </td>
+		   </tr>
+   </table>
+  
+   </div>
+   		<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h4>List symbols</h4></div>
+
+		<table class="table table-hover">
+		<tr>
+		<td>
+			<h5>
+				<span class="fa-stack fa-lg">
+				  <i class="fa fa-square-o fa-stack-2x"></i>
+				  <i  class="fa fa-star-o fa-stack-1x"></i>
+				  </span>
+			</h5> 
+	  </td>
+	  <td>
+		<h5>Flag</h5>
+		   </td>
+		   <td>
+			 <h5>Show that this is an important item.<b>Non-signed-in</b> users can't un-flag the items of a <b>signed-in</b> user.</h5></h5>
+		   </div>
+		   </td>
+		</tr>
+		<tr>
+		<td>
+		<h5>
+			<span class="fa-stack fa-lg">
+			  <i class="fa fa-square-o fa-stack-2x"></i>
+			  <i  class="fa fa-unlock-o fa-stack-1x"></i>
+			  </span>
+		</h5> 
+	  </td>
+	  <td>
+		<h5>Lock</h5>
+		   </td>
+		   <td>
+			 <h5>Lock an item. <b>Non-signed-in</b> users can't unlock the items of a <b>signed-in</b> user.</h5></h5>
+		   </div>
+		   </td>
+		</tr>
+		<tr>
+		<td>
+		<h5>
+			<span class="fa-stack fa-lg">
+			  <i class="fa fa-square-o fa-stack-2x"></i>
+			  <i style="margin:-1px 0 0 0 ;" class="fa fa-trash-o fa-stack-1x"></i>
+			   </span>
+	  </td><td>
+			 <h5>Delete</h5> 
+		   </td>
+				   <td>
+			 <h5>Delete an item. <b>Non-signed-in</b> users can't delete the items of a <b>signed-in</b> user.</h5>
+		   </div>
+		   </td>
+		   </tr>
+		<tr>
+		<td>
+		<h5>
+			<span class="fa-stack fa-lg">
+			  <i class="fa fa-square-o fa-stack-2x"></i>
+			  <i  class="fa fa-info fa-stack-1x"></i>
+			  </span>
+	  </td><td>
+			  <h5>Information</h5> 
+		 </td>
+		
+				   <td>
+			 <h5>When did this item got checked...and by whom?</h5>
+		   </div>
+		   </td>
+		   </tr>
+   </table>
+  </div>
+   </div>
+</div>
+{% endautoescape %}
+{% endblock %}
