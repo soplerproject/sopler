@@ -37,6 +37,32 @@ The css, js files and images will load properly, if you set the `DEBUG` paramete
 
 `$ python manage.py runserver --insecure`
 
+Data Migration - South
+-------
+
+1. Uncomment [south][south] (``settings.py`` file).
+[south]: http://south.readthedocs.org/en/latest/
+
+2. Initialization :
+
+`$ python manage.py schemamigration core --initial`
+ 
+`$ python manage.py syncdb` (optional - If complaining that `south_migrationhistory` does not exist)
+ 
+`$ python manage.py migrate core` (in case of error, add the `--fake` parameter)
+
+
+3. Change the model :
+
+  Add new field in your model (``models.py`` file).
+
+
+4. Migration :
+
+`$ python manage.py schemamigration core --auto`
+ 
+`$ python manage.py migrate core`
+
 License
 -------
 This software is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE][AGPL]. For more
