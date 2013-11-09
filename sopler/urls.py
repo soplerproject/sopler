@@ -23,4 +23,5 @@ urlpatterns = patterns('',
     url(r'^about/$', TemplateView.as_view(template_name='pages/about/about.html')),
     url(r'^team/$', TemplateView.as_view(template_name='pages/about/team.html')),
     url(r'^terms/$', TemplateView.as_view(template_name='pages/about/terms.html')),
+    url(r'^howto/$', TemplateView.as_view(template_name='pages/about/howto.html')),
 )
