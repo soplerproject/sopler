@@ -80,6 +80,7 @@ class Comment(models.Model):
 
     NewComment = models.ForeignKey(List)
     ComOwner = models.CharField("Owner's Handle",max_length=100)
+    ComOwnerFN = models.CharField("Owner's First Name",max_length=100)
     ComOwnerState = models.CharField("Owner's Confirmation State",max_length=100)
     ComContent = models.TextField("Comment",max_length=100)
     ComPubDate = models.DateTimeField("Date Comment Published")
