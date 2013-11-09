@@ -57,11 +57,11 @@
                            <div class="accordion-inner list_box_collapse">
                               <dl class="dl-horizontal">
                                  <dt><i class="fa fa-user"></i> &nbsp;Owner:</dt>
-                                 <dd id="info-dd"><a href="{{ list.ListOwnerLink }}">{{list.ListOwner | slice:'15'}}</a></dd>
+                                 <dd id="info-dd"><a href="{{ list.ListOwnerLink }}">{{list.ListOwner | truncatechars:'15'}}</a></dd>
                                  <dt><i class="fa icon-browserid"></i> &nbsp;State:</dt>
                                  <dd id="info-dd">{{ list.ListOwnerState }}</dd>
                                  <dt><i class="fa fa-list-ul"></i> &nbsp;List: </dt>
-                                 <dd id="info-dd">  {{ list.ListName | slice:'15' }}</dd>
+                                 <dd id="info-dd">  {{ list.ListName | truncatechars:'15' }}</dd>
                                  <dt><i class="fa fa-clock-o"></i> &nbsp;Created: </dt>
                                  <dd id="info-dd"> {{list.ListPubDate}}</dd>
                                  
