@@ -160,6 +160,7 @@ def DeletePreviousList(request, slug):
 def AddNewComment(request, slug):
     if request.user.is_anonymous():
     	ComOwner = request.POST.get('ItemOwner')
+    	ComOwnerFN = ""
     	ComOwnerState = "non-confirmed"
 
     else:
@@ -168,15 +169,19 @@ def AddNewComment(request, slug):
 
           if ItemOwnerPrvdr == "facebook": 
 		  ComOwner = account.extra_data['username']
+		  ComOwnerFN = ""
 		  ComOwnerState = "confirmed"
     	  elif ItemOwnerPrvdr == "twitter":
 	    	  ComOwner = account.extra_data['screen_name']
+	    	  ComOwnerFN = ""
 	    	  ComOwnerState = "confirmed"
     	  elif ItemOwnerPrvdr == "google":
 	    	  ComOwner = account.extra_data['name']
+	    	  ComOwnerFN = account.extra_data['id']
 	    	  ComOwnerState = "confirmed"
     	  elif ItemOwnerPrvdr == "persona":
 	    	  ComOwner = account.user
+	    	  ComOwnerFN = ""
 	    	  ComOwnerState = "confirmed"
 	  else:
 	  	  pass
