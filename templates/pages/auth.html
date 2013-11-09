@@ -291,6 +291,17 @@
 		    <button type="submit" style="margin-right: 15px; margin-top:-41px;" class= "close fa fa-trash-o"></button>
 		  </form>
 		{% endifequal %}
+		
+		{% for account in user.socialaccount_set.all %}
+		  {% ifequal comment.ComOwnerFN|stringformat:"s" account.uid|stringformat:"s" %}
+		    <form class="Form" action="{% url 'sopler:DeleteComment' list.slug %}" method="post" onclick="doComSubmit();">
+		      {% csrf_token %}
+		      <input type="hidden" name="comment_pk" value="{{ comment.pk }}" />
+		      <button type="submit" style="margin-right: 15px; margin-top:-41px;" class= "close fa fa-trash-o"></button>
+		    </form>
+		  {% endifequal %}
+		{% endfor %}
+		
 		<!-- ========================================================================================= -->
 
 	      {% endfor %}
