@@ -533,6 +533,20 @@ img.logo{
 }
 
 /********* Boxes for main/sidepanel/team **********/
+.namebox{
+	font-size:22px;
+	font-weight:bold;
+	margin-left:0.6em;
+	margin-right:0.6em;
+	background-color: rgba(222, 222, 222, 0.7);
+	border: 1px solid rgba(0,0, 0, 0.07);
+    	border-radius: 15px;
+    	display: block;
+    	margin-top: 2.2em;
+    	min-width: 10.5em;
+    	max-width:48em;
+}
+
 .about-box{
 	min-width:15em;
 }
