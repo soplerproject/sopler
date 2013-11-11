@@ -14,7 +14,8 @@
                   </div>
                   <div class= "col-md-5 col-md-offset-2 visible-md visible-lg">
                       <p style="float:right; margin-top:12px; font-size:15px;">
-                      <i class="fa fa-user"></i> {{ list.ListOwner }}&nbsp;&nbsp; &nbsp; <i class="fa fa-clock-o"></i> {{ list.ListPubDate }}
+                      <i class="fa fa-user"></i> {{ list.ListOwner | truncatechars:'15'}}&nbsp;&nbsp;&nbsp; 
+                      <i class="fa fa-clock-o"></i> {{ list.ListPubDate }}
                       </p>
                   </div>
               </div>
