@@ -35,20 +35,32 @@
                      </div>
                      <div class="popover-content ">
                         <div class="form-group">
-
-                           {% if user.is_authenticated %}
-			    <!-- do nothing -->
-                           {% else%}
-			    <input id="username" type="text" class="form-control" name="ItemOwner" required="required" placeholder="Enter username"/>
-                           {% endif %}
-
-                           <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
+                        {% if user.is_authenticated %}
+                          <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
                         </div>
                         <div  class="input-group">
-                           <input  id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onfocus="this.select()" onsubmit="this.reset()"/>
-                           <span class="input-group-btn">
-                           <button type="submit" class="btn btn-default" >Add</button>
-                           </span>
+                          <input  id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onfocus="this.select()" onsubmit="this.reset()"/>
+                          <span class="input-group-btn">
+                          <button type="submit" class="btn btn-default" >Add</button>
+                          </span>
+                        {% else%}
+                          {% if list.ListAuthOnly = False %}
+                            <input id="username" type="text" class="form-control" name="ItemOwner" required="required" placeholder="Enter username"/>
+                            <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
+                          </div>
+                          <div  class="input-group">
+                            <input  id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onfocus="this.select()" onsubmit="this.reset()"/>
+                            <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default" >Add</button>
+                          {% else%}
+                            <input id="username" type="text" class="form-control" name="ItemOwner" placeholder="(Disabled)" disabled/>
+                          </div>
+                          <div  class="input-group">
+                            <input  id="appendedInputButton" type="text" class="form-control" name="content" placeholder="(Disabled)" disabled/>
+                            <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default" disabled >Add</button>
+                          {% endif %}
+                        {% endif %}
                         </div>
                      </div>
                   </div>
@@ -252,7 +264,7 @@
       {% else %}
 	<div class="col-md-8">
 	    <div class="listbox">
-	      <div class="empty_list">
+	      <div style="margin-left:0;" class="empty_list">
 		  <br>
 		  <div><i class="fa fa-exclamation-triangle"></i></div>
 		  <h4>Authentication needed</h4>
@@ -261,6 +273,7 @@
 	    </div>
 	</div>
 	</div>
+      </div>
       {% endif %}
     {% else %}
       {% if user.is_authenticated %}
