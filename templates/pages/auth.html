@@ -230,7 +230,7 @@
 		      </div>
 		      <div id="collapse{{ item.pk }}" class="accordion-body collapse out">
 			<div align="justify" style="margin-left:10px;" class="accordion-inner">
-			    <i class="fa fa-check"></i> Checked by <b>{{ item.WhoDone }}</b> on {{ item.TimeDone }}
+			    <i class="fa fa-check"></i> Checked by <b>{{ item.WhoDone | truncatechars:'30'}}</b> on {{ item.TimeDone }}
 			</div>
 		      </div>
                       <!-- ============  End of details ====================== -->
