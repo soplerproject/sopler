@@ -4,7 +4,21 @@
 {% load staticfiles %}
 
 <script type="text/javascript" src="{% static "js/qrcode.js" %}"></script>
-<div  class="row">
+    
+<div class="row">
+      <div class="row">
+          <div class="col-md-12 namebox">
+              <div class="row">
+                  <div class="col-md-5">
+                      <span class="logocolor" style="margin-right:3px;">/.</span> {{ list.ListName }}
+                  </div>
+                  <div class= "col-md-5 col-md-offset-2 visible-md visible-lg">
+                      <p style="float:right; margin-top:12px; font-size:15px;">
+                      <i class="fa fa-user"></i> {{ list.ListOwner }}&nbsp;&nbsp; &nbsp; <i class="fa fa-clock-o"></i> {{ list.ListPubDate }}
+                      </p>
+                  </div>
+              </div>
+          </div>
 <!------------------Sidepanel Boxes----------------------->
    <div class="col-md-4 hidden-print">
 <!------------------Add Box----------------------->
