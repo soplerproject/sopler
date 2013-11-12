@@ -112,7 +112,7 @@
 			    </a>
 			    <div id="collapse{{ item.pk }}" class="accordion-body collapse out">
 				<div align="justify" style="margin-left:10px;" class="accordion-inner">
-				  <i class="fa fa-check"></i> Checked by <b>{{ item.WhoDone | truncatechars:'30'}}</b> on {{ item.TimeDone }}
+				  <small><i class="fa fa-check"></i> Checked by <b>{{ item.WhoDone | truncatechars:'30'}}</b> on {{ item.TimeDone }}</small>
 				</div>
 			    </div>
 			  </div>
@@ -149,7 +149,7 @@
             {% regroup list.comment_set.all by ComOwner as ComOwner %}
             {% for i in ComOwner %}
 	      {% for comment in i.list %}
-		<div id="commentcount"><small>[{{comment.ComPubDate}}] </small><a href=></a><b>{{i.grouper}}</b> : {{comment.ComContent | slice:'100' }}</div>
+		<div id="commentcount"><small>[{{comment.ComPubDate}}] </small><a href=></a><b>{{i.grouper | truncatechars:'20'}}</b> : {{comment.ComContent | slice:'100' }}</div>
 		<!--Non-auth user can delete all non-auth comments-->
 		{% if comment.ComOwnerState != "confirmed" %}
 		  <form class="Form" action="{% url 'sopler:DeleteComment' list.slug %}" method="post" onclick="doComSubmit();">
