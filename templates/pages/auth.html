@@ -22,7 +22,7 @@
 		      <img src={{item.ItemOwnerAvtr}} width="48" height="48" style="border: 0px solid black; border-radius: 10px;-moz-border-radius: 10px;-khtml-border-radius: 10px;-webkit-border-radius: 10px;">
 		    {% endif %} 
 		    {% if item.ItemOwnerLink != ""  %}
-		      <a href={{item.ItemOwnerLink}}><b>&nbsp; {{i.grouper}}</b></a>
+		      <a href={{item.ItemOwnerLink}}><b>&nbsp; {{i.grouper | truncatechars:'40'}}</b></a>
 		    {% else %}
 		      <b>&nbsp; {{i.grouper}}</b></br>
 		    {% endif %} 
@@ -230,7 +230,7 @@
 		      </div>
 		      <div id="collapse{{ item.pk }}" class="accordion-body collapse out">
 			<div align="justify" style="margin-left:10px;" class="accordion-inner">
-			    <i class="fa fa-check"></i> Checked by <b>{{ item.WhoDone | truncatechars:'30'}}</b> on {{ item.TimeDone }}
+			    <small><i class="fa fa-check"></i> Checked by <b>{{ item.WhoDone | truncatechars:'30'}}</b> on {{ item.TimeDone }}</small>
 			</div>
 		      </div>
                       <!-- ============  End of details ====================== -->
@@ -268,7 +268,7 @@
             {% regroup list.comment_set.all by ComOwner as ComOwner %}
             {% for i in ComOwner %}
 	      {% for comment in i.list %}
-		<div id="commentcount"><small>[{{comment.ComPubDate}}] </small><a href=></a><b>{{i.grouper}}</b> : {{comment.ComContent | slice:'100' }}</div>
+		<div id="commentcount"><small>[{{comment.ComPubDate}}] </small><a href=></a><b>{{i.grouper | truncatechars:'20'}}</b> : {{comment.ComContent | slice:'100' }}</div>
 
 		<!-- ========================================================================================= -->
 		<!-- Authenticated user, can delete all Non-Authenticated comments                             -->
