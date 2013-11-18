@@ -6,6 +6,20 @@ PROJECT_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+SESSION_SAVE_EVERY_REQUEST = True
+#Set "True" if all non-SSL requests should be permanently redirected to SSL.
+SECURE_SSL_REDIRECT = False
+# Setting to an integer number of seconds 
+SECURE_HSTS_SECONDS = 5
+# HTTP Strict Transport Security.
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# Prevent framing of your pages and protect them from clickjacking.
+SECURE_FRAME_DENY = True
+# Prevent the browser from guessing asset content types.
+SECURE_CONTENT_TYPE_NOSNIFF = True
+# Enable the browser’s XSS filtering protections.
+SECURE_BROWSER_XSS_FILTER = True
+
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -89,7 +103,8 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = ''
+# Ensure that you’re using a long, random and unique "SECRET_KEY"
+SECRET_KEY = 'Enter_Here_A_Long_Random_And_Unique_Key_&^%$&!!'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -120,6 +135,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'djangosecure.middleware.SecurityMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     #'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -159,6 +175,8 @@ INSTALLED_APPS = (
     'allauth.socialaccount.providers.persona',
     #'allauth.socialaccount.providers.openid',
     'core',
+    # Extra Security Features
+    'djangosecure',
     # Uncomment for data migration 
     #'south',
 )
