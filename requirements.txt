@@ -1,3 +1,4 @@
 django
 django-allauth
 south
+django-secure
