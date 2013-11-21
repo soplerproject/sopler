@@ -1,4 +1,4 @@
-django
+django==1.5.4
 django-allauth
 south
 django-secure
