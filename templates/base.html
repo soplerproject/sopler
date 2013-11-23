@@ -218,7 +218,15 @@
 				<li>
 				    <p class="navbar-text hello">Hi, {{user.first_name | slice:'10' }} {{ user.last_name | slice:'1' }}</p>
 				</li>
-				<li class="hello" ><img class="hidden-xs " src={{user.socialaccount_set.all.0.get_avatar_url}} width="30" height="30"></li>
+				  {% if account.provider == "facebook" %}
+				    <li class="hello" ><img class="hidden-xs " src=https://graph.facebook.com/{{user.socialaccount_set.all.0.uid}}/picture?type=large width="30" height="30"></li>
+				  {% elif account.provider == "twitter" %}
+				    <li class="hello" ><img class="hidden-xs " src={{user.socialaccount_set.all.0.extra_data.profile_image_url_https}} width="30" height="30"></li>
+				  {% else %}
+				    <li class="hello" ><img class="hidden-xs " src={{user.socialaccount_set.all.0.get_avatar_url}} width="30" height="30"></li>
+				  {% endif %}
+				  <button type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign Out</button>
+				{% else %}
 				<button type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign Out</button>
 				{% else %}
 				<li>
@@ -278,7 +286,7 @@
                               <a href="https://plus.google.com/102570420687118205013" rel="publisher" target="_blank">
                                  <li id="google_footer_icon"><span class="footer_social">Google+</span></li>
                               </a>
-                              <a href="http://www.youtube.com/user/soplerproject/" target="_blank">
+                              <a href="https://www.youtube.com/user/soplerproject/" target="_blank">
                                  <li id="youtube_footer_icon"><span class="footer_social">Youtube</span></li>
                               </a>
                               <a href="https://github.com/soplerproject" target="_blank">
@@ -310,7 +318,7 @@
                                  </h3>
                               </li>
                               <li><img style="opacity:0.7;" src="/static/buttons/logo_footer.png" width="100" height="38"/></li>
-                              <li><small>Running on <a href="http://okeanos.grnet.gr/" target="_blank">~okeanos</a></small></li>
+                              <li><small>Running on <a href="https://okeanos.grnet.gr/" target="_blank">~okeanos</a></small></li>
                            </ul>
                         </div>
                      </div>
@@ -336,7 +344,7 @@
 	                           <a href="https://plus.google.com/102570420687118205013" rel="publisher" target="_blank">
 	                              <div id="google_footer_icon"><span class="footer_social">Google+</span></div>
 	                           </a>
-	                           <a href="http://www.youtube.com/user/soplerproject/" target="_blank">
+	                           <a href="https://www.youtube.com/user/soplerproject/" target="_blank">
 	                              <div id="youtube_footer_icon"><span class="footer_social">Youtube</span></div>
 	                           </a>
 	                           <a href="https://github.com/soplerproject" target="_blank">
@@ -362,7 +370,7 @@
 	                              </h3>
 	                           </li>
 	                           <li><img style="opacity:0.7;" src="/static/buttons/logo_footer.png" width="100" height="38"/></li>
-	                           <li><small>Running on <a href="http://okeanos.grnet.gr/" target="_blank">~okeanos</a></small></li>
+	                           <li><small>Running on <a href="https://okeanos.grnet.gr/" target="_blank">~okeanos</a></small></li>
 	                        </ul>
 	                     </div>
 	                  </div>
