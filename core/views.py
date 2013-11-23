@@ -77,7 +77,7 @@ def AddList(request):
                   ListOwnerFN = account.extra_data['id']
                   ListOwnerLN = ""
 		  ListOwnerState = "confirmed"
-		  ListOwnerLink = account.extra_data['link'] 
+		  ListOwnerLink = "https://plus.google.com/" + account.extra_data['id']
 		  
 	  elif ListOwnerPrvdr == "persona":
 	    	  ListOwner   = account.user
@@ -254,7 +254,7 @@ def AddNewItem(request, slug):
 	    	  ItemOwner = account.extra_data['name']
                   ItemOwnerFN = account.extra_data['id']
                   ItemOwnerLN = ""
-                  ItemOwnerLink = account.extra_data['link'] 
+                  ItemOwnerLink = "https://plus.google.com/" + account.extra_data['id'] 
 		  ItemOwnerState = "confirmed"
 		  ItemOwnerAvtr = "https://plus.google.com/s2/photos/profile/" + account.extra_data['id'] + "?sz=100"
 		  
