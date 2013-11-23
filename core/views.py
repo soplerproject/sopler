@@ -240,7 +240,7 @@ def AddNewItem(request, slug):
                   ItemOwnerLN = account.extra_data['last_name']
                   ItemOwnerLink = account.extra_data['link']
 		  ItemOwnerState = "confirmed"
-		  ItemOwnerAvtr = account.get_avatar_url()
+		  ItemOwnerAvtr = "https://graph.facebook.com/" + account.extra_data['id'] + "/picture?type=large"
 
 	  elif ItemOwnerPrvdr == "twitter":
 	    	  ItemOwner = account.extra_data['screen_name']
@@ -248,7 +248,7 @@ def AddNewItem(request, slug):
                   ItemOwnerLN = ""
                   ItemOwnerLink = "https://twitter.com/" + account.extra_data['screen_name']
 		  ItemOwnerState = "confirmed"
-		  ItemOwnerAvtr = account.get_avatar_url()
+		  ItemOwnerAvtr = account.extra_data['profile_image_url_https']
 
 	  elif ItemOwnerPrvdr == "google":
 	    	  ItemOwner = account.extra_data['name']
