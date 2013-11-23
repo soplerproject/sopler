@@ -160,6 +160,13 @@
 			  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
 			  <button type="submit" style="margin: -47px 7px;" class= "close fa fa-trash-o"></button>
 			</form>
+		      {% else %}
+			{% if item.ItemMarked %}
+			  <button type="submit"  style="margin: -47px 63px; color: #d6a708; opacity:0.6;" class= "close fa fa-star" ></button>
+			{% endif %}
+			{% if item.ItemLocked %}
+			  <button type="submit" style="margin: -46px 35px; color: red;" class= "close fa fa-lock" ></button>
+			{% endif %}
 		      {% endif %}
 		    {% endif %}	
 
