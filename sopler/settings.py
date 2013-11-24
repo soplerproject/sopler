@@ -9,8 +9,9 @@ TEMPLATE_DEBUG = DEBUG
 SESSION_SAVE_EVERY_REQUEST = True
 #Set "True" if all non-SSL requests should be permanently redirected to SSL.
 SECURE_SSL_REDIRECT = False
-# Setting to an integer number of seconds 
-SECURE_HSTS_SECONDS = 5
+# Setting to an integer number of seconds
+#It is recommended to set the max-age to a big value like 31536000 (12 months) or 63072000 (24 months).
+SECURE_HSTS_SECONDS = 31536000
 # HTTP Strict Transport Security.
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 # Prevent framing of your pages and protect them from clickjacking.
