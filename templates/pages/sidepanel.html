@@ -83,15 +83,24 @@
                         <div id="info_collapse" class="accordion-body collapse">
                            <div class="accordion-inner list_box_collapse">
                               <dl class="dl-horizontal">
-                                 <dt><i class="fa fa-user"></i> &nbsp;Owner:</dt>
-                                 <dd id="info-dd"><a href="{{ list.ListOwnerLink }}">{{list.ListOwner | truncatechars:'15'}}</a></dd>
-                                 <dt><i class="fa icon-browserid"></i> &nbsp;State:</dt>
-                                 <dd id="info-dd">{{ list.ListOwnerState }}</dd>
-                                 <dt><i class="fa fa-list-ul"></i> &nbsp;List: </dt>
-                                 <dd id="info-dd">  {{ list.ListName | truncatechars:'15' }}</dd>
-                                 <dt><i class="fa fa-clock-o"></i> &nbsp;Created: </dt>
-                                 <dd id="info-dd"> {{list.ListPubDate}}</dd>
-                                 
+                                 <!-------Visible on mobile only--------->
+			  	 <dt class="visible-xs"><i class="fa fa-user"></i> &nbsp;Owner:</dt>
+                                 <dd class="visible-xs" id="info-dd-mobile"><a href="{{ list.ListOwnerLink }}">{{list.ListOwner | truncatechars:'15'}}</a></dd>
+                                 <dt class="visible-xs"><i class="fa icon-browserid"></i> &nbsp;State:</dt>
+                                 <dd class="visible-xs" id="info-dd-mobile">{{ list.ListOwnerState }}</dd>
+                                 <dt class="visible-xs"><i class="fa fa-list-ul"></i> &nbsp;List: </dt>
+                                 <dd class="visible-xs" id="info-dd-mobile">  {{ list.ListName | truncatechars:'15' }}</dd>
+                                 <dt class="visible-xs"><i class="fa fa-clock-o"></i> &nbsp;Created: </dt>
+                                 <dd class="visible-xs" id="info-dd-mobile"> {{list.ListPubDate}}</dd>
+                                 <!----------not visible on mobile--------->
+                                 <dt class="hidden-xs"><i class="fa fa-user"></i> &nbsp;Owner:</dt>
+                                 <dd class="hidden-xs" id="info-dd-nonmobile"><a href="{{ list.ListOwnerLink }}">{{list.ListOwner | truncatechars:'15'}}</a></dd>
+                                 <dt class="hidden-xs"><i class="fa icon-browserid"></i> &nbsp;State:</dt>
+                                 <dd class="hidden-xs" id="info-dd-nonmobile">{{ list.ListOwnerState }}</dd>
+                                 <dt class="hidden-xs"><i class="fa fa-list-ul"></i> &nbsp;List: </dt>
+                                 <dd class="hidden-xs" id="info-dd-nonmobile">  {{ list.ListName | truncatechars:'15' }}</dd>
+                                 <dt class="hidden-xs"><i class="fa fa-clock-o"></i> &nbsp;Created: </dt>
+                                 <dd class="hidden-xs" id="info-dd-nonmobile"> {{list.ListPubDate}}</dd>
                                  <!-- ========================================================================================= -->
 				 <!-- Check previous Authenticated users's lists                                                -->
 				 <!-- ========================================================================================= -->
@@ -113,7 +122,7 @@
 					  <ul style="padding-right:10px;" class="list-unstyled">
 					  <li>
                                           <div id="listcount"><dt>&nbsp;&nbsp;<i class="fa fa-list-ul"><small><a href=/lists/{{ListName.slug}}> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt></div>
-                                          <dd id="info-dd">
+                                          <dd id="info-dd-nonmobile">
                                           <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{list.ListPubDate}}</i></dt><dd></dd>
 					  <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
 					    {% csrf_token %}
@@ -133,7 +142,7 @@
 					  <ul style="padding-right:10px;" class="list-unstyled">
 					  <li>
                                           <div id="listcount"><dt>&nbsp;&nbsp;<i class="fa fa-list-ul"><small><a href=/lists/{{ListName.slug}}> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt></div>
-                                          <dd id="info-dd">
+                                          <dd id="info-dd-nonmobile">
                                           <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{list.ListPubDate}}</i></dt><dd></dd>
 					  <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
 					    {% csrf_token %}
