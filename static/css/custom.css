@@ -206,11 +206,9 @@ input {
 	    margin-top: 20px;
 }
 .navbar-brand{
-	padding: 15px 10px;
+	padding: 15px 7px;
 }
-.navbar-brand img{
-	margin-left:-20px;
-}
+
 /****Footer tweak for mobile*****/
 .dl-horizontal dt {
 	text-align:left;
