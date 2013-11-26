@@ -684,7 +684,10 @@ img.logo{
 
 /********** Item buttons (tbfixed) **********/
 /*** this one is blue*****/
-.btn-custom_green { padding-left: 3%; margin-bottom:10px; text-align:left; 
+.btn-custom_green { 
+        padding-left: 3%;
+        margin-bottom:10px;
+        text-align:left; 
 	border:2px solid;
 	-webkit-border-radius: 7px; 
 	-moz-border-radius: 7px; 
@@ -719,9 +722,10 @@ img.logo{
 }
 /*** this one is green*****/
 .btn-custom_red { 
+        padding-left: 3%; 
+        margin-bottom:10px; 
+        text-align:left; 
 	opacity:0.65;
-	padding-left: 3%;
-	text-align:left;
 	text-decoration:line-through;
 	border:2px solid;
 	-webkit-border-radius: 7px; 
@@ -742,4 +746,10 @@ img.logo{
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.42);
 	-webkit-font-smoothing: antialiased;
 	overflow:hidden; 
+}
+/****limit the item text off the button tool icons****/
+.button_limit{
+	overflow:hidden; 
+	margin-left:5px;
+	margin-right:95px;
 }
