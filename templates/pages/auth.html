@@ -38,7 +38,7 @@
 			<button type="submit" class="btn-custom_green"><div class="button_limit">{{ item.content | slice:'57' }}</div></button>
 		      </form>
 
-                      <!-- ========================================================================================= -->
+		      <!-- ========================================================================================= -->
 		      <!-- Item owner / List Owner must have lock/ulock, mark/unmark, delete access on items                           -->
 		      <!-- ========================================================================================= -->
                       {% for account in user.socialaccount_set.all %}
@@ -115,8 +115,6 @@
 		      {% endif %}
 		    {% endif %}	
 
-
-
 		    {% if item.ItemDone %}
 		      <!-- =============  Details ====================== -->
 
@@ -128,7 +126,7 @@
 			      <br>
 			</form>
 
-                        <!-- ========================================================================================= -->
+			<!-- ========================================================================================= -->
 			<!-- Authenticated user, can delete Non-Authenticated user's checked items                     -->
 			<!-- ========================================================================================= -->
 			{% if item.ItemOwnerState == "non-confirmed" %}
@@ -154,7 +152,7 @@
 
 			<!-- ========================================================================================= -->
 			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ item.pk }}">
-			<button style="margin: -39px 35px;" class= "close fa fa-info"></button>
+			<button style="margin: -46px 35px;" class= "close fa fa-info"></button>
 			</a>
 		      </div>
 		      <div id="collapse{{ item.pk }}" class="accordion-body collapse out">

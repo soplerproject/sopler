@@ -98,7 +98,7 @@
 			    <form class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doSubmit(this)"> 
 				{% csrf_token %}
 				<input type="hidden" name="item_pk" value="{{ item.pk }}" />
-				<button type="submit" style="margin: -38px 7px;" class= "close fa fa-trash-o"></button>
+				<button type="submit" style="margin: -48px 7px;" class= "close fa fa-trash-o"></button>
 			    </form>
 			    {% else %}
 			    <form class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doSubmit(this)">
@@ -108,7 +108,7 @@
 			    {% endif %}  
 
 			    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ item.pk }}">
-			    <button style="margin: -38px 35px;" class= "close fa fa-info"></button>
+			    <button style="margin: -47px 35px;"  class= "close fa fa-info"></button>
 			    </a>
 			    <div id="collapse{{ item.pk }}" class="accordion-body collapse out">
 				<div align="justify" style="margin-left:10px;" class="accordion-inner">
