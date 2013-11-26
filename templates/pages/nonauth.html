@@ -39,7 +39,7 @@
 			  {% csrf_token %}
 			  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
 			  <input type="hidden" class="whodone" name="ItemOwner" />		
-			  <button type="submit" class="btn  btn-custom_green">{{ item.content | slice:'57' }}</button>
+			  <button type="submit" class="btn  btn-custom_green"><div class="button_limit">{{ item.content | slice:'57' }}</div></button>
 			</form>
 
 			<!-- ========================================================================================= -->
@@ -88,7 +88,7 @@
 			  <form class="Form" style="text-align: left;" action="{% url 'sopler:UnCheckItem' list.slug %}" method="post" onclick="doSubmit(this)">
 			      {% csrf_token %}
 			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			      <button type="submit" class="btn-custom_red">{{ item.content | slice:'57' }}</button>
+			      <button type="submit" class="btn-custom_red"><div class="button_limit">{{ item.content | slice:'57' }}</div></button>
 			  </form>
 
 			  <!-- ========================================================================================= -->
