@@ -35,45 +35,14 @@
 		      <form  class="Form" action="{% url 'sopler:CheckItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
 			{% csrf_token %}
 			<input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			<button type="submit" class="btn-custom_green">{{ item.content | slice:'57' }}</button>
+			<button type="submit" class="btn-custom_green"><div class="button_limit">{{ item.content | slice:'57' }}</div></button>
 		      </form>
 
+                      <!-- ========================================================================================= -->
+		      <!-- Item owner / List Owner must have lock/ulock, mark/unmark, delete access on items                           -->
 		      <!-- ========================================================================================= -->
-		      <!-- Item owner must have lock/ulock, mark/unmark, delete access on items                           -->
-		      <!-- ========================================================================================= -->
-
-		      {% ifequal item.ItemOwner|stringformat:"s" user|stringformat:"s" %}
-			<form class="Form" action="{% url 'sopler:MarkItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
-			  {% csrf_token %}
-			  {% if item.ItemMarked %}
-			    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			    <button type="submit"  style="margin: -48px 63px; color: #d6a708; opacity:0.6;" class= "close fa fa-star" ></button>
-			  {% else %}
-			    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			    <button type="submit"  style="margin: -48px 63px;" class= "close fa fa-star-o" ></button>
-			  {% endif %}
-			</form>
-
-			<form class="Form" action="{% url 'sopler:LockItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
-			  {% csrf_token %}
-			  {% if item.ItemLocked %}
-			    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			    <button type="submit" style="margin: -46px 35px; color: red;" class= "close fa fa-lock" ></button>
-			  {% else %}
-			    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			    <button type="submit"  style="margin: -46px 35px;"  class= "close fa fa-unlock-o" ></button>
-			  {% endif %}
-			</form>
-
-			<form class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
-			  {% csrf_token %}
-			  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			  <button type="submit" style="margin: -47px 7px;" class= "close fa fa-trash-o"></button>
-			</form>
-		      {% endifequal %}
-
-		      {% for account in user.socialaccount_set.all %}
-			{% ifequal item.ItemOwnerFN|stringformat:"s" account.uid|stringformat:"s" %}
+                      {% for account in user.socialaccount_set.all %}
+			{% if item.ItemOwner|stringformat:"s" == user|stringformat:"s" or  ItemOwner|stringformat:"s" == list.ListOwner|stringformat:"s" or item.ItemOwnerFN|stringformat:"s" == account.uid|stringformat:"s"%}
 			  <form class="Form" action="{% url 'sopler:MarkItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
 			    {% csrf_token %}
 			    {% if item.ItemMarked %}
@@ -98,35 +67,18 @@
 
 			  <form class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
 			    {% csrf_token %}
-			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			      <button type="submit" style="margin: -47px 7px;" class= "close fa fa-trash-o"></button>
+			    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+			    <button type="submit" style="margin: -47px 7px;" class= "close fa fa-trash-o"></button>
 			  </form>
-
-			{% endifequal %}
-		      {% endfor %}
-
-		      <!-- ========================================================================================= -->
-		      <!-- List Owner must have unlock / delete access on lists's items                           -->
-		      <!-- ========================================================================================= -->
-
-		      {% ifequal ItemOwner|stringformat:"s" list.ListOwner|stringformat:"s" %}
-		      <form class="Form" action="{% url 'sopler:LockItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
-			{% csrf_token %}
-			{% if item.ItemLocked %}
-			  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			  <button type="submit" style="margin: -46px 35px; color: red;" class= "close fa fa-lock" ></button>
 			{% else %}
-			  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			  <button type="submit"  style="margin: -46px 35px;"  class= "close fa fa-unlock-o" ></button>
+			  {% if item.ItemMarked %}
+			    <button type="submit"  style="margin: -47px 63px; color: #d6a708; opacity:0.6;" class= "close fa fa-star" ></button>
+			  {% endif %}
+			  {% if item.ItemLocked %}
+			    <button type="submit" style="margin: -46px 35px; color: red;" class= "close fa fa-lock" ></button>
+			  {% endif %}	
 			{% endif %}
-		      </form>
-
-		      <form class="Form" style="text-align: left;" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
-			{% csrf_token %}
-			<input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			<button type="submit" style="margin: -47px 7px;" class= "close fa fa-trash-o"></button>
-		      </form>
-		      {% endifequal %}  
+		      {% endfor %}
 
 		      <!-- ========================================================================================= -->
 		      <!-- Authenticated user, can (un)lock/(un)mark/delete  Non-Authenticated user's items          -->
@@ -160,13 +112,6 @@
 			  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
 			  <button type="submit" style="margin: -47px 7px;" class= "close fa fa-trash-o"></button>
 			</form>
-		      {% else %}
-			{% if item.ItemMarked %}
-			  <button type="submit"  style="margin: -47px 63px; color: #d6a708; opacity:0.6;" class= "close fa fa-star" ></button>
-			{% endif %}
-			{% if item.ItemLocked %}
-			  <button type="submit" style="margin: -46px 35px; color: red;" class= "close fa fa-lock" ></button>
-			{% endif %}
 		      {% endif %}
 		    {% endif %}	
 
@@ -179,58 +124,35 @@
 			<form class="Form" style="text-align: left;" action="{% url 'sopler:UnCheckItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
 			      {% csrf_token %}
 			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			      <button type="submit" class="btn-custom_red">{{ item.content | slice:'57' }}</button>
+			      <button type="submit" class="btn-custom_red"><div class="button_limit">{{ item.content | slice:'57' }}</div></button>
 			      <br>
 			</form>
 
-			<!-- ========================================================================================= -->
+                        <!-- ========================================================================================= -->
 			<!-- Authenticated user, can delete Non-Authenticated user's checked items                     -->
 			<!-- ========================================================================================= -->
-
 			{% if item.ItemOwnerState == "non-confirmed" %}
 			  <form class="Form" style="text-align: left;" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
 			      {% csrf_token %}
 			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			      <button type="submit" style="margin: -38px 7px;" class= "close fa fa-trash-o"></button>
+			      <button type="submit" style="margin: -47px 7px;" class= "close fa fa-trash-o"></button>
 			  </form>
 			{% endif %}
 
 			<!-- ========================================================================================= -->
-			<!-- Item owner must have delete access on checked items                                            -->
+			<!-- Item owner must / List Owner have delete access on checked items                          -->
 			<!-- ========================================================================================= -->
-
-			{% ifequal item.ItemOwner|stringformat:"s" user|stringformat:"s" %}
-			  <form class="Form" style="text-align: left;" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
-			      {% csrf_token %}
-			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			      <button type="submit" style="margin: -38px 7px;" class= "close fa fa-trash-o"></button>
-			  </form>
-			{% endifequal %}    
-
-			{% for account in user.socialaccount_set.all %}
-			  {% ifequal item.ItemOwnerFN|stringformat:"s" account.uid|stringformat:"s" %}
-			    <form class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
+                        {% for account in user.socialaccount_set.all %}
+			  {% if item.ItemOwner|stringformat:"s" == user|stringformat:"s" or ItemOwner|stringformat:"s" == list.ListOwner|stringformat:"s" or item.ItemOwnerFN|stringformat:"s" == account.uid|stringformat:"s"%}
+			    <form class="Form" style="text-align: left;" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
 				{% csrf_token %}
 				<input type="hidden" name="item_pk" value="{{ item.pk }}" />
-				<button type="submit" style="margin: -38px 7px;" class= "close fa fa-trash-o"></button>
+				<button type="submit" style="margin: -47px 7px;" class= "close fa fa-trash-o"></button>
 			    </form>
-			  {% endifequal %}
+			  {% endif %}    
 			{% endfor %}
 
 			<!-- ========================================================================================= -->
-			<!-- List Owner must have delete access on lists's checked items                                    -->
-			<!-- ========================================================================================= -->
-
-			{% ifequal ItemOwner|stringformat:"s" list.ListOwner|stringformat:"s" %}
-			  <form class="Form" style="text-align: left;" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
-			      {% csrf_token %}
-			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			      <button type="submit" style="margin: -38px 7px;" class= "close fa fa-trash-o"></button>
-			  </form>
-			{% endifequal %}
-
-			<!-- ========================================================================================= -->
-
 			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ item.pk }}">
 			<button style="margin: -39px 35px;" class= "close fa fa-info"></button>
 			</a>
