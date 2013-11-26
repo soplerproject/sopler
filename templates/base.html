@@ -216,27 +216,27 @@
 			    {% for account in user.socialaccount_set.all %}
 			          <!-- Facebook -->
 				  {% if account.provider == "facebook" %}
-				    <li><p class="navbar-text hello hidden-xs ">Hi, {{user.first_name | truncatechars:'10' }} {{ user.last_name | slice:'1' }}</p></li>
+				    <li><p class="navbar-text hello hidden-xs ">Hi, {{user.first_name | truncatechars:'18' }} {{ user.last_name | slice:'1' }}</p></li>
 				    <!-------Visible on mobile only--------->
-				    <li><p class="navbar-text hello visible-xs ">Hi, {{user.first_name | truncatechars:'8' }} {{ user.last_name | slice:'1' }}</p></li>
+				    <li><p class="navbar-text hello visible-xs ">Hi, {{user.first_name | truncatechars:'11' }} {{ user.last_name | slice:'1' }}</p></li>
 				    <li class="hello" ><img class="hidden-xs " src=https://graph.facebook.com/{{user.socialaccount_set.all.0.uid}}/picture?type=large width="30" height="30"></li>  
 				  <!-- Twitter -->
 				  {% elif account.provider == "twitter" %}
-				    <li><p class="navbar-text hello hidden-xs ">Hi, {{ user.username }}</p></li>
+				    <li><p class="navbar-text hello hidden-xs ">Hi, {{ user.username | truncatechars:'20' }}</p></li>
 				    <!-------Visible on mobile only--------->
-				    <li><p class="navbar-text hello visible-xs ">Hi, {{ user.username | truncatechars:'10' }}</p></li>
+				    <li><p class="navbar-text hello visible-xs ">Hi, {{ user.username | truncatechars:'14' }}</p></li>
 				    <li class="hello" ><img class="hidden-xs " src={{user.socialaccount_set.all.0.extra_data.profile_image_url_https}} width="30" height="30"></li>
 				  <!-- Google -->
 				  {% elif account.provider == "google" %}
-				    <li><p class="navbar-text hello hidden-xs ">Hi, {{user.first_name | truncatechars:'10' }} {{ user.last_name | slice:'1' }}</p></li>
+				    <li><p class="navbar-text hello hidden-xs ">Hi, {{user.first_name | truncatechars:'18' }} {{ user.last_name | slice:'1' }}</p></li>
 				    <!-------Visible on mobile only--------->
-				    <li><p class="navbar-text hello visible-xs ">Hi, {{user.first_name | truncatechars:'8' }} {{ user.last_name | slice:'1' }}</p></li>
+				    <li><p class="navbar-text hello visible-xs ">Hi, {{user.first_name | truncatechars:'11' }} {{ user.last_name | slice:'1' }}</p></li>
 				    <li class="hello" ><img class="hidden-xs " src={{user.socialaccount_set.all.0.get_avatar_url}} width="30" height="30"></li>
 				  <!-- Mozilla Persona -->
 				  {% else %}
-				    <li><p class="navbar-text hello hidden-xs ">Hi, {{user.username }}</p></li>
+				    <li><p class="navbar-text hello hidden-xs ">Hi, {{user.username | truncatechars:'20' }}</p></li>
 				     <!-------Visible on mobile only--------->
-				    <li><p class="navbar-text hello visible-xs">Hi, {{ user.username | truncatechars:'10'  }}</p></li>
+				    <li><p class="navbar-text hello visible-xs">Hi, {{ user.username | truncatechars:'14'  }}</p></li>
 				    <li class="hello"><img class="hidden-xs " src=/static/buttons/Persona.png width="30" height="30" /></li>
 			          {% endif %}
 				  <button type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign Out</button>
