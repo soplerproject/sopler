@@ -214,33 +214,45 @@
                         <ul  class="nav navbar-nav list-inline" style="float:right; margin-right: 5em; white-space: nowrap;">
                            {% if user.is_authenticated %}
 			    {% for account in user.socialaccount_set.all %}
-			      {% if account.provider != "persona" %}
-				<li>
-				    <p class="navbar-text hello">Hi, {{user.first_name | slice:'10' }} {{ user.last_name | slice:'1' }}</p>
-				</li>
+			          <!-- Facebook -->
 				  {% if account.provider == "facebook" %}
-				    <li class="hello" ><img class="hidden-xs " src=https://graph.facebook.com/{{user.socialaccount_set.all.0.uid}}/picture?type=large width="30" height="30"></li>
+				    <li><p class="navbar-text hello hidden-xs ">Hi, {{user.first_name | truncatechars:'10' }} {{ user.last_name | slice:'1' }}</p></li>
+				    <!-------Visible on mobile only--------->
+				    <li><p class="navbar-text hello visible-xs ">Hi, {{user.first_name | truncatechars:'8' }} {{ user.last_name | slice:'1' }}</p></li>
+				    <li class="hello" ><img class="hidden-xs " src=https://graph.facebook.com/{{user.socialaccount_set.all.0.uid}}/picture?type=large width="30" height="30"></li>  
+				  <!-- Twitter -->
 				  {% elif account.provider == "twitter" %}
+				    <li><p class="navbar-text hello hidden-xs ">Hi, {{ user.username }}</p></li>
+				    <!-------Visible on mobile only--------->
+				    <li><p class="navbar-text hello visible-xs ">Hi, {{ user.username | truncatechars:'10' }}</p></li>
 				    <li class="hello" ><img class="hidden-xs " src={{user.socialaccount_set.all.0.extra_data.profile_image_url_https}} width="30" height="30"></li>
-				  {% else %}
+				  <!-- Google -->
+				  {% elif account.provider == "google" %}
+				    <li><p class="navbar-text hello hidden-xs ">Hi, {{user.first_name | truncatechars:'10' }} {{ user.last_name | slice:'1' }}</p></li>
+				    <!-------Visible on mobile only--------->
+				    <li><p class="navbar-text hello visible-xs ">Hi, {{user.first_name | truncatechars:'8' }} {{ user.last_name | slice:'1' }}</p></li>
 				    <li class="hello" ><img class="hidden-xs " src={{user.socialaccount_set.all.0.get_avatar_url}} width="30" height="30"></li>
-				  {% endif %}
+				  <!-- Mozilla Persona -->
+				  {% else %}
+				    <li><p class="navbar-text hello hidden-xs ">Hi, {{user.username }}</p></li>
+				     <!-------Visible on mobile only--------->
+				    <li><p class="navbar-text hello visible-xs">Hi, {{ user.username | truncatechars:'10'  }}</p></li>
+				    <li class="hello"><img class="hidden-xs " src=/static/buttons/Persona.png width="30" height="30" /></li>
+			          {% endif %}
 				  <button type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign Out</button>
-				{% else %}
-				<li>
-				    <p class="navbar-text hello">Hi, {{user.username }}</p>
-				</li>
-				<li class="hello"><img class="hidden-xs" src=/static/buttons/Persona.png width="30" height="30" /></li>
-				<button type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign Out</button>
-			      {% endif %}
 			    {% endfor %}
                            {% else %}
-                           <div class="accordion-heading">
-                           </div>
-                           <button style="margin-right:-3em;"type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin " data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign in</button>     
+                             <div class="accordion-heading">
+                             </div>
+                             <button style="margin-right:-3em;"type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin " data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign in</button>     
                            {% endif %}
-                        </ul>
-                        <a  class="navbar-brand" href="../../"> <img class="img-responsive" alt="Sopler" src="{% static "img/g69.png" %}""/> </a>
+                           </ul>
+                           {% if user.is_authenticated %}
+                             <a  class="navbar-brand hidden-xs" href="../../"> <img class="img-responsive" alt="Sopler" src="{% static "img/logo.png" %}""/> </a>
+                             <a  class="navbar-brand visible-xs" href="../../"> <img class="img-responsive" alt="Sopler" src="{% static "img/logo_smaller.png" %}""/> </a>
+			   {% else %}
+                             <a  class="navbar-brand" href="../../"> <img class="img-responsive" alt="Sopler" src="{% static "img/logo.png" %}""/> </a>
+                           {% endif %}
                      </div>
                   </div>
                   <div class="container">
