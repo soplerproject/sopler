@@ -3,6 +3,20 @@
 {% block content %}
 {% load staticfiles %}
 
+<!-- Count comments -->
+<script type="text/javascript">
+var time = 100; // Change this if you want
+  $(window).load(function (){
+    setInterval(function(){
+      var comcount = $('div[id*="commentcount"]').length;
+      if (comcount > 0){
+	  document.getElementById("comments_counter").innerHTML = "("+comcount+")"; 
+        }else{
+	  document.getElementById("comments_counter").innerHTML = "";}
+	},time);
+      })
+</script>
+
 <script type="text/javascript" src="{% static "js/qrcode.js" %}"></script>
     
 <div class="row">

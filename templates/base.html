@@ -150,30 +150,24 @@
                   	   }
                   };
                </script>
-
-               <!-- Count comments and previous lists-->
-	       <script type="text/javascript">
-                  var time = 100; // Change this if you want
-		  $(window).load(function (){
-		      setInterval(function(){
-			var comcount = $('div[id*="commentcount"]').length;
-                        if (comcount > 0){
-			  document.getElementById("comments_counter").innerHTML = "("+comcount+")"; 
-                        }else{
-			  document.getElementById("comments_counter").innerHTML = "";}
-		      },time);
-		  });
-		  $(window).load(function (){
-		      setInterval(function(){
-			var lstcount = $('div[id*="listcount"]').length;
-                        if (lstcount > 0){
-			  document.getElementById("list_counter").innerHTML = "("+lstcount+")"; 
-                        }else{
-			  document.getElementById("list_counter").innerHTML = "";}
-		      },time);
-		  });
-	       </script>
-
+               
+               
+               {% if user.is_authenticated %}
+		<!-- Count previous lists-->
+		<script type="text/javascript">
+		    var time = 100; // Change this if you want
+		    $(window).load(function (){
+			setInterval(function(){
+			  var lstcount = $('div[id*="listcount"]').length;
+			  if (lstcount > 0){
+			    document.getElementById("list_counter").innerHTML = "("+lstcount+")"; 
+			  }else{
+			    document.getElementById("list_counter").innerHTML = "";}
+			},time);
+		    });
+		</script>
+               {% endif %}
+               
                <!-- Video -->
 	       <script>
 		$(function(){
