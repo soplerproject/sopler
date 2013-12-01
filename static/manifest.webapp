@@ -1,0 +1,23 @@
+{
+        "version": "Beta-0.1",
+        "name": "Sopler",
+        "description": "List everything on Sopler!",
+        "launch_path": "/",
+        "icons": {
+                "16": "/static/img/icon-16.png",
+                "48": "/static/img/icon-48.png",
+                "60": "/static/img/icon-60.png",
+                "128": "/static/img/icon-128.png"
+        },
+        "developer": {
+                "name": "Sopler Project",
+                "url": "http://sopler.net/team/"
+        },
+        "default_locale":"en",
+        "locales": {
+		"gr": {
+	      		"name": "Sopler",
+	      		"description": "Δημιουργήστε λίστες με το Sopler!"
+	         }
+	}
+}
