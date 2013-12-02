@@ -35,7 +35,7 @@
 		      <form  class="Form" action="{% url 'sopler:CheckItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
 			{% csrf_token %}
 			<input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			<button type="submit" class="btn-custom_green"><div class="button_limit">{{ item.content | slice:'57' }}</div></button>
+			<button type="submit" class="btn-item_undone"><div class="button_limit">{{ item.content | slice:'57' }}</div></button>
 		      </form>
 
 		      <!-- ========================================================================================= -->
@@ -122,7 +122,7 @@
 			<form class="Form" style="text-align: left;" action="{% url 'sopler:UnCheckItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
 			      {% csrf_token %}
 			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			      <button type="submit" class="btn-custom_red"><div class="button_limit">{{ item.content | slice:'57' }}</div></button>
+			      <button type="submit" class="btn-item_done"><div class="button_limit">{{ item.content | slice:'57' }}</div></button>
 			      <br>
 			</form>
 
