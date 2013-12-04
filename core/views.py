@@ -134,8 +134,7 @@ def AddList(request):
 #################################################
 
 def DeleteList(request, slug):
-    list = get_object_or_404(List, slug=slug)
-    p = get_object_or_404(List, pk=int(request.POST['list_pk']))
+    p = get_object_or_404(List, slug=slug)
     p.delete()
     
     return HttpResponseRedirect('/lists/')
@@ -146,8 +145,7 @@ def DeleteList(request, slug):
 #################################################
 
 def DeletePreviousList(request, slug):
-    list = get_object_or_404(List, slug=slug)
-    p = get_object_or_404(List, pk=int(request.POST['list_pk']))
+    p = get_object_or_404(List, slug=slug)
     p.delete()
     
     return HttpResponseRedirect('/')

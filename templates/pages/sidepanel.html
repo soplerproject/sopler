@@ -140,7 +140,7 @@ var time = 100; // Change this if you want
                                           <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{list.ListPubDate}}</i></dt><dd></dd>
 					  <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
 					    {% csrf_token %}
-					    <input type="hidden" name="list_pk" value="{{ ListName.pk }}" /></small>
+					    </small>
 					    <button type="submit" style="margin-right: 5px; margin-top:-32px;" class= "close fa fa-trash-o"></button>
 					  </form></a>
 					  </li></ul>
@@ -160,7 +160,7 @@ var time = 100; // Change this if you want
                                           <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{list.ListPubDate}}</i></dt><dd></dd>
 					  <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
 					    {% csrf_token %}
-					    <input type="hidden" name="list_pk" value="{{ ListName.pk }}" /></small>
+					    </small>
 					    <button type="submit" style="margin-right: 5px; margin-top:-32px;" class= "close fa fa-trash-o"></button>
 					  </form></a>
 					  </li></ul>
