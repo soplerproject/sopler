@@ -131,7 +131,7 @@ var time = 100; // Change this if you want
 				    <div class="accordion-inner">
 				    {% regroup lists by ListOwner as ListOwner %}
 				    {% for i in ListOwner %}
-				      {% ifequal i.grouper|stringformat:"s" user|stringformat:"s" %}
+				      {% ifequal i.grouper|stringformat:"s" user.username|stringformat:"s" %}
 					{% for ListName in i.list %}
 					  <ul style="padding-right:10px;" class="list-unstyled">
 					  <li>
