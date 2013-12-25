@@ -50,19 +50,21 @@
 
 	      {% regroup object_list by ListOwner as ListOwner %}
 	      {% for i in ListOwner %}
-		{% ifequal i.grouper|stringformat:"s" user.username|stringformat:"s" %}
+		{% ifequal i.grouper|lower|stringformat:"s" user.username|lower|stringformat:"s" %}
 		  {% for ListName in i.list %}
-		    <ul style="padding-right:10px;" class="list-unstyled">
-		    <li>
-                    <div id="listcount"><dt>&nbsp;&nbsp;<i class="fa fa-list-ul"><small><a href=/lists/{{ListName.slug}}> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt></div>
-                    <dd id="info-dd">
-                    <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate}}</i></dt><dd></dd>
-		     <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
-			{% csrf_token %}
-			</small>
-			<button type="submit" style="margin-right: 5px; margin-top:-32px;" class= "close fa fa-trash-o"></button>
-		     </form></a>
-		   </li></ul>
+		    {% if ListName.ListOwnerState == "confirmed" %}
+		      <ul style="padding-right:10px;" class="list-unstyled">
+		      <li>
+		      <div id="listcount"><dt>&nbsp;&nbsp;<i class="fa fa-list-ul"><small><a href=/lists/{{ListName.slug}}> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt></div>
+		      <dd id="info-dd">
+		      <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate}}</i></dt><dd></dd>
+		      <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
+			  {% csrf_token %}
+			  </small>
+			  <button type="submit" style="margin-right: 5px; margin-top:-32px;" class= "close fa fa-trash-o"></button>
+		      </form></a>
+		    </li></ul>
+		    {% endif %}
 		  {% endfor %}
 		{% endifequal %}
 	      {% endfor %}
@@ -70,7 +72,7 @@
 	      {% regroup object_list by ListOwnerFN as ListOwnerFN %}
 	      {% for i in ListOwnerFN %}
 		{% for account in user.socialaccount_set.all %}
-		  {% ifequal i.grouper|stringformat:"s" account.uid|stringformat:"s" %}
+		  {% ifequal i.grouper|lower|stringformat:"s" account.uid|lower|stringformat:"s" %}
 		    {% for ListName in i.list %}
 		      <ul style="padding-right:10px;" class="list-unstyled">
 		      <li>

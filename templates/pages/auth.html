@@ -39,10 +39,11 @@
 		      </form>
 
 		      <!-- ========================================================================================= -->
-		      <!-- Item owner / List Owner must have lock/ulock, mark/unmark, delete access on items                           -->
+		      <!-- Item owner / List Owner must have lock/ulock, mark/unmark, delete access on items         -->
 		      <!-- ========================================================================================= -->
+
                       {% for account in user.socialaccount_set.all %}
-			{% if item.ItemOwner|stringformat:"s" == user.username|stringformat:"s" or  ItemOwner|stringformat:"s" == list.ListOwner|stringformat:"s" or item.ItemOwnerFN|stringformat:"s" == account.uid|stringformat:"s"%}
+			{% if item.ItemOwner|lower|stringformat:"s" == user.username|lower|stringformat:"s" or  ItemOwner|lower|stringformat:"s" == list.ListOwner|lower|stringformat:"s" or item.ItemOwnerFN|lower|stringformat:"s" == account.uid|lower|stringformat:"s"%}
 			  <form class="Form" action="{% url 'sopler:MarkItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
 			    {% csrf_token %}
 			    {% if item.ItemMarked %}
@@ -141,7 +142,7 @@
 			<!-- Item owner must / List Owner have delete access on checked items                          -->
 			<!-- ========================================================================================= -->
                         {% for account in user.socialaccount_set.all %}
-			  {% if item.ItemOwner|stringformat:"s" == user.username|stringformat:"s" or ItemOwner|stringformat:"s" == list.ListOwner|stringformat:"s" or item.ItemOwnerFN|stringformat:"s" == account.uid|stringformat:"s"%}
+			  {% if item.ItemOwner|lower|stringformat:"s" == user.username|lower|stringformat:"s" or ItemOwner|lower|stringformat:"s" == list.ListOwner|lower|stringformat:"s" or item.ItemOwnerFN|lower|stringformat:"s" == account.uid|lower|stringformat:"s"%}
 			    <form class="Form" style="text-align: left;" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
 				{% csrf_token %}
 				<input type="hidden" name="item_pk" value="{{ item.pk }}" />
@@ -211,7 +212,7 @@
 		<!-- ========================================================================================= -->
 		<!-- Authenticated user, can delete his own comments only                                          -->
 		<!-- ========================================================================================= -->
-		{% ifequal i.grouper|stringformat:"s" user.username|stringformat:"s" %}
+		{% ifequal i.grouper|lower|stringformat:"s" user.username|lower|stringformat:"s" %}
 		  <form class="Form" action="{% url 'sopler:DeleteComment' list.slug %}" method="post" onclick="doComSubmit();">
 		    {% csrf_token %}
 		    <input type="hidden" name="comment_pk" value="{{ comment.pk }}" />
@@ -220,7 +221,7 @@
 		{% endifequal %}
 		
 		{% for account in user.socialaccount_set.all %}
-		  {% ifequal comment.ComOwnerFN|stringformat:"s" account.uid|stringformat:"s" %}
+		  {% ifequal comment.ComOwnerFN|lower|stringformat:"s" account.uid|lower|stringformat:"s" %}
 		    <form class="Form" action="{% url 'sopler:DeleteComment' list.slug %}" method="post" onclick="doComSubmit();">
 		      {% csrf_token %}
 		      <input type="hidden" name="comment_pk" value="{{ comment.pk }}" />
