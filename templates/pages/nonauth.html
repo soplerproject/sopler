@@ -3,35 +3,38 @@
       <br>
       <div id="refresh">
          <ul id="comments">
-            {% regroup list.item_set.all by ItemOwner as ItemOwner %}
-
-            {% if not ItemOwner %}
-	      <div class="empty_list">
-		<div><i class="fa fa-info-circle"></i></div>
-		Your list is empty. <br>Don't waste any more time, add an item!<br>
-	      </div>
-            {% endif %}
-
-            {% for i in ItemOwner %}
-		<li class="cmmnt">
-		{% for item in i.list|slice:":1" %}
-		    <div class="avatar">
-			{% if item.ItemOwnerAvtr == ""  %}
-			  <img src="/static/buttons/User-Role-Guest-icon.png" width="48" height="48" style="border: 0px solid black; border-radius: 10px;-moz-border-radius: 10px;-khtml-border-radius: 10px;-webkit-border-radius: 10px;">
-			{% else %}
-			  <img src={{item.ItemOwnerAvtr}} width="48" height="48" style="border: 0px solid black; border-radius: 10px;-moz-border-radius: 10px;-khtml-border-radius: 10px;-webkit-border-radius: 10px;">
-			{% endif %}
-			<span id="avatar_name">
-			{% if item.ItemOwnerLink != ""  %}
-			  <a href={{item.ItemOwnerLink}}>&nbsp; {{i.grouper}}</a>
-			{% else %}
-			  &nbsp; {{i.grouper | truncatechars:'40'}}
-			{% endif %} 
-			</span>
+            {% regroup list.item_set.all by ItemOwnerState as ItemOwnerState %}
+	      {% for i in ItemOwnerState %} 
+		{% regroup i.list by ItemOwner as ItemOwner %}
+		
+		  {% if not ItemOwner %}
+		    <div class="empty_list">
+		      <div><i class="fa fa-info-circle"></i></div>
+		      Your list is empty. <br>Don't waste any more time, add an item!<br>
 		    </div>
-		{% endfor %}
+		  {% endif %}
+		  
+		  {% for j in ItemOwner %}
+		    <li class="cmmnt">
+		    {% for item in j.list|slice:":1" %}
+			  <div class="avatar">
+			      <!-- Item Owner Avatar -->
+			      {% if item.ItemOwnerAvtr == ""  %}
+				<img src="/static/buttons/User-Role-Guest-icon.png" width="48" height="48" style="border: 0px solid black; border-radius: 10px;-moz-border-radius: 10px;-khtml-border-radius: 10px;-webkit-border-radius: 10px;">
+			      {% else %}
+				<img src={{item.ItemOwnerAvtr}} width="48" height="48" style="border: 0px solid black; border-radius: 10px;-moz-border-radius: 10px;-khtml-border-radius: 10px;-webkit-border-radius: 10px;">
+			      {% endif %} 
+			      
+			      <!-- Item Owner Link -->
+			      {% if item.ItemOwnerLink != ""  %}
+				<a href={{item.ItemOwnerLink}}><b>&nbsp; {{j.grouper | truncatechars:'40'}}</b></a>
+			      {% else %}
+				<b>&nbsp; {{j.grouper}}</b></br>
+			      {% endif %} 		      
+			  </div>
+		     {% endfor %}
 
-		{% for item in i.list %}
+		{% for item in j.list %}
 		  {% if not item.ItemDone %}
 		    <div class="clear entry">
 			<!-- ========================================================================================= -->
@@ -121,7 +124,8 @@
 		  {% endfor %}
 		  <br>
 	      </li>
-            {% endfor %}
+	      {% endfor %}
+	  {% endfor %}
          </ul>
          </div> <!--end refresh-->
       </div>

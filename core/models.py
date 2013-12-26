@@ -67,7 +67,7 @@ class Item(models.Model):
     ItemOwnerLink = models.CharField("Owner's Provider Link",max_length=150)
     
     class Meta:
-        ordering = ["ItemOwner","-ItemMarked","ItemDone"]
+        ordering = ["ItemOwner","ItemOwnerState","-ItemMarked","ItemDone"]
 
     def __unicode__(self):
         return self.content
