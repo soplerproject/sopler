@@ -4,16 +4,15 @@
       <div id="refresh">
          <ul id="comments">
             {% regroup list.item_set.all by ItemOwnerState as ItemOwnerState %}
+	      {% if not ItemOwnerState %}
+		<div class="empty_list">
+		<div><i class="fa fa-info-circle"></i></div>
+		Your list is empty. <br>Don't waste any more time, add an item!<br>
+		</div>
+	      {% endif %}
 	      {% for i in ItemOwnerState %} 
 		{% regroup i.list by ItemOwner as ItemOwner %}
-		
-		  {% if not ItemOwner %}
-		    <div class="empty_list">
-		      <div><i class="fa fa-info-circle"></i></div>
-		      Your list is empty. <br>Don't waste any more time, add an item!<br>
-		    </div>
-		  {% endif %}
-		  
+
 		  {% for j in ItemOwner %}
 		    <li class="cmmnt">
 		    {% for item in j.list|slice:":1" %}
