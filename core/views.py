@@ -5,10 +5,11 @@ import time
 import random
 import re
 
+from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.views.generic import DetailView, TemplateView, ListView
-from django.shortcuts import get_object_or_404, render, render_to_response
-from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
@@ -18,9 +19,10 @@ from core.models import List, Item, Comment
 # Allauth Models
 import allauth.socialaccount.models
 
+# Favit Models
+from favit.models import Favorite
 
 pages_dir = "pages/"
-
 
 class ViewIndexPage(ListView):
     model = List
@@ -401,4 +403,25 @@ def LockItem(request, slug):
     p.save()
 
     return HttpResponseRedirect(reverse('sopler:list', args=(list.slug,)))
+    
 
+#################################################
+# Favorite a list 
+#################################################  
+@login_required
+def favit(request,slug):
+        
+    list = get_object_or_404(List, slug=slug)
+    user = request.user
+
+    slug = List.objects.get(slug=request.POST["slug"])
+    fav = Favorite.objects.get_favorite(user, slug) 
+      
+    if fav is None:
+	fav = Favorite.objects.create(user, slug)
+	
+    else:
+	fav.delete()
+    
+    return HttpResponseRedirect(reverse('sopler:list', args=(list.slug,)))
+    

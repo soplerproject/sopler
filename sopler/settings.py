@@ -180,6 +180,7 @@ INSTALLED_APPS = (
     'djangosecure',
     # Uncomment for data migration 
     #'south',
+    'favit',
 )
 
 # A sample logging configuration. The only tangible logging

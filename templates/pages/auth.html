@@ -1,6 +1,26 @@
+{% load favit_tags %} 
 <div class="col-md-8">
    <div class="listbox">
       <br>
+      
+      {% with list|get_favorite_for:user as FavoritedLists %}   
+	{% if FavoritedLists %}
+	  <form action="{% url 'sopler:favit' list.slug %}" method="post" >
+	    {% csrf_token %}
+	    <input type="hidden" name="slug" value="{{ list.slug }}" />
+	    <button type="submit"  style="margin: -35px 1px; opacity:0.6; color:red" class= "close fa fa-heart" ></i>
+	    </button>
+	  </form>
+	{% else %}
+	  <form action="{% url 'sopler:favit' list.slug %}" method="post" >
+	    {% csrf_token %}
+	    <input type="hidden" name="slug" value="{{ list.slug }}" />
+	    <button type="submit"  style="margin: -35px 1px; opacity:0.6;" class= "close fa fa-heart" ></i>
+	    </button>
+	  </form>
+	{% endif %}
+	
+      {% endwith %}
       <div id="refresh">
          <ul id="comments">
             {% regroup list.item_set.all by ItemOwnerState as ItemOwnerState %}

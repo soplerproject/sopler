@@ -2,7 +2,7 @@
 
 from django.conf.urls import patterns, url
 from django.views.generic import RedirectView
-from core.views import ViewIndexPage, ViewProfilePage, ViewList, AddList, AddNewItem, CheckItem, UnCheckItem, DeleteItem, MarkItem, LockItem, AddNewComment, DeleteComment, DeleteList, DeletePreviousList
+from core.views import *
 
 urlpatterns = patterns('',
     url(r'^$', RedirectView.as_view(url='/home')),
@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^lists/(?P<slug>[\w-]+)/DeleteComment/$', DeleteComment, name='DeleteComment'),
     url(r'^lists/(?P<slug>[\w-]+)/DeleteList/$', DeleteList, name='DeleteList'),
     url(r'^lists/(?P<slug>[\w-]+)/DeletePreviousList/$', DeletePreviousList, name='DeletePreviousList'),
+    url(r'^lists/(?P<slug>[\w-]+)/favit/$', favit, name='favit'),
     #
     # Disable Signup
     url(r'^accounts/signup/', RedirectView.as_view(url='/')),

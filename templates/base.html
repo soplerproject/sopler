@@ -42,7 +42,7 @@
                <script type="text/javascript" src="{% static "js/bootstrap.input-clear.js" %}"></script>
                <script type="text/javascript" src="{% static "js/jquery.form.js" %}"></script>
                <script type="text/javascript" src="{% static "js/jquery.fitvids.js" %}"></script>
-
+               
                <script type="text/javascript">  
                   $(function ()  
                     { $("#besync_popover").popover();  
@@ -55,7 +55,21 @@
         		      $("#how_to_video").fitVids();  
 		       });
 	       </script>
-
+	       
+	      <!-- Count comments -->
+	      <script type="text/javascript">
+	      var time = 100; // Change this if you want
+		$(window).load(function (){
+		  setInterval(function(){
+		    var comcount = $('div[id*="commentcount"]').length;
+		    if (comcount > 0){
+			document.getElementById("comments_counter").innerHTML = "("+comcount+")"; 
+		      }else{
+			document.getElementById("comments_counter").innerHTML = "";}
+		      },time);
+		    })
+	      </script>
+	      
                <!-- Navigation Bar fix & relative -->
 	       <script type="text/javascript">
 		      $(document).ready(function(){
@@ -158,13 +172,23 @@
 		    var time = 100; // Change this if you want
 		    $(window).load(function (){
 			setInterval(function(){
-			  var lstcount = $('div[id*="listcount"]').length;
-			  if (lstcount > 0){
-			    document.getElementById("list_counter").innerHTML = "("+lstcount+")"; 
+			  var yrlstcount = $('div[id*="yrlistcount"]').length;
+			  if (yrlstcount > 0){
+			    document.getElementById("yourlist_counter").innerHTML = "("+yrlstcount+")"; 
 			  }else{
-			    document.getElementById("list_counter").innerHTML = "";}
+			    document.getElementById("yourlist_counter").innerHTML = "";}
 			},time);
 		    });
+		    $(window).load(function (){
+			setInterval(function(){
+			  var fvlstcount = $('div[id*="fvlistcount"]').length;
+			  if (fvlstcount > 0){
+			    document.getElementById("favlist_counter").innerHTML = "("+fvlstcount+")"; 
+			  }else{
+			    document.getElementById("favlist_counter").innerHTML = "";}
+			},time);
+		    });	    
+		    
 		</script>
                {% endif %}
                
@@ -253,7 +277,8 @@
 
                      <!-- Jumbotron -->
                      <div class="jumbotron">
-                        {% block content %} {% endblock content%}
+                        {% block content %} 
+                        {% endblock content%}
                         <br>
                         <br>
                      </div>
