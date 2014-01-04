@@ -13,7 +13,7 @@ class ListAdmin(admin.ModelAdmin):
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = ["list_ListName","list_slug","ItemOwner"]
-    search_fields = ("ItemOwner","list__ListName","list_slug",)
+    search_fields = ("ItemOwner","list__ListName","list__slug",)
     
     def list_ListName(self, instance):
         return instance.list.ListName
