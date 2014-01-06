@@ -349,6 +349,45 @@ input {
 #comments .cmmnt .cmmnt-content header .userlink { font-weight: bold; } 
 #comments .cmmnt .replies { margin-bottom: 7px; }
 
+/*---------------Progress bar------------------*/
+
+.progress{
+	background-color:transparent;
+	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.25) inset;
+
+}
+
+.progress-bar-success {
+        background-color: #b3d4a2;
+	color:#535353 !important;
+}
+
+.progress-bar-info{
+background-color: #e3eef1;
+	 color: #484848 !important; 
+}
+
+/*-------------Favorite Button-----------------*/
+
+.favbutton{
+	box-shadow: 1px 1px #ccc;
+	float:right; 
+	margin:-10px -10px; 
+	width:40px; height:40px; 
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0, #F6F6F6),
+		color-stop(1, #DFDFDF)
+	);
+	background-image: -o-linear-gradient(bottom, #F6F6F6 0%, #DFDFDF 100%);
+	background-image: -moz-linear-gradient(bottom, #F6F6F6 0%, #DFDFDF 100%);
+	background-image: -webkit-linear-gradient(bottom, #F6F6F6 0%, #DFDFDF 100%);
+	background-image: -ms-linear-gradient(bottom, #F6F6F6 0%, #DFDFDF 100%);
+	background-image: linear-gradient(to bottom, #F6F6F6 0%, #DFDFDF 100%);
+}
+
 /* Gradient transparent - color - transparent */ 
 
 hr{ 
