@@ -1,6 +1,15 @@
 <div class="col-md-8">
    <div class="listbox">
       <br>
+      
+      <!--  Progress Bar -->
+      <div class="progress">
+	<div class="progress-bar progress-bar-success"  id="progressbar" >
+	</div>
+	<div class="progress-bar progress-bar-info"  id="progressbar2" >
+	</div>
+      </div>
+      
       <div id="refresh">
          <ul id="comments">
             {% regroup list.item_set.all by ItemOwnerState as ItemOwnerState %}
@@ -35,6 +44,7 @@
 
 		{% for item in j.list %}
 		  {% if not item.ItemDone %}
+		  <div id="ItemNotDone"></div>
 		    <div class="clear entry">
 			<!-- ========================================================================================= -->
 			<form  class="Form" action="{% url 'sopler:CheckItem' list.slug %}" method="post"  onclick="doSubmit(this)" >
@@ -85,6 +95,7 @@
 		     {% endif %}
 
 		     {% if item.ItemDone %}
+		      <div id="ItemDone"></div>
 			<!-- =============  Details ====================== -->
 			<div class="clear entry">
 			  <form class="Form" style="text-align: left;" action="{% url 'sopler:UnCheckItem' list.slug %}" method="post" onclick="doSubmit(this)">

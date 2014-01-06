@@ -42,6 +42,7 @@
                <script type="text/javascript" src="{% static "js/bootstrap.input-clear.js" %}"></script>
                <script type="text/javascript" src="{% static "js/jquery.form.js" %}"></script>
                <script type="text/javascript" src="{% static "js/jquery.fitvids.js" %}"></script>
+               <script type="text/javascript" src="{% static "js/jquery-ui.js" %}"></script>
                
                <script type="text/javascript">  
                   $(function ()  
@@ -165,7 +166,51 @@
                   };
                </script>
                
-               
+	      <!-- Progress Bar -->
+	      <script type="text/javascript">
+	          var time = 100; // Change this if you want
+		  var progressBar;
+		  $(window).load(function(){
+                      setInterval(function(){
+			var CountItemDone = $('div[id*="ItemDone"]').size();
+			var CountItemNotDone = $('div[id*="ItemNotDone"]').size();
+			var CountItems = CountItemDone + CountItemNotDone
+		        var progress = ((CountItemDone * 100)/CountItems)
+			var percentDone = progress.toString() + "%";
+			var percentNotDone = (100-progress).toString() + "%";
+			$( "#progressbar" ).css("width", percentDone ); 
+			$( "#progressbar2" ).css("width", percentNotDone );
+ 			if(CountItems > 0){
+				$( "div.progress-bar.progress-bar-success" ).show();
+				$( "div.progress-bar.progress-bar-success" ).html(function() {
+				   return CountItemDone + "/" + CountItems + " Done";
+				});
+				if( CountItemDone == 0){
+					 $( "div.progress-bar.progress-bar-info" ).show();
+						if (CountItems > 1){
+							 $( "div.progress-bar.progress-bar-info" ).html(function() {
+							   return "Total: " + CountItems + " Items";
+							});
+						}else{
+							$( "div.progress-bar.progress-bar-info" ).html(function() {
+							   return "Total: " + CountItems + " Item";
+							});
+						}
+				}else{
+					
+					  $( "div.progress-bar.progress-bar-info" ).html(function() {
+					  	return " ";
+					   });
+				}
+		      }else{
+				  $( "div.progress-bar.progress-bar-info" ).hide();
+				  $( "div.progress-bar.progress-bar-success" ).hide();
+		      }
+		      },time);
+		  });
+	      </script> 
+	      
+	      
                {% if user.is_authenticated %}
 		<!-- Count previous lists-->
 		<script type="text/javascript">

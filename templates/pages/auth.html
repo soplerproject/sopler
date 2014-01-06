@@ -3,22 +3,35 @@
    <div class="listbox">
       <br>
       
+      <!-- Favorite -->
       {% with list|get_favorite_for:user as FavoritedLists %}   
 	{% if FavoritedLists %}
 	  <form action="{% url 'sopler:favit' list.slug %}" method="post" >
 	    {% csrf_token %}
 	    <input type="hidden" name="slug" value="{{ list.slug }}" />
-	    <button type="submit"  style="margin: -35px 1px; opacity:0.6; color:red" class= "close fa fa-heart" ></i>
-	    </button>
+	    <span class="btn btn-default favbutton" style="" >
+	      <button type="submit"   style="opacity:0.6; color:red; margin: -7px -0.595em; text-shadow: none;" class= "close fa fa-heart" ></i>
+	      </button>
+	    </span>
 	  </form>
 	{% else %}
 	  <form action="{% url 'sopler:favit' list.slug %}" method="post" >
 	    {% csrf_token %}
 	    <input type="hidden" name="slug" value="{{ list.slug }}" />
-	    <button type="submit"  style="margin: -35px 1px; opacity:0.6;" class= "close fa fa-heart" ></i>
-	    </button>
+	    <span class="btn btn-default favbutton" style="" >
+	      <button type="submit"   style="opacity:0.6; margin: -7px -0.595em; text-shadow: none;" class= "close fa fa-heart" ></i>
+	      </button>
+	    </span>
 	  </form>
 	{% endif %}
+	
+      <!--  Progress Bar -->
+      <div class="progress" style="margin-right: 50px;">
+	<div class="progress-bar progress-bar-success"  id="progressbar" >
+	</div>
+	<div class="progress-bar progress-bar-info"  id="progressbar2" >
+	</div>
+      </div>
 	
       {% endwith %}
       <div id="refresh">
@@ -54,6 +67,7 @@
 
 		{% for item in j.list %}
 		  {% if not item.ItemDone %}
+		  <div id="ItemNotDone"></div>
 		    <div class="clear entry">
 			<form  class="Form" action="{% url 'sopler:CheckItem' list.slug %}" method="post" onclick="doAuthSubmit(this)" >
 			  {% csrf_token %}
@@ -140,6 +154,7 @@
 		      {% endif %}	
 
 		      {% if item.ItemDone %}
+		       <div id="ItemDone"></div>
 			<!-- =============  Details ====================== -->
 
 			<div class="clear entry">
