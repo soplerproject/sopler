@@ -9,7 +9,7 @@
    <div class="about-box">
       <div id="boxes" class="popover bottom roundall">
          <div class="popover-title title-main">
-            <h2 style="text-shadow:none;">Create a list<span style="font-size:1.75em;" class="dot">.</span></h2>
+            <h2 data-l10n-id="create-a-list" style="text-shadow:none;">Create a list<span style="font-size:1.75em;" class="dot">.</span></h2>
          </div>
          <div class="popover-content">
 
@@ -28,7 +28,7 @@
 			  <div class="accordion-inner">
 			    <div class="checkbox">
 				<label>
-				<input type="checkbox" name="ListAuthOnly">
+				<input data-l10n-id="allow-authenticated-users-only" type="checkbox" name="ListAuthOnly">
 				Allow authenticated users only
 				</label>
 			    </div>
@@ -38,7 +38,7 @@
 		    <div class="accordion-group">
 		      <div class="accordion-heading">
 			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseYourLists">
-			  <b>Your Lists </b><span id="yourlist_counter"></span>
+			  <b data-l10n-id="your-lists" >Your Lists </b><span id="yourlist_counter"></span>
 			  <span class="caret"></span>
 			  </a>
 		      </div>
@@ -104,7 +104,7 @@
               <div class="accordion-group">
 	      <div class="accordion-heading">
 	      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseFavLists">
-	      <b>Your Favorite Lists </b><span id="favlist_counter"></span>
+	      <b data-l10n-id="your-favourite-lists">Your Favorite Lists </b><span id="favlist_counter"></span>
 	      <span class="caret"></span>
 	      </a>
 	      </div>
@@ -173,10 +173,10 @@
             {% else %}
 	      <form class="validate-form" action="{% url 'sopler:AddList' %}" method="post">
 	      {% csrf_token %}
-		<input type="text" class="sign-up-input" name="ListOwnerName" required="required" placeholder="Who owns the list?">
+		<input data-l10n-id="who-owns-the-list" type="text" class="sign-up-input" name="ListOwnerName" required="required" placeholder="Who owns the list?">
             {% endif %}
-	      <input type="text" class="sign-up-input" name="ListName" required="required" placeholder="Give it a name!">
-	      <input type="submit" value="Start!" class="sign-up-button">
+	      <input data-l10n-id="give-it-a-name" type="text" class="sign-up-input" name="ListName" required="required" placeholder="Give it a name!">
+	      <input data-l10n-id="start" type="submit" value="Start!" class="sign-up-button">
             </form>
 
             </div>
@@ -197,44 +197,44 @@
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
            <br/>
-      <h2 class="hidden-xs">List everything on <span class="logocolor spaces">/.</span><span class="changefont">Sopler</span></h2>
-      <h3 class="visible-xs">List everything on <span class="logocolor spaces">/.</span><span class="changefont">Sopler</span></h3>
-      <h4 class="hidden-xs">A free/open source, social and collaborative web application that helps you make lists.<br/>Create and share them with others easily in real time!</h4>
-      <h4 class="visible-xs">A web application that helps you make lists.</h4>
+      <h2  data-l10n-id="list-everything"class="hidden-xs">List everything on <span class="logocolor spaces">/.</span><span class="changefont">Sopler</span></h2>
+      <h3 data-l10n-id="list-everything" class="visible-xs">List everything on <span class="logocolor spaces">/.</span><span class="changefont">Sopler</span></h3>
+      <h4 data-l10n-id="index-info" class="hidden-xs">A free/open source, social and collaborative web application that helps you make lists.<br/> <span data-l10n-id="index-info2">Create and share them with others easily in real time!</span></h4>
+      <h4 data-l10n-id="index-info-xs" class="visible-xs">A web application that helps you make lists.</h4>
    <div style="clear:both;"></div>
    <br />
    <div style="text-shadow: 5px 5px 5px #dddddd; text-align:center;" class="row hidden-xs">
       <div class="col-sm-4">
          <h1 style="border: 1px solid #b74f41;" id="main_icons"><i style="color:#b74f41; text-shadow: none;" class="fa fa-lightbulb-o"></i></h1>
-         <h2 >Think<span style="color:#b74f41;"class="dot">.</span></h2>
-         <h5>Think of things you want in a list! Organize a party, go shopping...endless possibilities.</h5>
+         <h2 data-l10n-id="think">Think<span style="color:#b74f41;"class="dot">.</span></h2>
+         <h5 data-l10n-id="think-info">Think of things you want in a list! Organize a party, go shopping...endless possibilities.</h5>
       </div>
       <div class="col-sm-4">
          <h1 style="border: 1px solid #7aa948;"id="main_icons"><i style="color:#7aa948;text-shadow: none; font-size:0.9em;" class="fa fa-list-ul"></i></h1>
-         <h2  >Create<span style="color:#7aa948;" class="dot">.</span></h2>
-         <h5 > Quickly create or easily modify a list of items you will need. Many options to choose.</h5 >
+         <h2 data-l10n-id="create" >Create<span style="color:#7aa948;" class="dot">.</span></h2>
+         <h5 data-l10n-id="create-info"> Quickly create or easily modify a list of items you will need. Many options to choose.</h5 >
       </div>
       <div class="col-sm-4">
          <h1  style="border: 1px solid #5294c9;" id="main_icons"><i style="color:#5294c9;text-shadow:none;font-size:1.1em; margin-right:3px;" class="icon-share-simple"></i></h1>
-         <h2 >Share<span class="dot">.</span></h2>
-         <h5>Share your lists with your friends and collaborate with them as you wish.</h5 >
+         <h2 data-l10n-id="share" >Share<span class="dot">.</span></h2>
+         <h5 data-l10n-id="share-info">Share your lists with your friends and collaborate with them as you wish.</h5 >
       </div>
    </div>
     <div style="text-shadow: 5px 5px 5px #dddddd; text-align:center;" class="row visible-xs">
       <div class="col-sm-4">
          <h1 style="border: 1px solid #b74f41;" id="main_icons"><i style="color:#b74f41; text-shadow: none;" class="fa fa-lightbulb-o"></i></h1>
-         <h2 style="margin-top:0px;" >Think<span style="color:#b74f41;"class="dot">.</span></h2>
-         <h5>Think of things you want in a list!</h5>
+         <h2 data-l10n-id="think" style="margin-top:0px;" >Think<span style="color:#b74f41;"class="dot">.</span></h2>
+         <h5 data-l10n-id="think-info-xs">Think of things you want in a list!</h5>
       </div>
       <div class="col-sm-4">
          <h1 style="margin-top:30px;border: 1px solid #7aa948;"id="main_icons"><i style="color:#7aa948;text-shadow: none; font-size:0.9em;" class="fa fa-list-ul"></i></h1>
-         <h2 style="margin-top:0px;" >Create<span style="color:#7aa948;" class="dot">.</span></h2>
-         <h5 > Quickly create or easily modify a list of items you will need.</h5>
+         <h2 data-l10n-id="create" style="margin-top:0px;" >Create<span style="color:#7aa948;" class="dot">.</span></h2>
+         <h5 data-l10n-id="create-info-xs" >Quickly create or easily modify a list of items you will need.</h5>
       </div>
       <div class="col-sm-4">
          <h1  style="margin-top:30px;border: 1px solid #5294c9;" id="main_icons"><i style="color:#5294c9;text-shadow:none;font-size:1.1em; margin-right:3px;" class="icon-share-simple"></i></h1>
-         <h2 style="margin-top:0px;" >Share<span class="dot">.</span></h2>
-         <h5>Share your lists with your friends and collaborate with them.</h5 >
+         <h2 data-l10n-id="share" style="margin-top:0px;" >Share<span class="dot">.</span></h2>
+         <h5 data-l10n-id="share-info-xs">Share your lists with your friends and collaborate with them.</h5 >
       </div>
    </div>
 </div>

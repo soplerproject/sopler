@@ -33,7 +33,8 @@
                <div  class="about-box">
                   <div id="list_boxes" class="popover bottom roundtop">
                      <div class="popover-title ">
-                        <h5 align="left" style="margin-top: 0;font-size:1.4em; text-shadow:none;">&nbsp;&nbsp;<i class="fa fa-plus"></i>&nbsp;&nbsp; Add an item </h5>
+                        <h5 align="left" style="margin: 0 0 0 12px;font-size:1.3em; text-shadow:none;"><i class="fa fa-plus"></i>
+							<span data-l10n-id="add-an-item" style="font-size:1.1em;margin-left:5px;">Add an item</span></h5>
                      </div>
                      <div class="popover-content ">
                         <div class="form-group">
@@ -41,26 +42,26 @@
                           <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
                         </div>
                         <div  class="input-group">
-                          <input  id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onfocus="this.select()" onsubmit="this.reset()"/>
+                          <input data-l10n-id="input-item" id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onfocus="this.select()" onsubmit="this.reset()"/>
                           <span class="input-group-btn">
-                          <button type="submit" class="btn btn-default" >Add</button>
+                          <button type="submit" class="btn btn-default" ><i class="fa fa-pencil-square-o"></i></button>
                           </span>
                         {% else%}
                           {% if list.ListAuthOnly = False %}
-                            <input id="username" type="text" class="form-control" name="ItemOwner" required="required" placeholder="Enter username"/>
+                            <input data-l10n-id="enter-username" id="username" type="text" class="form-control" name="ItemOwner" required="required" placeholder="Enter username"/>
                             <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
                           </div>
                           <div  class="input-group">
-                            <input  id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onfocus="this.select()" onsubmit="this.reset()"/>
+                            <input data-l10n-id="input-item" id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onfocus="this.select()" onsubmit="this.reset()"/>
                             <span class="input-group-btn">
-                            <button type="submit" class="btn btn-default" >Add</button>
+                            <button type="submit" class="btn btn-default" ><i style=" font-size:1.35em;" class="fa fa-pencil-square-o"></i></button>
                           {% else%}
                             <input id="username" type="text" class="form-control" name="ItemOwner" placeholder="(Disabled)" disabled/>
                           </div>
                           <div  class="input-group">
                             <input  id="appendedInputButton" type="text" class="form-control" name="content" placeholder="(Disabled)" disabled/>
                             <span class="input-group-btn">
-                            <button type="submit" class="btn btn-default" disabled >Add</button>
+                            <button type="submit" class="btn btn-default" disabled ><i class="fa fa-pencil-square-o"></i></button>
                           {% endif %}
                         {% endif %}
                         </div>
@@ -79,35 +80,37 @@
                      <div class="accordion-group">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#info_collapse">
                            <div class="accordion-heading popover-title list_box">
-                              <h5 align="left" style=" color: #484848; margin-top: 0; font-size:1.4em; text-shadow:none;"> &nbsp;&nbsp;&nbsp; <i class="fa fa-info"></i>&nbsp;&nbsp;Information<button class="btn btn-default box_button" ><i class="fa fa-chevron-down"></i> </button></h5>
+                              <h5  align="left" style=" color: #484848;margin: 0 0 7px 15px; font-size:1.4em; text-shadow:none;"><i class="fa fa-info"></i>
+								<span data-l10n-id="information" style="margin-left:5px;">Information</span>
+								<button class="btn btn-default box_button" ><i class="fa fa-chevron-down"></i> </button></h5>
                            </div>
                         </a>
                         <div id="info_collapse" class="accordion-body collapse">
                            <div class="accordion-inner list_box_collapse">
                               <dl class="dl-horizontal"> 
                                  <!-------Visible on mobile only--------->
-			  	 <dt class="visible-xs"><i class="fa fa-user"></i> &nbsp;Owner:</dt>
+								 <dt data-l10n-id="owner" class="visible-xs"><i class="fa fa-user"></i> &nbsp;Owner:</dt>
                                  <dd class="visible-xs" id="info-dd-mobile"><a href="{{ list.ListOwnerLink }}">{{list.ListOwner | truncatechars:'15'}}</a></dd>
-                                 <dt class="visible-xs"><i class="fa icon-browserid"></i> &nbsp;State:</dt>
+                                 <dt data-l10n-id="state" class="visible-xs"><i class="fa icon-browserid"></i> &nbsp;State:</dt>
                                  <dd class="visible-xs" id="info-dd-mobile">{{ list.ListOwnerState }}</dd>
-                                 <dt class="visible-xs"><i class="fa fa-list-ul"></i> &nbsp;List: </dt>
+                                 <dt data-l10n-id="list" class="visible-xs"><i class="fa fa-list-ul"></i> &nbsp;List: </dt>
                                  <dd class="visible-xs" id="info-dd-mobile">  {{ list.ListName | truncatechars:'15' }}</dd>
-                                 <dt class="visible-xs"><i class="fa fa-clock-o"></i> &nbsp;Created: </dt>
+                                 <dt data-l10n-id="created" class="visible-xs"><i class="fa fa-clock-o"></i> &nbsp;Created: </dt>
                                  <dd class="visible-xs" id="info-dd-mobile"> {{list.ListPubDate}}</dd>
                                  <!-- Show fav count  -->
-                                 <dt class="visible-xs"><i class="fa fa-heart"></i> &nbsp;Favorited: </dt>
+                                 <dt data-l10n-id="favorited" class="visible-xs"><i class="fa fa-heart"></i> &nbsp;Favorited: </dt>
                                  <dd class="visible-xs" id="info-dd-mobile">{{list|favorites_count}} {% if list|favorites_count == 1 %} time {%else%} times {% endif %}</dd>
                                  <!----------not visible on mobile--------->
-                                 <dt class="hidden-xs"><i class="fa fa-user"></i> &nbsp;Owner:</dt>
+                                 <dt data-l10n-id="owner" class="hidden-xs"><i class="fa fa-user"></i> &nbsp;Owner:</dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile"><a href="{{ list.ListOwnerLink }}">{{list.ListOwner | truncatechars:'15'}}</a></dd>
-                                 <dt class="hidden-xs"><i class="fa icon-browserid"></i> &nbsp;State:</dt>
+                                 <dt data-l10n-id="state" class="hidden-xs"><i class="fa icon-browserid"></i> &nbsp;State:</dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile">{{ list.ListOwnerState }}</dd>
-                                 <dt class="hidden-xs"><i class="fa fa-list-ul"></i> &nbsp;List: </dt>
+                                 <dt data-l10n-id="list" class="hidden-xs"><i class="fa fa-list-ul"></i> &nbsp;List: </dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile">  {{ list.ListName | truncatechars:'15' }}</dd>
-                                 <dt class="hidden-xs"><i class="fa fa-clock-o"></i> &nbsp;Created: </dt>
+                                 <dt data-l10n-id="created" class="hidden-xs"><i class="fa fa-clock-o"></i> &nbsp;Created: </dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile"> {{list.ListPubDate}}</dd>
                                  <!-- Show fav count  -->
-                                 <dt class="hidden-xs"><i class="fa fa-heart"></i> &nbsp;Favorited: </dt>
+                                 <dt data-l10n-id="favorited" class="hidden-xs"><i class="fa fa-heart"></i> &nbsp;Favorited: </dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile">{{list|favorites_count}} {% if list|favorites_count == 1 %} time {%else%} times {% endif %}</dd>
                                  
                                  <!-- ========================================================= -->
@@ -118,7 +121,7 @@
 				 {% if user.is_authenticated %}
 				  <div class="accordion-group">
 				    <div class="accordion-heading">
-					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseYourLists">
+					<a data-l10n-id="your-lists" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseYourLists">
 					<b>Your Lists </b><span id="yourlist_counter"></span>
 					<span class="caret"></span>
 					</a>
@@ -180,7 +183,7 @@
 			            
                                     <div class="accordion-group">
 				    <div class="accordion-heading">
-					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseFavLists">
+					<a data-l10n-id="your-favorite-lists" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseFavLists">
 					<b>Your Favorite Lists </b><span id="favlist_counter"></span>
 					<span class="caret"></span>
 					</a>
@@ -271,7 +274,9 @@
                      <div class="accordion-group">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#share_collapse">
                            <div class="accordion-heading popover-title list_box">
-                              <h5  style="color: #484848; margin-top: 0;font-size:1.4em; text-shadow:none;">&nbsp;&nbsp;<i class="icon-share-simple"></i>&nbsp;&nbsp;Share<button class="btn btn-default box_button" ><i class="fa fa-chevron-down"></i> </button></button></h5>
+                              <h5 data-l10n-id="share-sidepanel" style="color: #484848; margin: 0 0 7px 8px;font-size:1.4em; text-shadow:none;"><i class="icon-share-simple"></i>
+								Share
+								<button class="btn btn-default box_button" ><i class="fa fa-chevron-down"></i> </button></h5>
                            </div>
                         </a>
                         <div id="share_collapse" class="accordion-body collapse">
@@ -305,7 +310,7 @@
                                                 </div>
                                              </div>
                                              <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button data-l10n-id="close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                              </div>
                                           </div>
                                           <!-- /.modal-content -->
@@ -335,9 +340,10 @@
                   <div id="list_boxes" class="popover bottom roundbottom">
                      <div class="accordion-group">
                         <div class="accordion-heading popover-title list_box">
-                           <h5  style="color: #484848; margin-top: 0;font-size:1.35em; text-shadow:none;">&nbsp;&nbsp;<i class="fa fa-refresh"></i> &nbsp;Sync 
+                           <h5  style="color: #484848; margin: 0 0 7px 12px;font-size:1.35em; text-shadow:none;"><i class="fa fa-refresh"></i>
+							<span style="margin-left:1px;">Sync</span> 
                               <small>
-                              <span style="cursor:pointer;"id="besync_popover"  data-content="Work in real-time with your collaborators." data-placement="top" data-toggle="popover" data-container="body" type="button" data-original-title="" title=""> <i class="fa fa-question-circle"></i> </span>
+                              <span  data-l10n-id="sync-popover" style="cursor:pointer;" id="besync_popover"  data-content="Work in real-time with your collaborators." data-placement="top" data-toggle="popover" data-container="body" type="button" data-original-title="" title=""> <i class="fa fa-question-circle"></i> </span>
                               </small>
                               <button id="realtime_button" class="btn btn-default box_button" onclick="RT()" ><i class="fa fa-power-off"></i> </button>
                            </h5>
@@ -367,8 +373,8 @@
 	      <div style="margin-left:0;" class="empty_list">
 		  <br>
 		  <div><i class="fa fa-exclamation-triangle"></i></div>
-		  <h4>Authentication needed</h4>
-		  The owner of this list wants you to sign in to see the list!
+		  <h4 data-l10n-id="authentication-needed" >Authentication needed</h4>
+		  <span data-l10n-id="authentication-needed2">The owner of this list wants you to sign in to see the list!</span>
 	      </div>
 	    </div>
 	</div>

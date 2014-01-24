@@ -14,9 +14,9 @@
          <ul id="comments">
             {% regroup list.item_set.all by ItemOwnerState as ItemOwnerState %}
 	      {% if not ItemOwnerState %}
-		<div class="empty_list">
+		<div data-l10n-id="empty-list" class="empty_list">
 		<div><i class="fa fa-info-circle"></i></div>
-		Your list is empty. <br>Don't waste any more time, add an item!<br>
+		Your list is empty. <br><span data-l10n-id="dont-waste-time">Don't waste any more time, add an item!</span><br>
 		</div>
 	      {% endif %}
 	      {% for i in ItemOwnerState %} 
@@ -150,8 +150,8 @@
          <div class="accordion-group">
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#comments_collapse">
                <div class="accordion-heading popover-title list_box">
-                  <h5 style="color: #484848; margin-top: 0;font-size:1.3em; text-shadow:none;">
-                     &nbsp;&nbsp;<i class="fa fa-comments"></i>&nbsp;&nbsp;Comments <span id="comments_counter"></span>
+                  <h5 style="color: #484848; margin: 0 0 5px 10px;font-size:1.3em; text-shadow:none;">
+                     <i class="fa fa-comments"></i><span data-l10n-id="comments" style="margin-left:5px;">Comments</span><span id="comments_counter"></span>
                      <button class="btn btn-default box_button" >
                         <i class="fa fa-chevron-down"></i>
                   </h5>
@@ -182,10 +182,10 @@
 	      <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
 	      <div class="row">
 	      <div class="col-md-11">
-	      <textarea  id="textarea" class="form-control" type="text" name="comment" autofocus="autofocus" maxlength="99" required="required" placeholder="Save comment!"></textarea>
+	      <textarea data-l10n-id="comment" id="textarea" class="form-control" type="text" name="comment" autofocus="autofocus" maxlength="99" required="required" placeholder="Save comment!"></textarea>
 	      </div>
 	      <div class="col-md-1 ">
-	      <button  type="submit" class="btn btn-info pull-right">Save!</button>
+	      <button data-l10n-id="send" type="submit" class="btn btn-info pull-right">Save!</button>
 	      <div id="textarea_feedback"></div>
 	      </div>
 	      </div>
