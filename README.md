@@ -1,7 +1,7 @@
 Sopler
 ======
 
-This is the source code of [sopler][sopler], a free / open source, social and collaborative web application that helps you make lists.
+This is the source code of [sopler][sopler], a free / open source, social and collaborative web application that helps you make todo-lists.
 [sopler]: http://sopler.net/
 
 Python packages
