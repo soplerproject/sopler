@@ -5,7 +5,7 @@
 {% load favit_tags %}
 
 <script type="text/javascript" src="{% static "js/qrcode.js" %}"></script>
-    
+
 <div class="row">
       <div class="row">
           <div class="col-md-12 namebox">
@@ -89,28 +89,28 @@
                            <div class="accordion-inner list_box_collapse">
                               <dl class="dl-horizontal"> 
                                  <!-------Visible on mobile only--------->
-								 <dt data-l10n-id="owner" class="visible-xs"><i class="fa fa-user"></i> &nbsp;Owner:</dt>
+								 <dt data-l10n-id="owner" class="visible-xs"><i style="margin-right:5px;"class="fa fa-user"></i>Owner:</dt>
                                  <dd class="visible-xs" id="info-dd-mobile"><a href="{{ list.ListOwnerLink }}">{{list.ListOwner | truncatechars:'15'}}</a></dd>
-                                 <dt data-l10n-id="state" class="visible-xs"><i class="fa icon-browserid"></i> &nbsp;State:</dt>
+                                 <dt data-l10n-id="state" class="visible-xs"><i style="margin-right:5px;" class="fa icon-browserid"></i> &nbsp;State:</dt>
                                  <dd class="visible-xs" id="info-dd-mobile">{{ list.ListOwnerState }}</dd>
-                                 <dt data-l10n-id="list" class="visible-xs"><i class="fa fa-list-ul"></i> &nbsp;List: </dt>
+                                 <dt data-l10n-id="list" class="visible-xs"><i style="margin-right:5px;" class="fa fa-list-ul"></i>List: </dt>
                                  <dd class="visible-xs" id="info-dd-mobile">  {{ list.ListName | truncatechars:'15' }}</dd>
-                                 <dt data-l10n-id="created" class="visible-xs"><i class="fa fa-clock-o"></i> &nbsp;Created: </dt>
+                                 <dt data-l10n-id="created" class="visible-xs"><i style="margin-right:5px;" class="fa fa-clock-o"></i>Created: </dt>
                                  <dd class="visible-xs" id="info-dd-mobile"> {{list.ListPubDate}}</dd>
                                  <!-- Show fav count  -->
-                                 <dt data-l10n-id="favorited" class="visible-xs"><i class="fa fa-heart"></i> &nbsp;Favorited: </dt>
+                                 <dt data-l10n-id="favorited" class="visible-xs"><i style="margin-right:5px;" class="fa fa-heart"></i>Favorited: </dt>
                                  <dd class="visible-xs" id="info-dd-mobile">{{list|favorites_count}} {% if list|favorites_count == 1 %} time {%else%} times {% endif %}</dd>
                                  <!----------not visible on mobile--------->
-                                 <dt data-l10n-id="owner" class="hidden-xs"><i class="fa fa-user"></i> &nbsp;Owner:</dt>
+                                 <dt data-l10n-id="owner" class="hidden-xs"><i style="margin-right:5px;" class="fa fa-user"></i>Owner:</dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile"><a href="{{ list.ListOwnerLink }}">{{list.ListOwner | truncatechars:'15'}}</a></dd>
-                                 <dt data-l10n-id="state" class="hidden-xs"><i class="fa icon-browserid"></i> &nbsp;State:</dt>
+                                 <dt data-l10n-id="state" class="hidden-xs"><i style="margin-right:5px;" class="fa icon-browserid"></i>State:</dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile">{{ list.ListOwnerState }}</dd>
-                                 <dt data-l10n-id="list" class="hidden-xs"><i class="fa fa-list-ul"></i> &nbsp;List: </dt>
+                                 <dt data-l10n-id="list" class="hidden-xs"><i style="margin-right:5px;" class="fa fa-list-ul"></i>List: </dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile">  {{ list.ListName | truncatechars:'15' }}</dd>
-                                 <dt data-l10n-id="created" class="hidden-xs"><i class="fa fa-clock-o"></i> &nbsp;Created: </dt>
+                                 <dt data-l10n-id="created" class="hidden-xs"><i style="margin-right:5px;" class="fa fa-clock-o"></i>Created: </dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile"> {{list.ListPubDate}}</dd>
                                  <!-- Show fav count  -->
-                                 <dt data-l10n-id="favorited" class="hidden-xs"><i class="fa fa-heart"></i> &nbsp;Favorited: </dt>
+                                 <dt data-l10n-id="favorited" class="hidden-xs"><i style="margin-right:5px;"class="fa fa-heart"></i>Favorited: </dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile">{{list|favorites_count}} {% if list|favorites_count == 1 %} time {%else%} times {% endif %}</dd>
                                  
                                  <!-- ========================================================= -->
