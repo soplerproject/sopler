@@ -66,9 +66,9 @@
 		  setInterval(function(){
 		    var comcount = $('div[id*="commentcount"]').length;
 		    if (comcount > 0){
-			document.getElementById("comments_counter").innerHTML = "("+comcount+")"; 
+			$('#comments_counter').html(" ("+comcount+")"); 
 		      }else{
-			document.getElementById("comments_counter").innerHTML = "";}
+			$('#comments_counter').html(" ");}
 		      },time);
 		    })
 	      </script>
