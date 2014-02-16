@@ -379,7 +379,7 @@ def DeleteItem(request, slug):
 	      p.delete()
 	      
 	  elif ItemOwnerPrvdr == "persona":
-	    if p.ItemOwner == account.user or list.ListOwner == account.user:
+	    if p.ItemOwner == account.user.username or list.ListOwner == account.user.username:
 	      p.ItemDone = False
 	      p.delete()
 	  else:
@@ -445,7 +445,7 @@ def MarkItem(request, slug):
 	    p.save()
 	    
 	elif ItemOwnerPrvdr == "persona":
-	  if p.ItemOwner == account.user or list.ListOwner == account.user:
+	  if p.ItemOwner == account.user.username or list.ListOwner == account.user.username:
 	    if p.ItemLocked == False :
 	      if p.ItemMarked == True : 
 		  p.ItemMarked = False 
@@ -514,7 +514,7 @@ def LockItem(request, slug):
 	    p.save()
 	    
 	elif ItemOwnerPrvdr == "persona":
-	  if p.ItemOwner == account.user or list.ListOwner == account.user:
+	  if p.ItemOwner == account.user.username or list.ListOwner == account.user.username:
 	    if p.ItemLocked == True :
 	      p.ItemLocked  = False
 	    else:
