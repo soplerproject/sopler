@@ -33,9 +33,9 @@ class List(models.Model):
     ListOwnerPrvdr = models.CharField("Owner's Provider",max_length=100)
     ListOwnerLink = models.CharField("Owner's Provider Link",max_length=150)
 
-
     class Meta:
         ordering = ["ListOwner"]
+        
         
     def __unicode__(self):
         return self.ListName
@@ -45,7 +45,7 @@ class List(models.Model):
 # -------------
 class Item(models.Model):
 
-    list = models.ForeignKey(List)
+    list = models.ForeignKey('List') 
     content = models.TextField()
     
     ItemMarked = models.BooleanField()

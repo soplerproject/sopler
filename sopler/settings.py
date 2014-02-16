@@ -181,6 +181,7 @@ INSTALLED_APPS = (
     # Uncomment for data migration 
     #'south',
     'favit',
+    'tastypie',
 )
 
 # A sample logging configuration. The only tangible logging

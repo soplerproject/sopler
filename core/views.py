@@ -337,22 +337,11 @@ def CheckItem(request, slug):
 def UnCheckItem(request, slug):
     list = get_object_or_404(List, slug=slug)
     p = get_object_or_404(Item, pk=int(request.POST['item_pk']))
-    if request.user.is_anonymous():
-       if p.WhoDone == request.POST.get('ItemOwner'):
-          p.ItemDone = False
-          p.WhoDone = ""
-       else :
-          p.ItemDone = False
-
-    else:
-
-       if p.WhoDone == request.user.first_name + " " + request.user.last_name or p.ItemOwnerFN + " " + p.ItemOwnerLN == request.user.first_name + " " + request.user.last_name :
-          p.ItemDone = False
-          p.WhoDone = ""
-       else :
-          p.ItemDone = False
+    
+    p.ItemDone = False
+    p.WhoDone = ""
     p.save()
-
+    
     return HttpResponseRedirect(reverse('sopler:list', args=(list.slug,)))
 
 #################################################
@@ -361,46 +350,187 @@ def UnCheckItem(request, slug):
 def DeleteItem(request, slug):
     list = get_object_or_404(List, slug=slug)
     p = get_object_or_404(Item, pk=int(request.POST['item_pk']))
+    
     if p.ItemLocked == True : 
        pass
+     
+    elif p.ItemOwnerState == "non-confirmed":
+	p.ItemDone = False
+	p.delete()
+	
     else:
-       p.ItemDone = False
-       p.delete()
-    
+       if request.user.is_authenticated():
+	for account in request.user.socialaccount_set.all():
+          ItemOwnerPrvdr = account.provider
+          
+          if ItemOwnerPrvdr == "facebook": 
+	    if p.ItemOwner == account.extra_data['username'] or list.ListOwner == account.extra_data['username']:
+	      p.ItemDone = False
+	      p.delete()
+	      
+	  elif ItemOwnerPrvdr == "twitter":
+	    if p.ItemOwner == account.extra_data['screen_name'] or list.ListOwner == account.extra_data['screen_name']:
+	      p.ItemDone = False
+	      p.delete()
+	      
+	  elif ItemOwnerPrvdr == "google":
+	    if p.ItemOwner == account.extra_data['name'] or list.ListOwner == account.extra_data['name']:
+	      p.ItemDone = False
+	      p.delete()
+	      
+	  elif ItemOwnerPrvdr == "persona":
+	    if p.ItemOwner == account.user or list.ListOwner == account.user:
+	      p.ItemDone = False
+	      p.delete()
+	  else:
+	    pass
+	else:
+	  pass
+      
     return HttpResponseRedirect(reverse('sopler:list', args=(list.slug,)))
-
-
+  
 #################################################
 # Mark item, as important
 #################################################
+
 def MarkItem(request, slug):
     list = get_object_or_404(List, slug=slug)
     p = get_object_or_404(Item, pk=int(request.POST['item_pk']))
-    if p.ItemLocked == False : 
-       if p.ItemMarked == True : 
-          p.ItemMarked = False 
-       else:
-          p.ItemMarked = True 
+    list = get_object_or_404(List, slug=slug)
+			  
+    if request.user.is_authenticated():
+      for account in request.user.socialaccount_set.all():
+	ItemOwnerPrvdr = account.provider
+	
+	if ItemOwnerPrvdr == "facebook": 
+	  if p.ItemOwner == account.extra_data['username'] or list.ListOwner == account.extra_data['username'] :
+	    if p.ItemLocked == False :
+	      if p.ItemMarked == True : 
+		  p.ItemMarked = False 
+	      else:
+		  p.ItemMarked = True 
+	    else:
+	      if p.ItemMarked == True :
+		  pass
+	      else:
+		  pass
+	    p.save()
+	    
+	elif ItemOwnerPrvdr == "twitter":
+	  if p.ItemOwner == account.extra_data['screen_name'] or list.ListOwner == account.extra_data['screen_name']:
+	    if p.ItemLocked == False :
+	      if p.ItemMarked == True : 
+		  p.ItemMarked = False 
+	      else:
+		  p.ItemMarked = True 
+	    else:
+	      if p.ItemMarked == True :
+		  pass
+	      else:
+		  pass
+	    p.save()
+	    
+	elif ItemOwnerPrvdr == "google":
+	  if p.ItemOwner == account.extra_data['name'] or list.ListOwner == account.extra_data['name']:
+	    if p.ItemLocked == False : 
+	      if p.ItemMarked == True : 
+		  p.ItemMarked = False 
+	      else:
+		  p.ItemMarked = True 
+	    else:
+	      if p.ItemMarked == True :
+		  pass
+	      else:
+		  pass
+	    p.save()
+	    
+	elif ItemOwnerPrvdr == "persona":
+	  if p.ItemOwner == account.user or list.ListOwner == account.user:
+	    if p.ItemLocked == False :
+	      if p.ItemMarked == True : 
+		  p.ItemMarked = False 
+	      else:
+		  p.ItemMarked = True 
+	    else:
+	      if p.ItemMarked == True :
+		  pass
+	      else:
+		  pass
+	    p.save()
+	else:
+	  pass
     else:
-       if p.ItemMarked == True :
-          pass
-       else:
-          pass
-    p.save()
+      if p.ItemOwnerState == "non-confirmed":
+	if p.ItemLocked == False :
+	  if p.ItemMarked == True : 
+	      p.ItemMarked = False 
+	  else:
+	      p.ItemMarked = True 
+	else:
+	  if p.ItemMarked == True :
+	      pass
+	  else:
+	      pass
+	p.save()
+      else:
+	pass
 
     return HttpResponseRedirect(reverse('sopler:list', args=(list.slug,)))
 
 #################################################
 # Lock an item, as important
 #################################################
+
 def LockItem(request, slug):
     list = get_object_or_404(List, slug=slug)
     p = get_object_or_404(Item, pk=int(request.POST['item_pk']))
-    if p.ItemLocked == True :
-       p.ItemLocked  = False
+    
+    if request.user.is_authenticated():
+      for account in request.user.socialaccount_set.all():
+	ItemOwnerPrvdr = account.provider
+	
+	if ItemOwnerPrvdr == "facebook": 
+	  if p.ItemOwner == account.extra_data['username'] or list.ListOwner == account.extra_data['username'] :
+	    if p.ItemLocked == True :
+	      p.ItemLocked  = False
+	    else:
+	      p.ItemLocked  = True
+	    p.save()
+	    
+	elif ItemOwnerPrvdr == "twitter":
+	  if p.ItemOwner == account.extra_data['screen_name'] or list.ListOwner == account.extra_data['screen_name']:
+	    if p.ItemLocked == True :
+	      p.ItemLocked  = False
+	    else:
+	      p.ItemLocked  = True
+	    p.save()
+	    
+	elif ItemOwnerPrvdr == "google":
+	  if p.ItemOwner == account.extra_data['name'] or list.ListOwner == account.extra_data['name']:
+	    if p.ItemLocked == True :
+	      p.ItemLocked  = False
+	    else:
+	      p.ItemLocked  = True
+	    p.save()
+	    
+	elif ItemOwnerPrvdr == "persona":
+	  if p.ItemOwner == account.user or list.ListOwner == account.user:
+	    if p.ItemLocked == True :
+	      p.ItemLocked  = False
+	    else:
+	      p.ItemLocked  = True
+	    p.save()
+	else:
+	  pass
     else:
-       p.ItemLocked  = True
-    p.save()
+      if p.ItemOwnerState == "non-confirmed":
+	if p.ItemLocked == True :
+	  p.ItemLocked  = False
+	else:
+	  p.ItemLocked  = True
+	p.save()
+      else:
+	pass
 
     return HttpResponseRedirect(reverse('sopler:list', args=(list.slug,)))
     
