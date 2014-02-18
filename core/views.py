@@ -12,6 +12,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
 # Sopler Models
 from core.models import List, Item, Comment
@@ -40,6 +41,7 @@ class ViewList(DetailView):
     def get_context_data(self, **kwargs):
       context = super(ViewList, self).get_context_data(**kwargs)
       context['lists'] = List.objects.all()
+      context['users'] = User.objects.all()
       return context
 
 #################################################
