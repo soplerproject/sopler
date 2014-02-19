@@ -17,11 +17,11 @@
 		      {% if list.ListOwnerPrvdr == "facebook" or list.ListOwnerPrvd == "twitter" %}
 			{% for user in users %}
 			  {%if list.ListOwner|lower|stringformat:"s" == user.username|lower|stringformat:"s" %}
-			    <i class="fa fa-user"></i> <a href={{list.ListOwnerLink}} target="_blank">{{ user.get_full_name | truncatechars:'15'}}</a>&nbsp;&nbsp;&nbsp; 
+			    <i class="fa fa-user"></i> <a href="{{list.ListOwnerLink}}" target="_blank">{{ user.get_full_name | truncatechars:'15'}}</a>&nbsp;&nbsp;&nbsp; 
 			  {% endif %}
 			{% endfor %}
 		      {% else %}
-			  <i class="fa fa-user"></i> <a href={{list.ListOwnerLink}} target="_blank">{{ list.ListOwner | truncatechars:'15'}}</a>&nbsp;&nbsp;&nbsp;
+			  <i class="fa fa-user"></i> <a href="{{list.ListOwnerLink}}" target="_blank">{{ list.ListOwner | truncatechars:'15'}}</a>&nbsp;&nbsp;&nbsp;
 		      {% endif %}
                       <i class="fa fa-heart"></i> {{list|favorites_count}} &nbsp;&nbsp;
                       <i class="fa fa-clock-o"></i> {{ list.ListPubDate }}
