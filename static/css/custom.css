@@ -372,7 +372,26 @@ background-color: #e3eef1;
 .favbutton{
 	box-shadow: 1px 1px #ccc;
 	float:right; 
-	margin:-10px -10px; 
+	margin:-10px 10px; 
+	width:40px; height:40px; 
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0, #F6F6F6),
+		color-stop(1, #DFDFDF)
+	);
+	background-image: -o-linear-gradient(bottom, #F6F6F6 0%, #DFDFDF 100%);
+	background-image: -moz-linear-gradient(bottom, #F6F6F6 0%, #DFDFDF 100%);
+	background-image: -webkit-linear-gradient(bottom, #F6F6F6 0%, #DFDFDF 100%);
+	background-image: -ms-linear-gradient(bottom, #F6F6F6 0%, #DFDFDF 100%);
+	background-image: linear-gradient(to bottom, #F6F6F6 0%, #DFDFDF 100%);
+}
+
+.cogbutton{
+	box-shadow: 1px 1px #ccc;
+	float:right; 
+	margin:-10px -5px; 
 	width:40px; height:40px; 
 	background-image: -webkit-gradient(
 		linear,
@@ -477,6 +496,10 @@ img.logo{
     font-weight: bold;
 	cursor: pointer;
     z-index: 1;
+}
+
+.closeopacity{
+	opacity:0.4;
 }
 
 .close:hover {
@@ -603,6 +626,16 @@ img.logo{
     	max-width:48em;
 }
 
+.box-titles{
+
+margin-left:10px
+}
+
+.box-titles h2{
+font-size:20px;
+
+}
+
 .about-box{
 /**leave distance between sidepanel boxes    margin-bottom: 7px; **/
 	min-width:15em;
@@ -634,6 +667,70 @@ img.logo{
 	  margin-right: 10px;
 }
 
+.about-box .about-profile-pic {
+	  margin-top:10px;
+	  margin-left: 10px;
+	  float: left;
+	  margin-right: 10px;
+}
+
+.profile-counters{
+	color:#717171;
+	font-size:20px;
+	margin-top:20px;
+	padding-right:20px;	
+}
+
+.cogdropdown{
+float:right;
+}
+
+.cogdropdown-menu{
+margin-top:8px;
+left:-13em;
+min-width:240px;
+}
+
+.cogdropdown-menu-dashboard{
+margin-top:-10px;
+}
+
+.coglist{
+    cursor: pointer;
+
+    text-decoration: none;
+}
+
+.coglist a {
+    font-size:14px;
+    clear:both;
+    color: #262626;
+    text-decoration: none;
+    padding: 3px 13px;
+    white-space: nowrap;
+}
+
+.dashboard{
+ margin-top:10px;
+}
+
+.btn-danger {
+	font-size:13px;
+    background-color: #c45146;
+    border-color: #D43F3A;
+    color: #FFFFFF;
+    border-radius:15px; 
+}
+
+.btn-danger:hover{
+background-color: #b9473d;
+}
+
+.badge{
+color:#FFF;
+background-color:#666;
+padding: 3px 6px;
+}
 .about-box .popover {
 	  display: block;
 	  position: static;
@@ -674,6 +771,7 @@ img.logo{
 	border-radius:0px;
 }
 
+
 #boxes .popover-title {
 	text-align:center;
 	text-shadow: 2px 2px 2px #dddddd;
@@ -701,6 +799,24 @@ img.logo{
 	-webkit-border-radius: 50%;
 	-khtml-border-radius: 50%;
 	border-radius: 50%;
+}
+
+.red-heart{
+ color:#b71a1a;
+}
+
+.green-list{
+ color:#2e8736;
+}
+
+.blue-friends{
+ color:#3879b5;
+}
+
+/**** Friend images*****/
+
+.friend_img:hover{
+cursor:pointer;
 }
 
 /****** Index.html ./Sopler *****/
