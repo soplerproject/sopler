@@ -1,0 +1,8 @@
+
+----
+
+This is a modified version of django-social-friends-finder [1] for sopler project [2].
+
+----
+[1] https://github.com/laplacesdemon/django-social-friends-finder
+[2] https://github.com/soplerproject/sopler

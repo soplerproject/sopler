@@ -14,17 +14,17 @@
                   </div>
                   <div class= "col-md-5 col-md-offset-2 visible-md visible-lg">
                       <p style="float:right; margin-top:12px; font-size:15px;">
-		      {% if list.ListOwnerPrvdr == "facebook" or list.ListOwnerPrvd == "twitter" %}
+		      {% if list.ListOwnerPrvdr == "facebook" or list.ListOwnerPrvdr == "twitter" %}
 			{% for user in users %}
 			  {%if list.ListOwner|lower|stringformat:"s" == user.username|lower|stringformat:"s" %}
-			    <i class="fa fa-user"></i> <a href="{{list.ListOwnerLink}}" target="_blank">{{ user.get_full_name | truncatechars:'15'}}</a>&nbsp;&nbsp;&nbsp; 
+			    <i class="fa fa-user"></i> <a href="{{ list.ListOwnerLink }}">{{user.get_full_name | truncatechars:'15'}}</a> &nbsp;&nbsp;&nbsp; 
 			  {% endif %}
 			{% endfor %}
 		      {% else %}
-			  <i class="fa fa-user"></i> <a href="{{list.ListOwnerLink}}" target="_blank">{{ list.ListOwner | truncatechars:'15'}}</a>&nbsp;&nbsp;&nbsp;
+			  <i class="fa fa-user"></i> <a href="{{ list.ListOwnerLink }}">{{ list.ListOwner | truncatechars:'15'}}</a> &nbsp;&nbsp;&nbsp;
 		      {% endif %}
                       <i class="fa fa-heart"></i> {{list|favorites_count}} &nbsp;&nbsp;
-                      <i class="fa fa-clock-o"></i> {{ list.ListPubDate }}
+                      <i class="fa fa-clock-o"></i> {{ list.ListPubDate|date:"M. d, Y, H:i" }}
                       </p>
                   </div>
               </div>
@@ -41,36 +41,56 @@
                   <div id="list_boxes" class="popover bottom roundtop">
                      <div class="popover-title ">
                         <h5 align="left" style="margin: 0 0 0 12px;font-size:1.3em; text-shadow:none;"><i class="fa fa-plus"></i>
-							<span data-l10n-id="add-an-item" style="font-size:1.1em;margin-left:5px;">Add an item</span></h5>
+			<span data-l10n-id="add-an-item" style="font-size:1.1em;margin-left:5px;">Add an item</span></h5>
                      </div>
                      <div class="popover-content ">
                         <div class="form-group">
+
                         {% if user.is_authenticated %}
-                          <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
-                        </div>
-                        <div  class="input-group">
-                          <input data-l10n-id="input-item" id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onfocus="this.select()" onsubmit="this.reset()"/>
-                          <span class="input-group-btn">
-                          <button type="submit" class="btn btn-default" ><i class="fa fa-pencil-square-o"></i></button>
-                          </span>
-                        {% else%}
-                          {% if list.ListAuthOnly = False %}
-                            <input data-l10n-id="enter-username" id="username" type="text" class="form-control" name="ItemOwner" required="required" placeholder="Enter username"/>
-                            <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
-                          </div>
-                          <div  class="input-group">
-                            <input data-l10n-id="input-item" id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onfocus="this.select()" onsubmit="this.reset()"/>
-                            <span class="input-group-btn">
-                            <button type="submit" class="btn btn-default" ><i style=" font-size:1.35em;" class="fa fa-pencil-square-o"></i></button>
-                          {% else%}
-                            <input id="username" type="text" class="form-control" name="ItemOwner" placeholder="(Disabled)" disabled/>
-                          </div>
-                          <div  class="input-group">
-                            <input  id="appendedInputButton" type="text" class="form-control" name="content" placeholder="(Disabled)" disabled/>
-                            <span class="input-group-btn">
-                            <button type="submit" class="btn btn-default" disabled ><i class="fa fa-pencil-square-o"></i></button>
-                          {% endif %}
+			    {% if list.ListIsPrivate = False %}
+				<input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
+				</div>
+				<div  class="input-group">
+				<input data-l10n-id="input-item" id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onfocus="this.select()" onsubmit="this.reset()"/>
+				<span class="input-group-btn">
+				<button type="submit" class="btn btn-default" ><i class="fa fa-pencil-square-o"></i></button>
+				</span>
+			    {% else %}
+				{% if list.ListOwner|lower|stringformat:"s" != user.username|lower|stringformat:"s" or list.ListOwnerPrvdr == "google" and list.ListOwnerFN|lower|stringformat:"s" != account.extra_data.id|lower|stringformat:"s" %}
+				  <div  class="input-group">
+				  <input  id="appendedInputButton" type="text" class="form-control" name="content" placeholder="(Disabled)" disabled/>
+				  <span class="input-group-btn">
+				  <button type="submit" class="btn btn-default" disabled ><i class="fa fa-pencil-square-o"></i></button>
+				  </div>
+				{% else %}
+				  <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
+				  </div>
+				  <div  class="input-group">
+				  <input data-l10n-id="input-item" id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onfocus="this.select()" onsubmit="this.reset()"/>
+				  <span class="input-group-btn">
+				  <button type="submit" class="btn btn-default" ><i class="fa fa-pencil-square-o"></i></button>
+				  </span>
+				{% endif %}
+			    {% endif %}
+			{% else%} 
+			    {% if list.ListAuthOnly = False and list.ListIsPrivate = False %}
+				<input data-l10n-id="enter-username" id="username" type="text" class="form-control" name="ItemOwner" required="required" placeholder="Enter username"/>
+				<input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
+				</div>
+				<div  class="input-group">
+				<input data-l10n-id="input-item" id="appendedInputButton" type="text" class="form-control" name="content" autofocus="autofocus" required="required" placeholder="Add an item" onfocus="this.select()" onsubmit="this.reset()"/>
+				<span class="input-group-btn">
+				<button type="submit" class="btn btn-default" ><i style=" font-size:1.35em;" class="fa fa-pencil-square-o"></i></button>
+			    {% else%}
+				<input id="username" type="text" class="form-control" name="ItemOwner" placeholder="(Disabled)" disabled/>
+				</div>
+				<div  class="input-group">
+				<input  id="appendedInputButton" type="text" class="form-control" name="content" placeholder="(Disabled)" disabled/>
+				<span class="input-group-btn">
+				<button type="submit" class="btn btn-default" disabled ><i class="fa fa-pencil-square-o"></i></button>
+			    {% endif %}
                         {% endif %}
+
                         </div>
                      </div>
                   </div>
@@ -97,193 +117,45 @@
                               <dl class="dl-horizontal"> 
                                  <!-------Visible on mobile only--------->
 				 <dt data-l10n-id="owner" class="visible-xs"><i style="margin-right:5px;" class="fa fa-user"></i>Owner:</dt>
-				{% if list.ListOwnerPrvdr == "facebook" or list.ListOwnerPrvd == "twitter" %}
+				{% if list.ListOwnerPrvdr == "facebook" or list.ListOwnerPrvdr == "twitter" %}
 				  {% for user in users %}
-				    {%if list.ListOwner|lower|stringformat:"s" == user.username|lower|stringformat:"s" %}
-				      <dd class="visible-xs" id="info-dd-mobile"><a href="{{ list.ListOwnerLink }}" target="_blank">{{user.get_full_name | truncatechars:'15'}}</a></dd>
+				    {% if list.ListOwner|lower|stringformat:"s" == user.username|lower|stringformat:"s" %}
+				      <dd class="visible-xs" id="info-dd-mobile"><a href="{{ list.ListOwnerLink }}">{{user.get_full_name | truncatechars:'15'}}</a></dd>
 				    {% endif %}
 				  {% endfor %}
 				{% else %}
-				    <dd class="visible-xs" id="info-dd-mobile"><a href="{{ list.ListOwnerLink }}" target="_blank">{{list.ListOwner | truncatechars:'15'}}</a></dd>
+				    <dd class="visible-xs" id="info-dd-mobile"><a href="{{ list.ListOwnerLink }}">{{list.ListOwner | truncatechars:'15'}}</a></dd>
 				{% endif %}
                                  <dt data-l10n-id="state" class="visible-xs"><i style="margin-right:5px;" class="fa icon-browserid"></i> &nbsp;State:</dt>
                                  <dd class="visible-xs" id="info-dd-mobile">{{ list.ListOwnerState }}</dd>
                                  <dt data-l10n-id="list" class="visible-xs"><i style="margin-right:5px;" class="fa fa-list-ul"></i>List: </dt>
                                  <dd class="visible-xs" id="info-dd-mobile">  {{ list.ListName | truncatechars:'15' }}</dd>
                                  <dt data-l10n-id="created" class="visible-xs"><i style="margin-right:5px;" class="fa fa-clock-o"></i>Created: </dt>
-                                 <dd class="visible-xs" id="info-dd-mobile"> {{list.ListPubDate}}</dd>
+                                 <dd class="visible-xs" id="info-dd-mobile"> {{list.ListPubDate|date:"M. d, Y, H:i"}}</dd>
                                  <!-- Show fav count  -->
                                  <dt data-l10n-id="favorited" class="visible-xs"><i style="margin-right:5px;" class="fa fa-heart"></i>Favorited: </dt>
                                  <dd class="visible-xs" id="info-dd-mobile">{{list|favorites_count}} {% if list|favorites_count == 1 %} time {%else%} times {% endif %}</dd>
                                  <!----------not visible on mobile--------->
                                  <dt data-l10n-id="owner" class="hidden-xs"><i style="margin-right:5px;" class="fa fa-user"></i>Owner:</dt>
 
-				  {% if list.ListOwnerPrvdr == "facebook" or list.ListOwnerPrvd == "twitter" %}
+				  {% if list.ListOwnerPrvdr == "facebook" or list.ListOwnerPrvdr == "twitter" %}
 				    {% for user in users %}
 				      {%if list.ListOwner|lower|stringformat:"s" == user.username|lower|stringformat:"s" %}
-					<dd class="hidden-xs" id="info-dd-nonmobile"><a href="{{ list.ListOwnerLink }}" target="_blank">{{user.get_full_name | truncatechars:'15'}}</a></dd>
+					<dd class="hidden-xs" id="info-dd-nonmobile"><a href="{{ list.ListOwnerLink }}">{{user.get_full_name | truncatechars:'15'}}</a></dd>
 				      {% endif %}
 				    {% endfor %}
 				  {% else %}
-				      <dd class="hidden-xs" id="info-dd-nonmobile"><a href="{{ list.ListOwnerLink }}" target="_blank">{{list.ListOwner | truncatechars:'15'}}</a></dd>
+				      <dd class="hidden-xs" id="info-dd-nonmobile"><a href="{{ list.ListOwnerLink }}">{{list.ListOwner | truncatechars:'15'}}</a></dd>
 				  {% endif %}
                                  <dt data-l10n-id="state" class="hidden-xs"><i style="margin-right:5px;" class="fa icon-browserid"></i>State:</dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile">{{ list.ListOwnerState }}</dd>
                                  <dt data-l10n-id="list" class="hidden-xs"><i style="margin-right:5px;" class="fa fa-list-ul"></i>List: </dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile">  {{ list.ListName | truncatechars:'15' }}</dd>
                                  <dt data-l10n-id="created" class="hidden-xs"><i style="margin-right:5px;" class="fa fa-clock-o"></i>Created: </dt>
-                                 <dd class="hidden-xs" id="info-dd-nonmobile"> {{list.ListPubDate}}</dd>
+                                 <dd class="hidden-xs" id="info-dd-nonmobile"> {{list.ListPubDate|date:"M. d, Y, H:i"}}</dd>
                                  <!-- Show fav count  -->
                                  <dt data-l10n-id="favorited" class="hidden-xs"><i style="margin-right:5px;" class="fa fa-heart"></i>Favorited: </dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile">{{list|favorites_count}} {% if list|favorites_count == 1 %} time {%else%} times {% endif %}</dd>
-                                 
-                                 <!-- ========================================================= -->
-				 <!-- Check Authenticated users's lists                         -->
-				 <!-- ========================================================= -->
-				 
-                                 <p>
-				 {% if user.is_authenticated %}
-				  <div class="accordion-group">
-				    <div class="accordion-heading">
-					<a data-l10n-id="your-lists" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseYourLists">
-					<b>Your Lists </b><span id="yourlist_counter"></span>
-					<span class="caret"></span>
-					</a>
-				    </div>
-				    <div id="CollapseYourLists" class="accordion-body collapse out">
-				    <div class="accordion-inner">
-				    
-				    {% for account in user.socialaccount_set.all %}
-				      {% if account.provider != "google" %}
-					{% regroup lists by ListOwner as ListOwner %}
-					  {% for i in ListOwner %}
-					    {% ifequal i.grouper|lower|stringformat:"s" user.username|lower|stringformat:"s" %}
-					      {% for ListName in i.list %}
-						{% if ListName.ListOwnerState == "confirmed" %}
-						  <ul style="padding-right:10px;" class="list-unstyled">
-						  <li>
-						  <div id="yrlistcount"><dt>&nbsp;&nbsp;<i class="fa fa-list-ul"><small><a href=/lists/{{ListName.slug}} target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt></div>
-						  <dd id="info-dd-nonmobile">
-						  <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate}}</i></dt><dd></dd>
-						  <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
-						  {% csrf_token %}
-						  </small>
-						  <button type="submit" style="margin-right: 5px; margin-top:-32px;" class= "close fa fa-trash-o"></button>
-						  </form></a>
-						  </li></ul>
-						{% endif %}
-					      {% endfor %}
-					    {% endifequal %}
-					  {% endfor %}
-				      {% else %}
-					{% regroup lists by ListOwnerFN as ListOwnerFN %}
-					  {% for i in ListOwnerFN %}
-					    {% ifequal i.grouper|lower|stringformat:"s" account.uid|lower|stringformat:"s" %}
-					      {% for ListName in i.list %}
-						<ul style="padding-right:10px;" class="list-unstyled">
-						<li>
-						<div id="yrlistcount"><dt>&nbsp;&nbsp;<i class="fa fa-list-ul"><small><a href=/lists/{{ListName.slug}} target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt></div>
-						<dd id="info-dd-nonmobile">
-						<dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate}}</i></dt><dd></dd>
-						<form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
-						{% csrf_token %}
-						</small>
-						<button type="submit" style="margin-right: 5px; margin-top:-32px;" class= "close fa fa-trash-o"></button>
-						</form></a>
-						</li></ul>
-					      {% endfor %}
-					    {% endifequal %}
-					  {% endfor %}
-				      {% endif %}
-				    {% endfor %}
-				    
-				    </div>
-				    </div>
-				    </div>
-				    
-			            <!-- ========================================================= -->
-			            <!-- Check Favorite Lists                                      -->
-			            <!-- ========================================================= -->
-			            
-                                    <div class="accordion-group">
-				    <div class="accordion-heading">
-					<a data-l10n-id="your-favorite-lists" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseFavLists">
-					<b>Your Favorite Lists </b><span id="favlist_counter"></span>
-					<span class="caret"></span>
-					</a>
-				    </div>
-				    <div id="CollapseFavLists" class="accordion-body collapse out">
-				    <div class="accordion-inner">
-				    
-				    {% for account in user.socialaccount_set.all %}
-				      {% if account.provider != "google" %}
-					{% regroup lists by slug as slug %}
-					  {% user_favorites user as FavoritedLists %}
-					    {% for j in FavoritedLists %}  <!-- All user's favorites  -->
-					      {% for i in slug %}
-						{% ifequal i.grouper|stringformat:"s" j|stringformat:"s" %}
-						  {% for ListName in i.list %}
-						    {% ifnotequal ListName.ListOwner|lower|stringformat:"s" user.username|lower|stringformat:"s" %}
-						      <ul style="padding-right:10px;" class="list-unstyled">
-						      <li>
-						      <div id="fvlistcount">
-						      {% for user in users %}
-							{% if ListName.ListOwner|lower|stringformat:"s" == user.username|lower|stringformat:"s" %}
-							  <dt>&nbsp;&nbsp;<i class="fa fa-user"><small><a> <b>&nbsp;{{user.get_full_name|truncatechars:20 }} </b></a></i></dt></small>
-							  <dt>&nbsp;&nbsp;<i class="fa fa-list-ul"><small><a href=/lists/{{ListName.slug}} target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt></div>
-							  <dd id="info-dd-nonmobile">
-							  <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate}}</i></dt><dd></dd>
-							  <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
-							  {% csrf_token %}
-							  </small>
-							  </form></a>
-							  </li></ul>
-							{% endif %}
-						      {% endfor %}
-						    {% endifnotequal %}
-						  {% endfor %}
-						{% endifequal %}
-					      {% endfor %}
-					    {% endfor %}
-					  {% else %}
-					    {% regroup lists by slug as slug %}
-					      {% user_favorites user as FavoritedLists %}
-						{% for j in FavoritedLists %}  <!-- All user's favorites  -->
-						  {% for i in slug %}
-						    {% ifequal i.grouper|stringformat:"s" j|stringformat:"s" %}
-						      {% for ListName in i.list %}
-							{% ifnotequal ListName.ListOwnerFN|lower|stringformat:"s" account.uid|lower|stringformat:"s" %}
-							  <ul style="padding-right:10px;" class="list-unstyled">
-							  <li>
-							  <div id="fvlistcount">
-							  <dt>&nbsp;&nbsp;<i class="fa fa-user"><small><a> <b>&nbsp;{{ListName.ListOwner|truncatechars:20 }} </b></a></i></dt></small>
-							  <dt>&nbsp;&nbsp;<i class="fa fa-list-ul"><small><a href=/lists/{{ListName.slug}} target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt></div>
-							  <dd id="info-dd-nonmobile">
-							  <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate}}</i></dt><dd></dd>
-							  <form action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
-							  {% csrf_token %}
-							  </small>
-							  </form></a>
-							  </li></ul>
-							{% endifnotequal %}
-						      {% endfor %}
-						    {% endifequal %}
-						  {% endfor %}
-						{% endfor %}  
-					{% endif %}
-  				     {% endfor %}
-  				     				    
-				    </div>
-
-				    </div>
-				    </div>    
-
-				  {% else %}
-				  
-				    <!-- Do nothing.. yet!! -->
-				    
-				  {% endif %}
-                                 
                               </dl>
                            </div>
                         </div>
@@ -303,8 +175,8 @@
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#share_collapse">
                            <div class="accordion-heading popover-title list_box">
                               <h5 data-l10n-id="share-sidepanel" style="color: #484848; margin: 0 0 7px 8px;font-size:1.4em; text-shadow:none;"><i class="icon-share-simple"></i>
-								Share
-								<button class="btn btn-default box_button" ><i class="fa fa-chevron-down"></i> </button></h5>
+				Share
+			      <button class="btn btn-default box_button" ><i class="fa fa-chevron-down"></i> </button></h5>
                            </div>
                         </a>
                         <div id="share_collapse" class="accordion-body collapse">
@@ -392,7 +264,43 @@
       }
    </script>
 <!------------------List Box----------------------->
-   {% if list.ListAuthOnly = True %}
+
+  {% if list.ListIsPrivate = True %}
+     {% if user.is_authenticated %}
+      {% for account in user.socialaccount_set.all %}
+	{% if list.ListOwner|lower|stringformat:"s" == user.username|lower|stringformat:"s" or list.ListOwnerPrvdr == "google" and list.ListOwnerFN|lower|stringformat:"s" == account.extra_data.id|lower|stringformat:"s" %}
+	  {% include "pages/auth.html"%}
+	{% else %}
+	  <div class="col-md-8">
+	      <div class="listbox">
+		<div style="margin-left:0;" class="empty_list">
+		    <br>
+		    <div><i class="fa fa-exclamation-triangle"></i></div>
+		    <h4 data-l10n-id="authentication-needed" >List is Private</h4>
+		    <span data-l10n-id="authentication-needed2">The owner wants this list private!</span>
+		</div>
+	      </div>
+	  </div>
+	  </div>
+	</div>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+      <div class="col-md-8">
+	  <div class="listbox">
+	    <div style="margin-left:0;" class="empty_list">
+		<br>
+		<div><i class="fa fa-exclamation-triangle"></i></div>
+		<h4 data-l10n-id="authentication-needed" >List is Private</h4>
+		<span data-l10n-id="authentication-needed2">The owner wants this list private!</span>
+	    </div>
+	  </div>
+      </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% elif list.ListAuthOnly = True %}
       {% if user.is_authenticated %}
 	{% include "pages/auth.html"%}
       {% else %}
@@ -408,12 +316,13 @@
 	</div>
 	</div>
       </div>
-      {% endif %}
-    {% else %}
+    {% endif %}
+  {% else %}
       {% if user.is_authenticated %}
 	{% include "pages/auth.html"%}
       {% else %}
 	{% include "pages/nonauth.html"%}
       {% endif %}
-    {% endif %}
+  {% endif %}
+
 {% endblock %}

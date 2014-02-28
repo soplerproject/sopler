@@ -48,8 +48,26 @@
 
                <script type="text/javascript">  
                   $(function ()  
-                    { $("#besync_popover").popover();  
+                    { 
+						$("#besync_popover").popover();  
+
                     });  
+                    
+					        </script>
+					        
+					<!----- Hide popovers when clicking outside of them---->
+			   <script type="text/javascript">  
+				 $(document).ready(function(){ 
+					$('body').on('click', function (e) {
+						$('[data-toggle="popover"]').each(function () {
+							//the 'is' for buttons that trigger popups
+							//the 'has' for icons within a button that triggers a popup
+							if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+								$(this).popover('hide');
+							}
+						});
+					});
+				 });
                </script>
                
                <!---Apply fitvids.js on the video of the How-top page--->
@@ -58,7 +76,8 @@
         		      $("#how_to_video").fitVids();  
 		       });
 	       </script>
-	       
+	 
+
 	      <!-- Count comments -->
 	      <script type="text/javascript">
 	      var time = 100; // Change this if you want
@@ -214,6 +233,7 @@
 	      
 	      
                {% if user.is_authenticated %}
+
 		<!-- Count previous lists-->
 		<script type="text/javascript">
 		    var time = 100; // Change this if you want
@@ -221,21 +241,38 @@
 			setInterval(function(){
 			  var yrlstcount = $('div[id*="yrlistcount"]').length;
 			  if (yrlstcount > 0){
-			    document.getElementById("yourlist_counter").innerHTML = "("+yrlstcount+")"; 
+			   $('#yourlist_counter').html(yrlstcount);
+			   $('#yourlist_counter_responsive').html(yrlstcount);
 			  }else{
-			    document.getElementById("yourlist_counter").innerHTML = "";}
+			    $('#yourlist_counter').html("0");
+			    $('#yourlist_counter_responsive').html("0");
+			    }
 			},time);
 		    });
 		    $(window).load(function (){
 			setInterval(function(){
 			  var fvlstcount = $('div[id*="fvlistcount"]').length;
 			  if (fvlstcount > 0){
-			    document.getElementById("favlist_counter").innerHTML = "("+fvlstcount+")"; 
+			    $('#favlist_counter').html(fvlstcount);
+			     $('#favlist_counter_reponsive').html(fvlstcount);
 			  }else{
-			    document.getElementById("favlist_counter").innerHTML = "";}
+			    $('#favlist_counter').html("0");
+			    $('#favlist_counter_reponsive').html("0");
+			    }
 			},time);
 		    });	    
-		    
+		    $(window).load(function (){
+			setInterval(function(){
+			  var frndcount = $('div[id*="frndcount"]').length;
+			  if (frndcount > 0){
+			    $('#friend_counter').html(frndcount);
+			    $('#friend_counter_reponsive').html(frndcount);
+			  }else{
+			    $('#friend_counter').html("0");
+			    $('#friend_counter_reponsive').html("0");
+			    }
+			},time);
+		    });	
 		</script>
                {% endif %}
                
@@ -281,27 +318,27 @@
 			    {% for account in user.socialaccount_set.all %}
 			          <!-- Facebook -->
 				  {% if account.provider == "facebook" %}
-				    <li><p class="navbar-text hello hidden-xs ">Hi, {{user.first_name | truncatechars:'18' }} {{ user.last_name | slice:'1' }}</p></li>
+				    <li><p class="navbar-text hello hidden-xs ">Hi, <a href="/home">{{user.first_name | truncatechars:'18' }} {{ user.last_name | slice:'1' }}</a></p></li>
 				    <!-------Visible on mobile only--------->
-				    <li><p class="navbar-text hello visible-xs ">Hi, {{user.first_name | truncatechars:'11' }} {{ user.last_name | slice:'1' }}</p></li>
-				    <li class="hello" ><img class="hidden-xs " src=https://graph.facebook.com/{{user.socialaccount_set.all.0.uid}}/picture?type=large width="30" height="30"></li>  
+				    <li><p class="navbar-text hello visible-xs ">Hi, <a href="/home"> {{user.first_name | truncatechars:'11' }} {{ user.last_name | slice:'1' }}</a></p></li>
+				    <li class="hello" ><img class="hidden-xs " src=https://graph.facebook.com/{{user.socialaccount_set.all.0.uid}}/picture width="30" height="30"></li>  
 				  <!-- Twitter -->
 				  {% elif account.provider == "twitter" %}
-				    <li><p class="navbar-text hello hidden-xs ">Hi, {{ user.username | truncatechars:'20' }}</p></li>
+				    <li><p class="navbar-text hello hidden-xs ">Hi, <a href="/home">{{ user.username | truncatechars:'20' }}</a></p></li>
 				    <!-------Visible on mobile only--------->
-				    <li><p class="navbar-text hello visible-xs ">Hi, {{ user.username | truncatechars:'14' }}</p></li>
+				    <li><p class="navbar-text hello visible-xs ">Hi, <a href="/home">{{ user.username | truncatechars:'14' }}</a></p></li>
 				    <li class="hello" ><img class="hidden-xs " src={{user.socialaccount_set.all.0.extra_data.profile_image_url_https}} width="30" height="30"></li>
 				  <!-- Google -->
 				  {% elif account.provider == "google" %}
-				    <li><p class="navbar-text hello hidden-xs ">Hi, {{user.first_name | truncatechars:'18' }} {{ user.last_name | slice:'1' }}</p></li>
+				    <li><p class="navbar-text hello hidden-xs ">Hi, <a href="/home">{{user.first_name | truncatechars:'18' }} {{ user.last_name | slice:'1' }}</a></p></li>
 				    <!-------Visible on mobile only--------->
-				    <li><p class="navbar-text hello visible-xs ">Hi, {{user.first_name | truncatechars:'11' }} {{ user.last_name | slice:'1' }}</p></li>
+				    <li><p class="navbar-text hello visible-xs ">Hi, <a href="/dashboard">{{user.first_name | truncatechars:'11' }} {{ user.last_name | slice:'1' }}</a></p></li>
 				    <li class="hello" ><img class="hidden-xs " src={{user.socialaccount_set.all.0.get_avatar_url}} width="30" height="30"></li>
 				  <!-- Mozilla Persona -->
 				  {% else %}
-				    <li><p class="navbar-text hello hidden-xs ">Hi, {{user.username | truncatechars:'20' }}</p></li>
+				    <li><p class="navbar-text hello hidden-xs ">Hi, <a href="/home">{{user.username | truncatechars:'20' }}</a></p></li>
 				     <!-------Visible on mobile only--------->
-				    <li><p class="navbar-text hello visible-xs">Hi, {{ user.username | truncatechars:'14'  }}</p></li>
+				    <li><p class="navbar-text hello visible-xs">Hi, <a href="/home">{{ user.username | truncatechars:'14'  }}</a></p></li>
 				    <li class="hello"><img class="hidden-xs " src=/static/buttons/Persona.png width="30" height="30" /></li>
 			          {% endif %}
 				  <button data-l10n-id="signout" type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign Out</button>

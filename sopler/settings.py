@@ -21,6 +21,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # Enable the browser’s XSS filtering protections.
 SECURE_BROWSER_XSS_FILTER = True
 
+SOCIAL_FRIENDS_USING_ALLAUTH = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -40,6 +41,8 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default.
     }
 }
+
+
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -182,6 +185,8 @@ INSTALLED_APPS = (
     #'south',
     'favit',
     'tastypie',
+    # Fetches your friends from different social-networks.
+    'social_friends_finder',
 )
 
 # A sample logging configuration. The only tangible logging

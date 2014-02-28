@@ -1,0 +1,537 @@
+{% block content %}
+{% load staticfiles %}
+{% load favit_tags %}
+{% load core_tags %} 
+{% load favit_tags %} 
+{% load online_status_tags %} 
+
+<div class="row">
+
+  <!-- ========================================================= -->
+  <!-- Create a list                            		 -->
+  <!-- ========================================================= -->
+
+ <div class="col-lg-4 dashboard">
+      <div class="about-box ">
+	<div style="max-width:none;" class="popover bottom roundall">
+	  <div class="popover-title">
+            <h2  class="box-titles" style="font-size:20px;text-shadow:none;"><span data-l10n-id="create-a-list" style="color:#757575;">Lists</span><br></h2>
+         </div>
+         <div class="popover-content">
+	     <form class="validate-form" action="{% url 'sopler:AddList' %}" method="post">
+	      {% csrf_token %}
+	      <input style="margin-bottom: 10px;" data-l10n-id="give-it-a-name" type="text" class="sign-up-input" name="ListName" required="required" placeholder="Give it a name!"> 
+		<div  align=left class="accordion" id="accordion2">
+		    <div class="accordion-group">
+		      <div class="accordion-heading">
+			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseExtraOptions">
+			  <b><i class="fa fa-cog"></i> Extra options</b>
+			  <span class="caret"></span>
+			  </a>
+		      </div>
+		      <div id="CollapseExtraOptions" class="accordion-body collapse out">
+			  <div class="accordion-inner">
+			    <div class="checkbox">
+				<label>
+				<input data-l10n-id="allow-authenticated-users-only" type="checkbox" name="ListAuthOnly">
+				<small> Allow authenticated users only. </small>
+				</label>
+			    </div>
+			  </div>
+			    <div class="checkbox">
+				<label>
+				<input data-l10n-id="set-this-list-as-private" type="checkbox" name="ListIsPrivate">
+				<small> Set this list as private. </small>
+				</label>
+			    </div>
+		      </div>
+	        <input style="max-width:300px;" data-l10n-id="start" type="submit" value="Start!" class="sign-up-button center-block">
+            </form>
+	      </div>
+	     </div>
+         </div>
+         <span id="error"></span>
+         </div>
+      </div></div>
+
+  <!-- ========================================================= -->
+  <!-- Profile                                  		 -->
+  <!-- ========================================================= -->
+
+   <div class="col-lg-8 dashboard">
+      <div class="about-box">
+         <div style="max-width:none;" class="popover bottom roundall">
+            <h2 class="popover-title">
+				
+               <div style="margin-bottom:20px;" class="row">
+               <div class="col-lg-3">
+	       <center>
+               <div style="float:none;" class="about-profile-pic">
+
+	      {% for account in user.socialaccount_set.all %}
+	      <!-- Facebook -->
+	      {% if account.provider == "facebook" %}
+		<img style="border-radius: 45px;-moz-border-radius: 45px;-khtml-border-radius: 45px;-webkit-border-radius: 45px;" src=https://graph.facebook.com/{{user.socialaccount_set.all.0.uid}}/picture?type=large width="95" height="95"/>
+		<!-- Twitter -->
+		{% elif account.provider == "twitter" %}
+		<img style="border-radius: 45px;-moz-border-radius: 45px;-khtml-border-radius: 45px;-webkit-border-radius: 45px;" src={{account.extra_data.profile_image_url_https|replace:'/_normal/'}} width="95" height="95"/>
+		<!-- Google -->
+		{% elif account.provider == "google" %}
+		<img style="border-radius: 45px;-moz-border-radius: 45px;-khtml-border-radius: 45px;-webkit-border-radius: 45px;" src={{user.socialaccount_set.all.0.get_avatar_url}} width="95" height="95"/>
+		<!-- Mozilla Persona -->
+		{% else %}
+		<img style="border-radius: 45px;-moz-border-radius: 45px;-khtml-border-radius: 45px;-webkit-border-radius: 45px;" src=/static/buttons/Persona.png width="95" height="95"/>
+		{% endif %}
+
+		</div>
+		</center>
+		</div>
+
+		<div class="col-lg-9 visible-lg">
+		{% if account.provider == "persona" %}
+		  <h3 style="color:#505050;">{{user.username}}</h3>
+		{% else %}
+		  <h3 style="color:#505050;">{{user.get_full_name}}</h3>
+		{% endif %}
+		<h4 class="profile-counters">
+		<i class="fa fa-list-ul green-list"></i> <span class="green-list" id="yourlist_counter"></span>&nbsp;&nbsp;&nbsp;
+		<i style="margin-left:10px;" class="fa fa-heart red-heart"></i> <span class="red-heart" id="favlist_counter"></span>&nbsp;&nbsp;&nbsp;
+		<i style="margin-left:10px;" class="fa fa-group blue-friends"></i> <span class="blue-friends" id="friend_counter"></span>
+		</h4>
+		</div>
+		<div class="col-lg-9 hidden-lg">
+		<center>
+		{% if account.provider == "persona" %}
+		  <h3 style="color:#505050;">{{user.username}}</h3>
+		{% else %}
+		  <h3 style="color:#505050;">{{user.get_full_name}}</h3>
+		{% endif %}
+		<h4 class="profile-counters">
+		<i class="fa fa-list-ul green-list"></i> <span class="green-list" id="yourlist_counter_responsive"></span>&nbsp;&nbsp;&nbsp;
+		<i style="margin-left:10px;" class="fa fa-heart red-heart"></i> <span class="red-heart" id="favlist_counter_reponsive"></span>&nbsp;&nbsp;&nbsp;
+		<i style="margin-left:10px;" class="fa fa-group blue-friends"></i> <span class="blue-friends" id="friend_counter_reponsive"></span>
+		</h4>
+		</center>
+		</div>
+	      {% endfor %}
+             </div>
+            </h2>
+	 </div>
+      </div>
+   </div>
+
+
+</div>
+
+<div class="row">
+
+  <!-- ========================================================= -->
+  <!-- Your Lists                                		 -->
+  <!-- ========================================================= -->
+
+   <div class="col-lg-4 dashboard">
+      <div class="about-box">
+         <!-- Profile info -->
+         <div  style="max-width:none;" class="popover bottom roundall">
+            
+            <h2 class="popover-title green-list">
+               <small style="margin-left:10px;color:#757575;"><span class="green-list" style="margin-right:3px;"><i class="fa fa-list-ul"></i></span> Lists</small><br>
+              
+            </h2>
+            <div class="popover-content" id="team">
+		{% for account in user.socialaccount_set.all %}
+		  {% if account.provider != "google" %}
+		    {% regroup lists by ListOwner as ListOwner %}
+		      {% for i in ListOwner %}
+			{% ifequal i.grouper|lower|stringformat:"s" user.username|lower|stringformat:"s" %}
+			  {% for ListName in i.list %}
+			    {% if ListName.ListOwnerState == "confirmed" %}
+			      <ul style="padding-right:10px;" class="list-unstyled">
+			      <li>
+			      <small>
+			      <div id="yrlistcount"><dt><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></dt></div>
+			      <dd id="info-dd-nonmobile">
+			      <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i> &nbsp; <i class="fa fa-heart">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
+			      <div class="dropdown cogdropdown">
+			      <span id="dropdownMenu" data-toggle="dropdown">
+				<button style="padding: 2px 6px; white-space:normal; margin-top:-22px; float:right;" class="btn btn-default"><i style="font-size:16px;color:#666;"class="fa fa-cog"></i></button>
+			      </span>
+			      <ul class="dropdown-menu cogdropdown-menu cogdropdown-menu-dashboard" role="menu" aria-labelledby="dropdownMenu">
+
+			      <!-- Set List AuthOnly -->
+			      {% if ListName.ListAuthOnly == True %}
+				<form id="{{ListName.slug}}_authonly" action="{% url 'sopler:SetAuthOnly' ListName.slug %}" method="post" >
+				  {% csrf_token %}
+				  <input type="hidden" name="slug" value="{{ ListName.slug }}" />
+			          <li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_authonly'].submit();" role="presentation"><a style="text-decoration:none;"role="menuitem" tabindex="-1" href="#"><i class="fa fa-group fa-fw"></i>Authenticated users only</a><i class="fa fa-check"></i></li>
+				</form>
+			      {% else %}
+				  <form id="{{ListName.slug}}_authonly2" action="{% url 'sopler:SetAuthOnly' ListName.slug %}" method="post" >
+				  {% csrf_token %}
+				  <input type="hidden" name="slug" value="{{ ListName.slug }}" />
+				  <li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_authonly2'].submit();" role="presentation"><a style="text-decoration:none;"role="menuitem" tabindex="-1" href="#"><i class="fa fa-group fa-fw"></i>Authenticated users only</a></li>
+
+				</form>
+			      {% endif %}
+			     <!-- ------------- -->
+
+			      <li role="presentation" class="divider"></li>
+
+			       <!-- Set List Private -->
+			      {% if ListName.ListIsPrivate == True %}
+			        <form id="{{ListName.slug}}_privacy" action="{% url 'sopler:SetItPrivate' ListName.slug %}" method="post" >
+				{% csrf_token %}
+				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_privacy'].submit();" role="presentation"><a style="text-decoration:none;"role="menuitem" tabindex="-1" href="#"><i class="fa fa-ban fa-fw"></i>Private</a><i class="fa fa-check"></i></li>
+			        </form>
+			      {% else %}
+			        <form id="{{ListName.slug}}_privacy2" action="{% url 'sopler:SetItPrivate' ListName.slug %}" method="post" >
+				{% csrf_token %}
+				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_privacy2'].submit();" role="presentation"><a style="text-decoration:none;"role="menuitem" tabindex="-1" href="#"><i class="fa fa-ban fa-fw"></i>Private</a></li>
+			        </form>
+			     {% endif %}
+			     <!-- ------------- -->
+
+			     <li role="presentation" class="divider"></li>
+			     <form id="{{ListName.slug}}_listdelete" action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
+			      {% csrf_token %}
+			      <li class="coglist"  onclick="javascript:document.forms['{{ListName.slug}}_listdelete'].submit();" role="presentation"> <a style="text-decoration:none;"role="menuitem" tabindex="-1" href="#"><i class="fa fa-trash-o fa-fw"></i>Delete</a></i></li>
+			     </form>
+			     </ul>
+			     </div>
+			     </small>
+			     </li>		      
+			     </ul>
+			    {% endif %}
+			  {% endfor %}
+			{% endifequal %}
+		      {% endfor %}
+		  {% else %}
+		    {% regroup lists by ListOwnerFN as ListOwnerFN %}
+		      {% for i in ListOwnerFN %}
+			{% ifequal i.grouper|lower|stringformat:"s" account.uid|lower|stringformat:"s" %}
+			  {% for ListName in i.list %}
+			    {% if ListName.ListOwnerState == "confirmed" %}
+			      <ul style="padding-right:10px;" class="list-unstyled">
+			      <li>
+			      <small>
+			      <div id="yrlistcount"><dt><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></dt></div>
+			      <dd id="info-dd-nonmobile">
+			      <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i> &nbsp; <i class="fa fa-heart">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
+			      <div class="dropdown cogdropdown">
+			      <span id="dropdownMenu" data-toggle="dropdown">
+			      				<button style="padding: 2px 6px; white-space:normal; margin-top:-22px; float:right;" class="btn btn-default"><i style="font-size:16px;color:#666;"class="fa fa-cog"></i></button>
+			      </span>
+			      <ul class="dropdown-menu cogdropdown-menu cogdropdown-menu-dashboard" role="menu" aria-labelledby="dropdownMenu">
+
+			      <!-- Set List AuthOnly -->
+			      {% if ListName.ListAuthOnly == True %}
+				<form id="{{ListName.slug}}_authonly" action="{% url 'sopler:SetAuthOnly' ListName.slug %}" method="post" >
+				  {% csrf_token %}
+				  <input type="hidden" name="slug" value="{{ ListName.slug }}" />
+			          <li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_authonly'].submit();" role="presentation"><a style="text-decoration:none;"role="menuitem" tabindex="-1" href="#"><i class="fa fa-group fa-fw"></i>Authenticated users only</a><i class="fa fa-check"></i></li>
+				</form>
+			      {% else %}
+				  <form id="{{ListName.slug}}_authonly2" action="{% url 'sopler:SetAuthOnly' ListName.slug %}" method="post" >
+				  {% csrf_token %}
+				  <input type="hidden" name="slug" value="{{ ListName.slug }}" />
+				  <li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_authonly2'].submit();" role="presentation"><a style="text-decoration:none;"role="menuitem" tabindex="-1" href="#"><i class="fa fa-group fa-fw"></i>Authenticated users only</a></li>
+
+				</form>
+			      {% endif %}
+			     <!------------------------>
+
+			      <li role="presentation" class="divider"></li>
+
+			       <!-- Set List Private -->
+			      {% if ListName.ListIsPrivate == True %}
+			        <form id="{{ListName.slug}}_privacy" action="{% url 'sopler:SetItPrivate' ListName.slug %}" method="post" >
+				{% csrf_token %}
+				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_privacy'].submit();" role="presentation"><a style="text-decoration:none;"role="menuitem" tabindex="-1" href="#"><i class="fa fa-ban fa-fw"></i>Private</a><i class="fa fa-check"></i></li>
+			        </form>
+			      {% else %}
+			        <form id="{{ListName.slug}}_privacy2" action="{% url 'sopler:SetItPrivate' ListName.slug %}" method="post" >
+				{% csrf_token %}
+				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_privacy2'].submit();" role="presentation"><a style="text-decoration:none;"role="menuitem" tabindex="-1" href="#"><i class="fa fa-ban fa-fw"></i>Private</a></li>
+			        </form>
+			     {% endif %}
+			     <!----------------------->
+
+			     <li role="presentation" class="divider"></li>
+			     <form id="{{ListName.slug}}_listdelete" action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
+			      {% csrf_token %}
+			      <li class="coglist"  onclick="javascript:document.forms['{{ListName.slug}}_listdelete'].submit();" role="presentation"> <a style="text-decoration:none;"role="menuitem" tabindex="-1" href="#"><i class="fa fa-trash-o fa-fw"></i>Delete</a></i></li>
+			     </form>
+			     </ul>
+			     </div>
+			     </small>
+			     </li>		      
+			     </ul>
+			    {% endif %}
+			  {% endfor %}
+			{% endifequal %}
+		      {% endfor %}
+		  {% endif %}
+		{% endfor %}
+            </div>
+         </div>
+      </div>
+   </div>
+   
+
+  <!-- ========================================================= -->
+  <!-- Favorited Lists                                           -->
+  <!-- ========================================================= -->
+
+   <div class="col-lg-4 dashboard">
+      <div class="about-box">
+         <!-- Profile info -->
+         <div style="max-width:none;" class="popover bottom roundall">
+            <h2 class="popover-title">
+               <small class="red-heart"style="margin-left:10px;color:#757575"><span class="red-heart" style="margin-right:3px;"><i class="fa fa-heart"></i></span> Favorite Lists</small><br>
+            </h2>     
+            <div class="popover-content" id="team">
+              <div class="accordion-group">
+	      <div class="accordion-heading">
+	      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseFavLists">
+	      </a>
+	      </div>
+	      {% for account in user.socialaccount_set.all %}
+		{% if account.provider != "google" %}
+		  {% regroup lists by slug as slug %}
+		    {% user_favorites user as FavoritedLists %}
+		      {% for j in FavoritedLists %}
+			{% for i in slug %}
+			  {% if i.grouper|stringformat:"s" == j|stringformat:"s" %}
+			    {% for ListName in i.list %}
+			      {% if ListName.ListOwner|lower|stringformat:"s" != user.username|lower|stringformat:"s" %}
+				{% for user in users %}
+				  {% for account in user.socialaccount_set.all %}
+				    {% if ListName.ListOwner|lower|stringformat:"s" == user.username|lower|stringformat:"s" or ListName.ListOwnerPrvdr == "google" and ListName.ListOwnerFN|lower|stringformat:"s" == account.extra_data.id|lower|stringformat:"s" %}
+				    <ul style="padding-right:10px;" class="list-unstyled">
+				    <li>
+				    <div id="fvlistcount">
+				    {% if ListName.ListOwnerPrvdr != "persona" %}
+					<dt>&nbsp;&nbsp;<i class="fa fa-user"><small><a> <b>&nbsp;{{user.get_full_name|truncatechars:20 }} </b></a></i></dt></small>
+				    {%else%}
+					<dt>&nbsp;&nbsp;<i class="fa fa-user"><small><a> <b>&nbsp;{{user.username|truncatechars:20 }} </b></a></i></dt></small>
+				    {%endif%}
+				    <dt style="margin-left:27px;"><small><a href="/lists/{{ListName.slug}}" target="_blank"> <b>{{ListName|truncatechars:20 }} </b></a></dt></div>
+				    <dd id="info-dd-nonmobile">
+				    <dt style="margin-left:27px;">
+                                    <i class="fa fa-clock-o">&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i> 
+
+				    <!-- Undo Favorite -->
+				    {% if FavoritedLists %}
+				    <div class="dropdown cogdropdown">
+				    <span id="dropdownMenufav" data-toggle="dropdown">
+				    <button style="padding: 3px 6px; white-space:normal; margin-top:-13px; float:right;" class="btn btn-default"><i style="color:#666;" class="fa fa-heart">&nbsp;&nbsp;<span class="badge pull-right">{{ListName|favorites_count}}</span></i></button>
+				    </span>
+				    <ul class="dropdown-menu cogdropdown-menu-dashboard" style="left: -8em;" role="menu" aria-labelledby="dropdownMenufav">
+				    <form id="{{ListName.slug}}_favdelete" action="{% url 'sopler:favit' ListName.slug %}" method="post" >
+				    {% csrf_token %}
+				    <input type="hidden" name="slug" value="{{ ListName.slug }}" />
+				    <li class="coglist"  onclick="javascript:document.forms['{{ListName.slug}}_favdelete'].submit();" role="presentation"> <a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-trash-o fa-fw"></i>Remove</a></i></li>
+				    </form>
+				    </ul>
+				    </div>
+
+				    {% else %}
+				    {% endif %}
+				    <!------------------>
+
+                                    </dt><dd></dd>
+				    </small>
+				    </form></a>
+				    </li></ul>
+				    {% endif %}
+				  {% endfor %}
+				{% endfor %}
+			      {% endif %}
+			    {% endfor %}
+			  {% endif %}
+			{% endfor %}
+		      {% endfor %}
+		    {% else %}
+		      {% regroup lists by slug as slug %}
+			{% user_favorites user as FavoritedLists %}
+			  {% for j in FavoritedLists %} 
+			    {% for i in slug %}
+			      {% if i.grouper|stringformat:"s" == j|stringformat:"s" %}
+				{% for ListName in i.list %}
+				  {% if ListName.ListOwnerFN|lower|stringformat:"s" != account.uid|lower|stringformat:"s" %}
+				    {% for user in users %}
+				      {% if ListName.ListOwner|lower|stringformat:"s" == user.username|lower|stringformat:"s" or ListName.ListOwnerPrvdr == "google" and ListName.ListOwner|lower|stringformat:"s" == user.username|full_name|lower|stringformat:"s" %}
+					<ul style="padding-right:10px;" class="list-unstyled">
+					<li>
+					<div id="fvlistcount">
+					{% if ListName.ListOwnerPrvdr != "persona" %}
+					    <dt>&nbsp;&nbsp;<i class="fa fa-user"><small><a> <b>&nbsp;{{user.get_full_name|truncatechars:20 }} </b></a></i></dt></small>
+					{% else %}
+					    <dt>&nbsp;&nbsp;<i class="fa fa-user"><small><a> <b>&nbsp;{{user.username|truncatechars:20 }} </b></a></i></dt></small>
+					{%endif%}
+					<dt style="margin-left:27px;"><small><a href="/lists/{{ListName.slug}}" target="_blank"> <b>{{ListName|truncatechars:20 }} </b></a></dt></div>
+					<dd id="info-dd-nonmobile">
+					<dt style="margin-left:27px;">
+					<i class="fa fa-clock-o">&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i> 
+
+					<!-- Undo Favorite -->
+					{% if FavoritedLists %}
+					<div class="dropdown cogdropdown">
+					<span id="dropdownMenufav" data-toggle="dropdown">
+					<button style="padding: 3px 6px; white-space:normal; margin-top:-13px; float:right;" class="btn btn-default"><i style="color:#666;"class="fa fa-heart">&nbsp;&nbsp;<span class="badge pull-right">{{ListName|favorites_count}}</span></i></button>
+					</span>
+					<ul class="dropdown-menu cogdropdown-menu-dashboard" style="left: -8em;" role="menu" aria-labelledby="dropdownMenufav">
+					<form id="{{ListName.slug}}_favdelete" action="{% url 'sopler:favit' ListName.slug %}" method="post" >
+					{% csrf_token %}
+				        <input type="hidden" name="slug" value="{{ ListName.slug }}" />
+					<li class="coglist"  onclick="javascript:document.forms['{{ListName.slug}}_favdelete'].submit();" role="presentation"> <a style="text-decoration:none;"role="menuitem" tabindex="-1" href="#"><i class="fa fa-trash-o fa-fw"></i>Remove</a></i></li>
+					</form>
+					</ul>
+					</div>
+				      {% else %}
+				    {% endif %}
+				    <!-- ------------- -->
+
+                                    </dt><dd></dd>
+				    </small>
+				    </form></a>
+				    </li></ul>
+				      {% endif %}
+				    {% endfor %}
+				  {% endif %}
+				{% endfor %}
+			      {% endif %}
+			    {% endfor %}
+			  {% endfor %}  
+		  {% endif %}
+		{% endfor %}
+	      </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   
+  <!-- ========================================================= -->
+  <!-- Friends 		                                         -->
+  <!-- ========================================================= -->
+
+   <div class="col-lg-4 dashboard">
+      <div class="about-box">
+         <!-- Profile info -->
+         <div style="max-width:none;" class="popover bottom roundall">
+            <h2 class="popover-title">
+               <small style="margin-left:10px; color:#757575"><span  class="blue-friends"  style=" margin-right:3px;"><i class="fa fa-group"></i></span> Friends</small><br>
+            </h2>
+            <div class="popover-content" id="team">
+
+	      {% if not friends %}    
+		{% for provider in connected_providers %}
+		  {% if provider == "google" or provider == "persona" %}
+		    <i>We are sorry but, there's not yet support for friends on {{ provider }} accounts </i>.
+		  {% else %}
+		     <i>Oups, none of your (<b>{{ provider }}</b>) friends are using sopler! Invite them now.</i>
+		  {% endif %}
+		{% endfor %}
+
+	      {% else %}
+		{% for provider in connected_providers %}
+		  {% for user in users %}
+		      {% for account in user.socialaccount_set.all %}
+		      {% for friend in friends %}
+			{% if user == friend %}
+
+			    <!-------- Facebook Friends --------->
+			    {% if provider == "facebook" %}
+			      <img class="friend_img" data-toggle="modal" data-target="#{{user.get_full_name|cut:' '|lower|stringformat:'s'}}" src="https://graph.facebook.com/{{user.username}}/picture" width="46" height="46"/>
+			      <div class="modal fade" id="{{user.get_full_name|cut:' '|lower|stringformat:'s'}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				  <div class="modal-content">
+				    <div class="modal-header">
+				      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				      <h4 class="modal-title" id="myModalLabel">Check {{user.get_full_name}}'s Public Lists</h4>
+				    </div>
+				    <div id="frndcount" class="modal-body">
+				    {% regroup lists by ListOwner as ListOwner %}
+				    {% for i in ListOwner %}
+				      {% ifequal i.grouper|lower|stringformat:"s" user.username|lower|stringformat:"s" %}
+					{% for ListName in i.list %}
+					  {% if ListName.ListOwnerState == "confirmed" and ListName.ListIsPrivate = False %}
+					    <ul style="padding-right:10px;" class="list-unstyled">
+					    <li>
+					    <dt><small><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt>
+					    <dd id="info-dd-nonmobile">
+					    <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i> &nbsp;<i class="fa fa-heart">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
+					    </small>
+					    </form></a>
+					    </li></ul>
+					  {% endif %}
+					{% endfor %}
+				      {% endifequal %}
+				    {% endfor %}
+				  </div>
+				  <div class="modal-footer">
+				    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				  </div>
+				</div>
+			      </div>
+			      </div>
+			    <!---------------------------------->
+
+			  <!-------- Twitter Friends --------->
+			  {% elif provider == "twitter" %}
+			    <img class="friend_img" data-toggle="modal" data-target="#{{user.username}}" src="{{ account.extra_data.profile_image_url_https|replace:'/_normal/' }}" width="46" height="46"/>
+			    <div class="modal fade" id="{{user.username}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			      <div class="modal-dialog">
+				<div class="modal-content">
+				  <div class="modal-header">
+				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				    <h4 class="modal-title" id="myModalLabel">Check @{{user.username}}'s Public Lists</h4>
+				  </div>
+				  <div id="frndcount" class="modal-body">
+				  {% regroup lists by ListOwner as ListOwner %}
+				  {% for i in ListOwner %}
+				    {% ifequal i.grouper|lower|stringformat:"s" user.username|lower|stringformat:"s" %}
+				      {% for ListName in i.list %}
+					{% if ListName.ListOwnerState == "confirmed" and ListName.ListIsPrivate = False %}
+					  <ul style="padding-right:10px;" class="list-unstyled">
+					  <li>
+					  <dt><small><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt>
+					  <dd id="info-dd-nonmobile">
+					  <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i>&nbsp;<i class="fa fa-heart">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
+					  </small>
+					  </form></a>
+					  <dt>&nbsp;</dt><dd></dd>
+					  </li></ul>
+					{% endif %}
+				      {% endfor %}
+				    {% endifequal %}
+				  {% endfor %}
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			      </div>
+			    </div>
+			    </div>
+			   <!---------------------------------->
+
+			  {% else %}
+			    <!-- do nothing here -->
+			{% endif %}
+		       {% endif %}
+		      {% endfor %}
+		  {% endfor %}
+		  {% endfor %}
+		{% endfor %}
+	      {% endif %}
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>        
+{% endblock %}

@@ -3,3 +3,5 @@ django-allauth
 south
 django-secure
 django-tastypie
+facebook-sdk
+tweepy

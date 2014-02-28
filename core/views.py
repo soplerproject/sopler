@@ -17,23 +17,88 @@ from django.contrib.auth.models import User
 # Sopler Models
 from core.models import List, Item, Comment
 
+# Social Friends Finder (Models, Utils)
+from social_friends_finder.models import SocialFriendList
+from social_friends_finder.utils import setting
+
 # Allauth Models
 import allauth.socialaccount.models
 
 # Favit Models
 from favit.models import Favorite
 
+#################################################
+# Config
+#################################################
+
 pages_dir = "pages/"
 
-class ViewIndexPage(ListView):
+if setting("SOCIAL_FRIENDS_USING_ALLAUTH", False):
+    USING_ALLAUTH = True
+else:
+    USING_ALLAUTH = False
+    
+REDIRECT_IF_NO_ACCOUNT = setting('SF_REDIRECT_IF_NO_SOCIAL_ACCOUNT_FOUND', False)
+REDIRECT_URL = setting('SF_REDIRECT_URL', "/")
+
+#################################################
+
+class FriendListView(ListView):
+  
     model = List
     template_name = pages_dir + "index.html"
+    
+    def get(self, request, provider=None):
+
+        if request.user.is_anonymous() :
+	  self.social_auths = ""
+	  self.social_friend_lists = []
+	  self.social_user_lists = []
+	  self.social_friend_lists = SocialFriendList.objects.get_or_create_with_social_auths(self.social_auths)
+	  return super(FriendListView, self).get(request)
 	
+	else:
+	  if USING_ALLAUTH:
+	      self.social_auths = request.user.socialaccount_set.all()
+	  else:
+	      self.social_auths = request.user.social_auth.all() 
+	  self.social_friend_lists = []
+	  self.social_user_lists = []
+	  # for each social network, get or create social_friend_list
+	  self.social_friend_lists = SocialFriendList.objects.get_or_create_with_social_auths(self.social_auths)
+	  return super(FriendListView, self).get(request)
+      
+    def get_context_data(self, **kwargs):
+        context = super(FriendListView, self).get_context_data(**kwargs)
 
+        friends = []
+        for friend_list in self.social_friend_lists:
+            fs = friend_list.existing_social_friends()
+            for f in fs:
+                friends.append(f)
+
+        # Print Friends
+        context['friends'] = friends
+        
+        # Print All users
+	context['users'] = User.objects.all()
+	
+	# Print All lists
+	model = List
+	context['lists'] = List.objects.all()
+
+        connected_providers = []
+        for sa in self.social_auths:
+            connected_providers.append(sa.provider)
+        context['connected_providers'] = connected_providers
+
+        return context
+      
+      
 class ViewProfilePage(TemplateView):
-    template_name = pages_dir + "profile.html"
-
-
+    template_name = pages_dir + "dosignin.html"
+    
+    
 class ViewList(DetailView):
     model = List
     template_name = pages_dir + "sidepanel.html"
@@ -43,7 +108,8 @@ class ViewList(DetailView):
       context['lists'] = List.objects.all()
       context['users'] = User.objects.all()
       return context
-
+    
+    
 #################################################
 # Create A New List
 #################################################
@@ -93,13 +159,19 @@ def AddList(request):
 	  	  pass
 
     req = request.POST['ListName'].encode('utf-8')
+    
     ListAuthOnly = request.POST.get('ListAuthOnly')
-
     if ListAuthOnly: 
         ListAuthOnly = True
     else:
         ListAuthOnly = False
-
+        
+    ListIsPrivate = request.POST.get('ListIsPrivate') 
+    if ListIsPrivate: 
+        ListIsPrivate = True
+    else:
+        ListIsPrivate = False
+        
     now = time.time()
     sha256 = hashlib.sha256()
     sha256.update(req)
@@ -118,6 +190,7 @@ def AddList(request):
 	ListName = req,
 	slug = slugify(CryptLink), 
 	ListAuthOnly = ListAuthOnly, 
+	ListIsPrivate = ListIsPrivate,
 	ListOwner = ListOwner, 
         ListOwnerFN = ListOwnerFN,  
         ListOwnerLN = ListOwnerLN,
@@ -132,7 +205,36 @@ def AddList(request):
     list = get_object_or_404(List, slug=slugify(CryptLink))
     return HttpResponseRedirect('/lists/' + list.slug)
   
-  
+
+#################################################
+# Set List as Private.
+#################################################
+
+def SetItPrivate(request, slug):
+    p = get_object_or_404(List, slug=slug)
+    if p.ListIsPrivate: 
+      p.ListIsPrivate = False
+    else:
+      p.ListIsPrivate = True
+    p.save()
+    
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+
+
+#################################################
+# Allow authenticated users only. 
+#################################################
+
+def SetAuthOnly(request, slug):
+    p = get_object_or_404(List, slug=slug)
+    if p.ListAuthOnly: 
+      p.ListAuthOnly = False
+    else:
+      p.ListAuthOnly = True
+    p.save()
+    
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+
 #################################################
 # Delete List
 #################################################
@@ -152,7 +254,7 @@ def DeletePreviousList(request, slug):
     p = get_object_or_404(List, slug=slug)
     p.delete()
     
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
 
 
 #################################################
@@ -207,7 +309,6 @@ def AddNewComment(request, slug):
 #################################################
 # Delete Comment
 #################################################
-
 
 def DeleteComment(request, slug):
     list = get_object_or_404(List, slug=slug)
@@ -298,6 +399,7 @@ def AddNewItem(request, slug):
 #################################################
 # Check item
 #################################################
+
 def CheckItem(request, slug):
     list = get_object_or_404(List, slug=slug)
     p = get_object_or_404(Item, pk=int(request.POST['item_pk']))
@@ -336,6 +438,7 @@ def CheckItem(request, slug):
 #################################################
 # Uncheck -already checked- item
 #################################################
+
 def UnCheckItem(request, slug):
     list = get_object_or_404(List, slug=slug)
     p = get_object_or_404(Item, pk=int(request.POST['item_pk']))
@@ -349,6 +452,7 @@ def UnCheckItem(request, slug):
 #################################################
 # Delete Item From List
 #################################################
+
 def DeleteItem(request, slug):
     list = get_object_or_404(List, slug=slug)
     p = get_object_or_404(Item, pk=int(request.POST['item_pk']))
@@ -540,6 +644,7 @@ def LockItem(request, slug):
 #################################################
 # Favorite a list 
 #################################################  
+
 @login_required
 def favit(request,slug):
         
@@ -555,5 +660,5 @@ def favit(request,slug):
     else:
 	fav.delete()
     
-    return HttpResponseRedirect(reverse('sopler:list', args=(list.slug,)))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
     
