@@ -9,11 +9,10 @@
          <div class="popover-content">
 	      <form class="validate-form" action="{% url 'sopler:AddList' %}" method="post">
 	      {% csrf_token %}
-		<input data-l10n-id="who-owns-the-list" type="text" class="sign-up-input" name="ListOwnerName" required="required" placeholder="Who owns the list?">
+		  <input data-l10n-id="who-owns-the-list" type="text" class="sign-up-input" name="ListOwnerName" required="required" placeholder="Who owns the list?">
 	      <input data-l10n-id="give-it-a-name" type="text" class="sign-up-input" name="ListName" required="required" placeholder="Give it a name!">
 	      <input data-l10n-id="start" type="submit" value="Start!" class="sign-up-button">
             </form>
-
             </div>
          </div>
          <span id="error"></span>
@@ -21,17 +20,10 @@
    </div>
    <!------------------Text/Icons area----------------------->
    <div class="jumbotron" style=" padding-top:0; margin-top:60px;" align="center">
-	<a style="margin-bottom: 10px; min-width:8em;" class="btn btn-lg btn-success" href="#" data-toggle="modal" data-target="#VideoModal">
-	  <i class="fa fa-play-circle-o fa-2x pull-left"></i><big>Intro</big></a>
-		<div class="modal fade" id="VideoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-body">
-		      </div><!-- /.modal-body -->
-		    </div><!-- /.modal-content -->
-		  </div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
-           <br/>
+	<a target="_blank" href="https://marketplace.firefox.com/app/sopler">
+	  <img src="/static/buttons/firefoxmarketplace.png"/>
+	 </a>
+		<br/><br/>
       <h2  data-l10n-id="list-everything"class="hidden-xs">List everything on <span class="logocolor spaces">/.</span><span class="changefont">Sopler</span></h2>
       <h3 data-l10n-id="list-everything" class="visible-xs">List everything on <span class="logocolor spaces">/.</span><span class="changefont">Sopler</span></h3>
       <h4 data-l10n-id="index-info" class="hidden-xs">A free/open source, social and collaborative web application that helps you make lists.<br/> <span data-l10n-id="index-info2">Create and share them with others easily in real time!</span></h4>

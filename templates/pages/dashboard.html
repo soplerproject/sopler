@@ -445,7 +445,7 @@
 
 			    <!-------- Facebook Friends --------->
 			    {% if provider == "facebook" %}
-			      <img class="friend_img" data-toggle="modal" data-target="#{{user.get_full_name|cut:' '|lower|stringformat:'s'}}" src="https://graph.facebook.com/{{user.username}}/picture" width="46" height="46"/>
+			      <img title="{{user.get_full_name}}" class="friend_img" data-toggle="modal" data-target="#{{user.get_full_name|cut:' '|lower|stringformat:'s'}}" src="https://graph.facebook.com/{{user.username}}/picture" width="46" height="46"/>
 			      <div class="modal fade" id="{{user.get_full_name|cut:' '|lower|stringformat:'s'}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 				  <div class="modal-content">
@@ -482,7 +482,7 @@
 
 			  <!-------- Twitter Friends --------->
 			  {% elif provider == "twitter" %}
-			    <img class="friend_img" data-toggle="modal" data-target="#{{user.username}}" src="{{ account.extra_data.profile_image_url_https|replace:'/_normal/' }}" width="46" height="46"/>
+			    <img title="{{user.get_full_name}}" class="friend_img" data-toggle="modal" data-target="#{{user.username}}" src="{{ account.extra_data.profile_image_url_https|replace:'/_normal/' }}" width="46" height="46"/>
 			    <div class="modal fade" id="{{user.username}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			      <div class="modal-dialog">
 				<div class="modal-content">
