@@ -369,6 +369,11 @@ background-color: #e3eef1;
 
 /*-------------Favorite Button-----------------*/
 
+.favhover:hover{
+	text-decoration:underline;
+	cursor: pointer;
+}
+
 .favbutton{
 	box-shadow: 1px 1px #ccc;
 	float:right; 
