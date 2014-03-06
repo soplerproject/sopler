@@ -149,8 +149,59 @@
 			      <small>
 			      <div id="yrlistcount"><dt><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></dt></div>
 			      <dd id="info-dd-nonmobile">
-			      <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i> &nbsp; <i class="fa fa-heart">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
-			      <div class="dropdown cogdropdown">
+			     <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i> &nbsp; 
+                                           {% if list|favorites_count == 1 %}
+                                             <i data-toggle="modal" data-target="#{{ListName.slug}}_favModal" class="fa fa-heart favhover">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
+			                   {% endif %}
+				<!-- Who Favorite this List -->
+				<div class="modal fade" id="{{ListName.slug}}_favModal" tabindex="-1" role="dialog" aria-labelledby="myfavModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+					<div class="modal-content">
+					  <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">People who favorited this list</h4>
+					  </div>
+					  <div class="modal-body">
+
+					  {% favorites ListName as WhoFav %}
+					    {% for WhoFav in WhoFav %}
+					      {% for user in users %}
+						{% if WhoFav.user|lower|stringformat:"s" == user.username|lower|stringformat:"s" %}
+						  {% for account in user.socialaccount_set.all %}
+						    {% if account.provider != "persona" %}
+						      <!-- Facebook -->
+						      {% if account.provider == "facebook" %}
+							<dt><img src="https://graph.facebook.com/{{user.username}}/picture" width="46" height="46"/>&nbsp;&nbsp;&nbsp;<a href="{{ account.extra_data.link }}" target="_blank"><b>{{user.get_full_name}} </b></a></dt>
+							<p>
+							<!-- Twitter -->
+							{% elif account.provider == "twitter" %}
+							<dt><img src="{{ account.extra_data.profile_image_url_https|replace:'/_normal/' }}" width="46" height="46"/>&nbsp;&nbsp;&nbsp;<a href="https://twitter.com/{{ account.extra_data.screen_name }}" target="_blank"><b>{{user.get_full_name}} </b></a></dt>
+							<p>
+							<!-- Google -->
+							{% elif account.provider == "google" %}
+							<dt><img src="{{ account.extra_data.picture}}" width="46" height="46"/>&nbsp;&nbsp;&nbsp;<a href="https://plus.google.com/{{ account.extra_data.id }}" target="_blank"><b>{{user.get_full_name}}</b></a></dt>
+							<p>
+						      {% else %}		     
+                                                        <!-- Mozilla Persona -->
+							<dt><img src="/static/buttons/Persona.png" width="46" height="46"/> &nbsp;&nbsp;&nbsp;<a href="mailto:{{ account.extra_data.email }} " target="_blank"><b>{{user.username}} </b></a></dt>
+							<p>
+						      {% endif %}
+						    {% endif %}
+						  {% endfor %}
+						{% endif %}
+					      {% endfor %}
+					    {% endfor %}
+
+					  </div>
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			        <!------------------------>
+
+				  <div class="dropdown cogdropdown">
 			      <span id="dropdownMenu" data-toggle="dropdown">
 				<button style="padding: 2px 6px; white-space:normal; margin-top:-22px; float:right;" class="btn btn-default"><i style="font-size:16px;color:#666;"class="fa fa-cog"></i></button>
 			      </span>
@@ -463,6 +514,7 @@
 					    <dt><small><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt>
 					    <dd id="info-dd-nonmobile">
 					    <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i> &nbsp;<i class="fa fa-heart">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
+
 					    </small>
 					    </form></a>
 					    </li></ul>

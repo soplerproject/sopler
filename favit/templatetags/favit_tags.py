@@ -36,6 +36,19 @@ def favorites_count(obj):
 
 
 @register.assignment_tag
+def favorites(obj):
+    """
+    Usage:
+
+    {% favorites obj as favorite_list %}
+      {% for fav_obj in favorite_list %}
+	  {# do something with fav_obj #}
+      {% endfor %}
+    """
+    return Favorite.objects.for_object(obj)
+
+
+@register.assignment_tag
 def user_favorites(user, app_model=None):
     """
     Usage:
@@ -53,7 +66,7 @@ def user_favorites(user, app_model=None):
         {% with user_favorites <user> "app_label.model" as favorite_list %}
             {% for fav_obj in favorite_list %}
                 {# do something with fav_obj #}
-            {%
+            {% endfor %}
         {% endwith %}
     """
 
