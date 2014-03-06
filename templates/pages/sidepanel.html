@@ -35,7 +35,8 @@
 			<dt><img src="{{ account.extra_data.picture}}" width="46" height="46"/>&nbsp;&nbsp;&nbsp;<a href="https://plus.google.com/{{ account.extra_data.id }}" target="_blank"><b>{{user.get_full_name}}</b></a></dt>
 			<p>
 		      {% else %}
-			<p>		      <!-- Mozilla Persona -->
+			<p>
+			<!-- Mozilla Persona -->
 			<dt><img src="/static/buttons/Persona.png" width="46" height="46"/> &nbsp;&nbsp;&nbsp;<a href="mailto:{{ account.extra_data.email }} " target="_blank"><b>{{user.username}} </b></a></dt>
 		      {% endif %}
 		    {% endif %}
@@ -68,13 +69,15 @@
 		      {% if list.ListOwnerPrvdr == "facebook" or list.ListOwnerPrvdr == "twitter" %}
 			{% for user in users %}
 			  {%if list.ListOwner|lower|stringformat:"s" == user.username|lower|stringformat:"s" %}
-			    <i class="fa fa-user"></i> <a href="{{ list.ListOwnerLink }}">{{user.get_full_name | truncatechars:'15'}}</a> &nbsp;&nbsp;&nbsp; 
+			    <i class="fa fa-user"></i> <a href="{{ list.ListOwnerLink }}" target="_blank">{{user.get_full_name | truncatechars:'15'}}</a> &nbsp;&nbsp; 
 			  {% endif %}
 			{% endfor %}
 		      {% else %}
-			  <i class="fa fa-user"></i> <a href="{{ list.ListOwnerLink }}">{{ list.ListOwner | truncatechars:'15'}}</a> &nbsp;&nbsp;&nbsp;
+			  <i class="fa fa-user"></i> <a href="{{ list.ListOwnerLink }}" target="_blank">{{ list.ListOwner | truncatechars:'15'}}</a> &nbsp;&nbsp;
 		      {% endif %}
-                      <i data-toggle="modal" data-target="#{{list.slug}}_favModal" class="fa fa-heart favhover"> <b> {{list|favorites_count}}</b></i> &nbsp;&nbsp;
+		      {% if list|favorites_count >= 1 %}
+			 <i data-toggle="modal" data-target="#{{list.slug}}_favModal" class="fa fa-heart favhover"> <b> {{list|favorites_count}}</b></i> &nbsp;&nbsp;
+		      {% endif %}
                       <i class="fa fa-clock-o"></i> {{ list.ListPubDate|date:"M. d, Y, H:i" }}
                       </p>
                   </div>
@@ -183,9 +186,13 @@
                                  <dd class="visible-xs" id="info-dd-mobile">  {{ list.ListName | truncatechars:'15' }}</dd>
                                  <dt data-l10n-id="created" class="visible-xs"><i style="margin-right:5px;" class="fa fa-clock-o"></i>Created: </dt>
                                  <dd class="visible-xs" id="info-dd-mobile"> {{list.ListPubDate|date:"M. d, Y, H:i"}}</dd>
+
+				 {% if list|favorites_count >= 1 %}
                                  <!-- Show fav count  -->
-                                 <dt data-l10n-id="favorited" class="visible-xs"><i style="margin-right:5px;" class="fa fa-heart"></i>Favorited: </dt>
-                                 <dd data-toggle="modal" data-target="#{{list.slug}}_favModal" class="visible-xs" id="info-dd-mobile"><a><b class="favhover">{{list|favorites_count}} {% if list|favorites_count == 1 %} time {%else%} times {% endif %}</a></b></dd>
+				    <dt data-l10n-id="favorited" class="visible-xs"><i style="margin-right:5px;" class="fa fa-heart"></i>Favorited: </dt>
+				    <dd data-toggle="modal" data-target="#{{list.slug}}_favModal" class="visible-xs" id="info-dd-mobile"><a><b class="favhover">{{list|favorites_count}} {% if list|favorites_count == 1 %} time {%else%} times {% endif %}</a></b></dd>
+				 {% endif %}
+
                                  <!----------not visible on mobile--------->
                                  <dt data-l10n-id="owner" class="hidden-xs"><i style="margin-right:5px;" class="fa fa-user"></i>Owner:</dt>
 
@@ -204,9 +211,12 @@
                                  <dd class="hidden-xs" id="info-dd-nonmobile">  {{ list.ListName | truncatechars:'15' }}</dd>
                                  <dt data-l10n-id="created" class="hidden-xs"><i style="margin-right:5px;" class="fa fa-clock-o"></i>Created: </dt>
                                  <dd class="hidden-xs" id="info-dd-nonmobile"> {{list.ListPubDate|date:"M. d, Y, H:i"}}</dd>
+				 {% if list|favorites_count >= 1 %}
                                  <!-- Show fav count  -->
-                                 <dt data-l10n-id="favorited" class="hidden-xs"><i style="margin-right:5px;" class="fa fa-heart"></i>Favorited: </dt>
-                                 <dd data-toggle="modal" data-target="#{{list.slug}}_favModal" class="hidden-xs" id="info-dd-nonmobile"><a><b class="favhover">{{list|favorites_count}} {% if list|favorites_count == 1 %} time {%else%} times {% endif %}</a></b></dd>
+				    <dt data-l10n-id="favorited" class="hidden-xs"><i style="margin-right:5px;" class="fa fa-heart"></i>Favorited: </dt>
+				    <dd data-toggle="modal" data-target="#{{list.slug}}_favModal" class="hidden-xs" id="info-dd-nonmobile"><a><b class="favhover">{{list|favorites_count}} {% if list|favorites_count == 1 %} time {%else%} times {% endif %}</a></b></dd>
+				 {% endif %}
+
                               </dl>
                            </div>
                         </div>
