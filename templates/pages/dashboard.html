@@ -611,15 +611,14 @@
 					  <li>
 					  <dt><small><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt>
 					  <dd id="info-dd-nonmobile">
-					  <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}
+					  <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i>
 
-                                           {% if ListName|favorites_count >= 1 %}
-                                             </i>&nbsp;<i class="fa fa-heart">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
-			                   {% endif %}
+					  {% if ListName|favorites_count >= 1 %}
+					    </i>&nbsp;<i class="fa fa-heart">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
+					  {% endif %}
 
 					  </small>
 					  </form></a>
-					  <dt>&nbsp;</dt><dd></dd>
 					  </li></ul>
 					{% endif %}
 				      {% endfor %}
