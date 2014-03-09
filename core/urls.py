@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^lists/(?P<slug>[\w-]+)/DeleteList/$', DeleteList, name='DeleteList'),
     url(r'^lists/(?P<slug>[\w-]+)/DeletePreviousList/$', DeletePreviousList, name='DeletePreviousList'),
     url(r'^lists/(?P<slug>[\w-]+)/favit/$', favit, name='favit'),
+    url(r'^lists/(?P<slug>[\w-]+)/SetItHidden/$', SetItHidden, name='SetItHidden'),
     url(r'^lists/(?P<slug>[\w-]+)/SetItPrivate/$', SetItPrivate, name='SetItPrivate'),
     url(r'^lists/(?P<slug>[\w-]+)/SetAuthOnly/$', SetAuthOnly, name='SetAuthOnly'),
     #

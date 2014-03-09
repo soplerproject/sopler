@@ -32,7 +32,8 @@ class List(models.Model):
     ListOwnerState = models.CharField("Owner's Confirmation State",max_length=100)
     ListOwnerPrvdr = models.CharField("Owner's Provider",max_length=100)
     ListOwnerLink = models.CharField("Owner's Provider Link",max_length=150)
-    ListIsPrivate = models.BooleanField("This list is private")
+    ListIsPrivate = models.BooleanField("This list is Private")
+    ListIsHidden = models.BooleanField("This list is Hidden")
     
     class Meta:
         ordering = ["ListOwner"]

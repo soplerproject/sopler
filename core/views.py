@@ -219,7 +219,20 @@ def SetItPrivate(request, slug):
     p.save()
     
     return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+  
+#################################################
+# Set List as Hidden.
+#################################################
 
+def SetItHidden(request, slug):
+    p = get_object_or_404(List, slug=slug)
+    if p.ListIsHidden: 
+      p.ListIsHidden = False
+    else:
+      p.ListIsHidden = True
+    p.save()
+    
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
 
 #################################################
 # Allow authenticated users only. 

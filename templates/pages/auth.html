@@ -28,9 +28,8 @@
 	  {% endif %}
 	  <!---------------------->
 
-	  <li role="presentation" class="divider"></li>
-
 	  <!-- Set List Private -->
+	  <li role="presentation" class="divider"></li>
 	  {% if list.ListIsPrivate == True %}
 	  <form id="privacy" action="{% url 'sopler:SetItPrivate' list.slug %}" method="post" >
 	  {% csrf_token %}
@@ -45,6 +44,24 @@
 	  </form>
 	  {% endif %}
 	  <!---------------------->
+
+	  <!-- Set List Hidden -->
+	  <li role="presentation" class="divider"></li>
+	  {% if list.ListIsHidden == True %}
+	    <form id="{{list.slug}}_hidden" action="{% url 'sopler:SetItHidden' list.slug %}" method="post" >
+	    {% csrf_token %}
+	    <input type="hidden" name="slug" value="{{ list.slug }}" />
+	    <li class="coglist" onclick="javascript:document.forms['{{list.slug}}_hidden'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-eye-slash"></i> Hidden</a><i class="fa fa-check"></i></li>
+	    </form>
+	  {% else %}
+	    <form id="{{list.slug}}__hidden2" action="{% url 'sopler:SetItHidden' list.slug %}" method="post" >
+	    {% csrf_token %}
+	    <input type="hidden" name="slug" value="{{ list.slug }}" />
+	    <li class="coglist" onclick="javascript:document.forms['{{list.slug}}__hidden2'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-eye-slash"></i> Hidden</a></li>
+	    </form>
+	  {% endif %}
+	  <!-- ------------- -->
+
 
 	  </ul>
 	  </div>
