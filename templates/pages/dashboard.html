@@ -6,63 +6,10 @@
 <div class="row">
 
   <!-- ========================================================= -->
-  <!-- Create a list                            		 -->
-  <!-- ========================================================= -->
-
- <div class="col-lg-4 dashboard">
-      <div class="about-box ">
-	<div style="max-width:none;" class="popover bottom roundall">
-	  <div class="popover-title">
-            <h2  class="box-titles" style="font-size:20px;text-shadow:none;"><span data-l10n-id="create-a-list" style="color:#757575;">Lists</span><br></h2>
-         </div>
-         <div class="popover-content">
-	     <form class="validate-form" action="{% url 'sopler:AddList' %}" method="post">
-	      {% csrf_token %}
-	      <input style="margin-bottom: 10px;" data-l10n-id="give-it-a-name" type="text" class="sign-up-input" name="ListName" required="required" placeholder="Give it a name!"> 
-		<div  align=left class="accordion" id="accordion2">
-		    <div class="accordion-group">
-		      <div class="accordion-heading">
-			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseExtraOptions">
-			  <b><i class="fa fa-cog"></i> Extra options</b>
-			  <span class="caret"></span>
-			  </a>
-		      </div>
-		      <div id="CollapseExtraOptions" class="accordion-body collapse out">
-			  <div class="accordion-inner">
-			    <div class="checkbox">
-				<label>
-				<input type="checkbox" name="ListAuthOnly">
-				<small data-l10n-id="allow-authenticated-users-only"> Allow authenticated users only. </small>
-				</label>
-			    </div>
-			  </div>
-			    <div class="checkbox">
-				<label>
-				<input type="checkbox" name="ListIsPrivate">
-				<small data-l10n-id="set-this-list-as-private"> Set this list as private. </small>
-				</label>
-			    </div>
-			    <div class="checkbox">
-				<label>
-				<input type="checkbox" name="ListIsHidden">
-				<small data-l10n-id="set-this-list-as-hidden"> Set this list as hidden. </small>
-				</label>
-			    </div>
-		      </div>
-	        <input style="max-width:300px;" data-l10n-id="start" type="submit" value="Start!" class="sign-up-button center-block">
-            </form>
-	      </div>
-	     </div>
-         </div>
-         <span id="error"></span>
-         </div>
-      </div></div>
-
-  <!-- ========================================================= -->
   <!-- Profile                                  		 -->
   <!-- ========================================================= -->
 
-   <div class="col-lg-8 dashboard">
+   <div class="col-lg-8 col-lg-push-4 dashboard">
       <div class="about-box">
          <div style="max-width:none;" class="popover bottom roundall">
             <h2 class="popover-title">
@@ -125,6 +72,58 @@
    </div>
 
 
+  <!-- ========================================================= -->
+  <!-- Create a list                            		 -->
+  <!-- ========================================================= -->
+
+ <div class="col-lg-4 col-lg-pull-8 dashboard">
+      <div class="about-box ">
+	<div style="max-width:none;" class="popover bottom roundall">
+	  <div class="popover-title">
+            <h2  class="box-titles" style="font-size:20px;text-shadow:none;"><span data-l10n-id="create-a-list" style="color:#757575;">Lists</span><br></h2>
+         </div>
+         <div class="popover-content">
+	     <form class="validate-form" action="{% url 'sopler:AddList' %}" method="post">
+	      {% csrf_token %}
+	      <input style="margin-bottom: 10px;" data-l10n-id="give-it-a-name" type="text" class="sign-up-input" name="ListName" required="required" placeholder="Give it a name!"> 
+		<div  align=left class="accordion" id="accordion2">
+		    <div class="accordion-group">
+		      <div class="accordion-heading">
+			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseExtraOptions">
+			  <b><i class="fa fa-cog"></i> Extra options</b>
+			  <span class="caret"></span>
+			  </a>
+		      </div>
+		      <div id="CollapseExtraOptions" class="accordion-body collapse out">
+			  <div class="accordion-inner">
+			    <div class="checkbox">
+				<label>
+				<input type="checkbox" name="ListAuthOnly">
+				<small data-l10n-id="allow-authenticated-users-only"> Allow authenticated users only. </small>
+				</label>
+			    </div>
+			  </div>
+			    <div class="checkbox">
+				<label>
+				<input type="checkbox" name="ListIsPrivate">
+				<small data-l10n-id="set-this-list-as-private"> Set this list as private. </small>
+				</label>
+			    </div>
+			    <div class="checkbox">
+				<label>
+				<input type="checkbox" name="ListIsHidden">
+				<small data-l10n-id="set-this-list-as-hidden"> Set this list as hidden. </small>
+				</label>
+			    </div>
+		      </div>
+	        <input style="max-width:300px;" data-l10n-id="start" type="submit" value="Start!" class="sign-up-button center-block">
+            </form>
+	      </div>
+	     </div>
+         </div>
+         <span id="error"></span>
+         </div>
+      </div></div>
 </div>
 
 <div class="row">
