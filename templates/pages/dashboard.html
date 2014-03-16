@@ -584,18 +584,60 @@
 		{% for provider in connected_providers %}
 		  {% for user in users %}
 		      {% for account in user.socialaccount_set.all %}
-		      {% for friend in friends %}
-			{% if user == friend %}
+			{% for friend in friends %}
+			  {% if user == friend %}
 
-			    <!-------- Facebook Friends --------->
-			    {% if provider == "facebook" %}
-			      <img title="{{user.get_full_name}}" class="friend_img" data-toggle="modal" data-target="#{{user.get_full_name|cut:' '|lower|stringformat:'s'}}" src="https://graph.facebook.com/{{user.username}}/picture" width="46" height="46"/>
-			      <div class="modal fade" id="{{user.get_full_name|cut:' '|lower|stringformat:'s'}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			      <!-------- Facebook Friends --------->
+			      {% if provider == "facebook" %}
+				<img title="{{user.get_full_name}}" class="friend_img" data-toggle="modal" data-target="#{{user.get_full_name|cut:' '|lower|stringformat:'s'}}" src="https://graph.facebook.com/{{account.extra_data.id}}/picture" width="46" height="46"/>
+				<div class="modal fade" id="{{user.get_full_name|cut:' '|lower|stringformat:'s'}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Check {{user.get_full_name}}'s Public Lists</h4>
+				      </div>
+				      <div id="frndcount" class="modal-body">
+				      {% regroup lists by ListOwner as ListOwner %}
+				      {% for i in ListOwner %}
+					{% ifequal i.grouper|lower|stringformat:"s" user.username|lower|stringformat:"s" %}
+					  {% for ListName in i.list %}
+					    {% if ListName.ListOwnerState == "confirmed" and ListName.ListIsPrivate = False and ListName.ListIsHidden = False %}
+					      <ul style="padding-right:10px;" class="list-unstyled">
+					      <li>
+					      <dt><small><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt>
+					      <dd id="info-dd-nonmobile">
+					      <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i>
+
+					    {% if ListName|favorites_count >= 1 %}
+					      </i>&nbsp;<i class="fa fa-heart">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
+					    {% endif %}
+
+					      </small>
+					      </form></a>
+					      </li></ul>
+					    {% endif %}
+					  {% endfor %}
+					{% endifequal %}
+				      {% endfor %}
+				    </div>
+				    <div class="modal-footer">
+				      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				    </div>
+				  </div>
+				</div>
+				</div>
+			      <!---------------------------------->
+
+			    <!-------- Twitter Friends --------->
+			    {% elif provider == "twitter" %}
+			      <img title="{{user.get_full_name}}" class="friend_img" data-toggle="modal" data-target="#{{user.username}}" src="{{ account.extra_data.profile_image_url_https|replace:'/_normal/' }}" width="46" height="46"/>
+			      <div class="modal fade" id="{{user.username}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 				  <div class="modal-content">
 				    <div class="modal-header">
 				      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				      <h4 class="modal-title" id="myModalLabel">Check {{user.get_full_name}}'s Public Lists</h4>
+				      <h4 class="modal-title" id="myModalLabel">Check @{{user.username}}'s Public Lists</h4>
 				    </div>
 				    <div id="frndcount" class="modal-body">
 				    {% regroup lists by ListOwner as ListOwner %}
@@ -609,9 +651,9 @@
 					    <dd id="info-dd-nonmobile">
 					    <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i>
 
-                                           {% if ListName|favorites_count >= 1 %}
-                                             </i>&nbsp;<i class="fa fa-heart">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
-			                   {% endif %}
+					    {% if ListName|favorites_count >= 1 %}
+					      </i>&nbsp;<i class="fa fa-heart">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
+					    {% endif %}
 
 					    </small>
 					    </form></a>
@@ -629,54 +671,12 @@
 			      </div>
 			    <!---------------------------------->
 
-			  <!-------- Twitter Friends --------->
-			  {% elif provider == "twitter" %}
-			    <img title="{{user.get_full_name}}" class="friend_img" data-toggle="modal" data-target="#{{user.username}}" src="{{ account.extra_data.profile_image_url_https|replace:'/_normal/' }}" width="46" height="46"/>
-			    <div class="modal fade" id="{{user.username}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			      <div class="modal-dialog">
-				<div class="modal-content">
-				  <div class="modal-header">
-				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				    <h4 class="modal-title" id="myModalLabel">Check @{{user.username}}'s Public Lists</h4>
-				  </div>
-				  <div id="frndcount" class="modal-body">
-				  {% regroup lists by ListOwner as ListOwner %}
-				  {% for i in ListOwner %}
-				    {% ifequal i.grouper|lower|stringformat:"s" user.username|lower|stringformat:"s" %}
-				      {% for ListName in i.list %}
-					{% if ListName.ListOwnerState == "confirmed" and ListName.ListIsPrivate = False and ListName.ListIsHidden = False %}
-					  <ul style="padding-right:10px;" class="list-unstyled">
-					  <li>
-					  <dt><small><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt>
-					  <dd id="info-dd-nonmobile">
-					  <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i>
-
-					  {% if ListName|favorites_count >= 1 %}
-					    </i>&nbsp;<i class="fa fa-heart">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
-					  {% endif %}
-
-					  </small>
-					  </form></a>
-					  </li></ul>
-					{% endif %}
-				      {% endfor %}
-				    {% endifequal %}
-				  {% endfor %}
-				</div>
-				<div class="modal-footer">
-				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			      </div>
-			    </div>
-			    </div>
-			   <!---------------------------------->
-
-			  {% else %}
-			    <!-- do nothing here -->
+			    {% else %}
+			      <!-- do nothing here -->
+			  {% endif %}
 			{% endif %}
-		       {% endif %}
 		      {% endfor %}
-		  {% endfor %}
+		    {% endfor %}
 		  {% endfor %}
 		{% endfor %}
 	      {% endif %}
