@@ -80,7 +80,7 @@
       <div class="about-box ">
 	<div style="max-width:none;" class="popover bottom roundall">
 	  <div class="popover-title">
-            <h2  class="box-titles" style="font-size:20px;text-shadow:none;"><span data-l10n-id="create-a-list" style="color:#757575;">Lists</span><br></h2>
+            <h2  class="box-titles" style="font-size:20px;text-shadow:none;"><span data-l10n-id="create-a-list" style="color:#757575;">Create a list</span><br></h2>
          </div>
          <div class="popover-content">
 	     <form class="validate-form" action="{% url 'sopler:AddList' %}" method="post">
@@ -90,7 +90,7 @@
 		    <div class="accordion-group">
 		      <div class="accordion-heading">
 			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseExtraOptions">
-			  <b><i class="fa fa-cog"></i> Extra options</b>
+			  <b data-l10n-id="extra-options"> <i class="fa fa-cog">&nbsp; </i> Extra options</b>
 			  <span class="caret"></span>
 			  </a>
 		      </div>
@@ -98,21 +98,21 @@
 			  <div class="accordion-inner">
 			    <div class="checkbox">
 				<label>
-				<input type="checkbox" name="ListAuthOnly">
-				<small data-l10n-id="allow-authenticated-users-only"> Allow authenticated users only. </small>
+				<input class="extra-option" type="checkbox" name="ListAuthOnly">
+				<small  data-l10n-id="allow-authenticated-users-only"> Allow authenticated users only </small>
 				</label>
 			    </div>
 			  </div>
 			    <div class="checkbox">
 				<label>
-				<input type="checkbox" name="ListIsPrivate">
-				<small data-l10n-id="set-this-list-as-private"> Set this list as private. </small>
+				<input class="extra-option" type="checkbox" name="ListIsPrivate">
+				<small  data-l10n-id="set-this-list-as-private"> Set this list as private </small>
 				</label>
 			    </div>
 			    <div class="checkbox">
 				<label>
-				<input type="checkbox" name="ListIsHidden">
-				<small data-l10n-id="set-this-list-as-hidden"> Set this list as hidden. </small>
+				<input class="extra-option" type="checkbox" name="ListIsHidden">
+				<small data-l10n-id="set-this-list-as-hidden"> Set this list as hidden </small>
 				</label>
 			    </div>
 		      </div>
@@ -138,7 +138,7 @@
          <div  style="max-width:none;" class="popover bottom roundall">
             
             <h2 class="popover-title green-list">
-               <small style="margin-left:10px;color:#757575;"><span class="green-list" style="margin-right:3px;"><i class="fa fa-list-ul"></i></span> Lists</small><br>
+               <small data-l10n-id="lists" style="margin-left:10px;color:#757575;"><span class="green-list" style="margin-right:4px;"><i class="fa fa-list-ul"></i></span>Lists</small><br>
               
             </h2>
             <div class="popover-content" id="team">
@@ -219,13 +219,13 @@
 				<form id="{{ListName.slug}}_authonly" action="{% url 'sopler:SetAuthOnly' ListName.slug %}" method="post" >
 				  {% csrf_token %}
 				  <input type="hidden" name="slug" value="{{ ListName.slug }}" />
-			          <li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_authonly'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-group fa-fw"></i>Authenticated users only</a><i class="fa fa-check"></i></li>
+			          <li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_authonly'].submit();" role="presentation"><a data-l10n-id="authenticated-users-only" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"> <i class="fa fa-group fa-fw"></i>Authenticated users only</a><i class="fa fa-check"></i></li>
 				</form>
 			      {% else %}
 				  <form id="{{ListName.slug}}_authonly2" action="{% url 'sopler:SetAuthOnly' ListName.slug %}" method="post" >
 				  {% csrf_token %}
 				  <input type="hidden" name="slug" value="{{ ListName.slug }}" />
-				  <li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_authonly2'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-group fa-fw"></i>Authenticated users only</a></li>
+				  <li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_authonly2'].submit();" role="presentation"><a data-l10n-id="authenticated-users-only" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"> <i class="fa fa-group fa-fw"></i>Authenticated users only</a></li>
 
 				</form>
 			      {% endif %}
@@ -237,13 +237,13 @@
 			        <form id="{{ListName.slug}}_privacy" action="{% url 'sopler:SetItPrivate' ListName.slug %}" method="post" >
 				{% csrf_token %}
 				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
-				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_privacy'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-ban fa-fw"></i>Private</a><i class="fa fa-check"></i></li>
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_privacy'].submit();" role="presentation"><a data-l10n-id="private" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-ban fa-fw"></i>Private</a><i class="fa fa-check"></i></li>
 			        </form>
 			      {% else %}
 			        <form id="{{ListName.slug}}_privacy2" action="{% url 'sopler:SetItPrivate' ListName.slug %}" method="post" >
 				{% csrf_token %}
 				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
-				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_privacy2'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-ban fa-fw"></i>Private</a></li>
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_privacy2'].submit();" role="presentation"><a data-l10n-id="private" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-ban fa-fw"></i>Private</a></li>
 			        </form>
 			     {% endif %}
 			     <!-- ------------- -->
@@ -254,13 +254,13 @@
 			        <form id="{{ListName.slug}}_hidden" action="{% url 'sopler:SetItHidden' ListName.slug %}" method="post" >
 				{% csrf_token %}
 				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
-				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_hidden'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-eye-slash"></i> Hidden</a><i class="fa fa-check"></i></li>
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_hidden'].submit();" role="presentation"><a data-l10n-id="hidden" style="text-decoration:none;padding-right:5px;" role="menuitem" tabindex="-1" href="#"><i style="margin-right:5px;" class="fa fa-eye-slash"></i> Hidden</a><i class="fa fa-check"></i></li>
 			        </form>
 			      {% else %}
 			        <form id="{{ListName.slug}}__hidden2" action="{% url 'sopler:SetItHidden' ListName.slug %}" method="post" >
 				{% csrf_token %}
 				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
-				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}__hidden2'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-eye-slash"></i> Hidden</a></li>
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}__hidden2'].submit();" role="presentation"><a data-l10n-id="hidden" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i style="margin-right:5px;" class="fa fa-eye-slash"></i> Hidden</a></li>
 			        </form>
 			     {% endif %}
 			     <!-- ------------- -->
@@ -269,7 +269,7 @@
 			     <li role="presentation" class="divider"></li>
 			     <form id="{{ListName.slug}}_listdelete" action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
 			      {% csrf_token %}
-			      <li class="coglist"  onclick="javascript:document.forms['{{ListName.slug}}_listdelete'].submit();" role="presentation"> <a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-trash-o fa-fw"></i>Delete</a></i></li>
+			      <li class="coglist"  onclick="javascript:document.forms['{{ListName.slug}}_listdelete'].submit();" role="presentation"> <a data-l10n-id="howto28" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-trash-o fa-fw"></i>Delete</a></i></li>
 			     </form>
 			     </ul>
 			     </div>
@@ -434,7 +434,7 @@
          <!-- Profile info -->
          <div style="max-width:none;" class="popover bottom roundall">
             <h2 class="popover-title">
-               <small class="red-heart"style="margin-left:10px;color:#757575"><span class="red-heart" style="margin-right:3px;"><i class="fa fa-heart"></i></span> Favorite Lists</small><br>
+               <small data-l10n-id="favorite-lists" class="red-heart"style="margin-left:10px;color:#757575"><span class="red-heart" style="margin-right:4px;"><i class="fa fa-heart"></i></span>Favorite lists</small><br>
             </h2>     
             <div class="popover-content" id="team">
               <div class="accordion-group">
@@ -477,7 +477,7 @@
 				    <form id="{{ListName.slug}}_favdelete" action="{% url 'sopler:favit' ListName.slug %}" method="post" >
 				    {% csrf_token %}
 				    <input type="hidden" name="slug" value="{{ ListName.slug }}" />
-				    <li class="coglist"  onclick="javascript:document.forms['{{ListName.slug}}_favdelete'].submit();" role="presentation"> <a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-trash-o fa-fw"></i>Remove</a></i></li>
+				    <li class="coglist"  onclick="javascript:document.forms['{{ListName.slug}}_favdelete'].submit();" role="presentation"> <a data-l10n-id="remove" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-trash-o fa-fw"></i>Remove</a></i></li>
 				    </form>
 				    </ul>
 				    </div>
@@ -567,7 +567,7 @@
          <!-- Profile info -->
          <div style="max-width:none;" class="popover bottom roundall">
             <h2 class="popover-title">
-               <small style="margin-left:10px; color:#757575"><span  class="blue-friends"  style=" margin-right:3px;"><i class="fa fa-group"></i></span> Friends</small><br>
+               <small data-l10n-id="friends" style="margin-left:10px; color:#757575"><span  class="blue-friends"  style=" margin-right:4px;"><i class="fa fa-group"></i></span>Friends</small><br>
             </h2>
             <div class="popover-content" id="team">
 
@@ -595,7 +595,7 @@
 				    <div class="modal-content">
 				      <div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Check {{user.get_full_name}}'s Public Lists</h4>
+					<h4 class="modal-title" id="myModalLabel">{{user.get_full_name}}'s public lists</h4>
 				      </div>
 				      <div id="frndcount" class="modal-body">
 				      {% regroup lists by ListOwner as ListOwner %}
@@ -603,7 +603,7 @@
 					{% ifequal i.grouper|lower|stringformat:"s" user.username|lower|stringformat:"s" %}
 					  {% for ListName in i.list %}
 					    {% if ListName.ListOwnerState == "confirmed" and ListName.ListIsPrivate = False and ListName.ListIsHidden = False %}
-					      <ul style="padding-right:10px;" class="list-unstyled">
+					      <ul style="padding:0 10px 10px 0;" class="list-unstyled">
 					      <li>
 					      <dt><small><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt>
 					      <dd id="info-dd-nonmobile">
@@ -622,7 +622,7 @@
 				      {% endfor %}
 				    </div>
 				    <div class="modal-footer">
-				      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				      <button data-l10n-id="close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				    </div>
 				  </div>
 				</div>
@@ -637,7 +637,7 @@
 				  <div class="modal-content">
 				    <div class="modal-header">
 				      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				      <h4 class="modal-title" id="myModalLabel">Check @{{user.username}}'s Public Lists</h4>
+				      <h4 class="modal-title" id="myModalLabel">@{{user.username}}'s <span data-l10n-id="public-lists">public lists</span></h4>
 				    </div>
 				    <div id="frndcount" class="modal-body">
 				    {% regroup lists by ListOwner as ListOwner %}
@@ -645,7 +645,7 @@
 				      {% ifequal i.grouper|lower|stringformat:"s" user.username|lower|stringformat:"s" %}
 					{% for ListName in i.list %}
 					  {% if ListName.ListOwnerState == "confirmed" and ListName.ListIsPrivate = False and ListName.ListIsHidden = False %}
-					    <ul style="padding-right:10px;" class="list-unstyled">
+					    <ul style="padding:0 10px 10px 0;" class="list-unstyled">
 					    <li>
 					    <dt><small><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></i></dt>
 					    <dd id="info-dd-nonmobile">

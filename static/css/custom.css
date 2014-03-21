@@ -725,6 +725,10 @@ margin-top:-10px;
  margin-top:10px;
 }
 
+.extra-option{
+margin-top:11px !important;
+}
+
 .btn-danger {
 	font-size:13px;
     background-color: #c45146;
