@@ -300,7 +300,7 @@
                   <!-- Fixed navbar -->
                   <div id="navb" class="navbar navbar-default navbar-fixed-top" style="background-color:transparent;">
                      <div class="container">
-                        <ul  class="nav navbar-nav list-inline" style="float:right; margin-right: 5em; white-space: nowrap;">
+                        <ul  class="nav navbar-nav list-inline" style="float:right; margin-right: 2em;">
                            {% if user.is_authenticated %}
 			    {% for account in user.socialaccount_set.all %}
 			          <!-- Facebook -->
@@ -328,12 +328,12 @@
 				    <li><p class="navbar-text hello visible-xs">Hi, <a href="/home">{{ user.username | truncatechars:'14'  }}</a></p></li>
 				    <li class="hello"><img class="hidden-xs " src=/static/buttons/Persona.png width="30" height="30" /></li>
 			          {% endif %}
-				  <button data-l10n-id="signout" type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign Out</button>
+				  <button data-l10n-id="signout" type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign out</button>
 			    {% endfor %}
                            {% else %}
                              <div class="accordion-heading">
                              </div>
-                             <button data-l10n-id="signin" style="margin-right:-3em;"type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin " data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign in</button>     
+                             <button data-l10n-id="signin" style="margin-right:-1.5em;"type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin " data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign in</button>     
                            {% endif %}
                            </ul>
                            {% if user.is_authenticated %}

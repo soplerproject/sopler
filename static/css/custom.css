@@ -78,6 +78,10 @@ a:hover {
 	font-size:15px;
 }
 
+.jumbotron p{
+font-size: 16px;
+}
+
 /**** Input styling*****/
 
 input {
@@ -200,13 +204,17 @@ input {
 	background: url("../list_images/classy_fabric.png") repeat scroll 0 0 #E3E0EF;
 }
 
+.nav > li {
+display: inline-block;
+}
+
 .navbar-default .navbar-text{
 	    color:#ffffff ;
 	    margin-right: 5px;
 	    margin-top: 20px;
 }
 .navbar-brand{
-	padding: 15px 7px;
+	padding: 13px 7px;
 }
 
 /****Footer tweak for mobile*****/
@@ -726,7 +734,7 @@ margin-top:-10px;
 }
 
 .extra-option{
-margin-top:11px !important;
+margin-top:6px !important;
 }
 
 .btn-danger {

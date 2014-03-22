@@ -88,7 +88,7 @@
 	      <input style="margin-bottom: 10px;" data-l10n-id="give-it-a-name" type="text" class="sign-up-input" name="ListName" required="required" placeholder="Give it a name!"> 
 		<div  align=left class="accordion" id="accordion2">
 		    <div class="accordion-group">
-		      <div class="accordion-heading">
+		      <div style="margin-bottom:8px;" class="accordion-heading">
 			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#CollapseExtraOptions">
 			  <b data-l10n-id="extra-options"> <i class="fa fa-cog">&nbsp; </i> Extra options</b>
 			  <span class="caret"></span>
@@ -254,7 +254,7 @@
 			        <form id="{{ListName.slug}}_hidden" action="{% url 'sopler:SetItHidden' ListName.slug %}" method="post" >
 				{% csrf_token %}
 				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
-				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_hidden'].submit();" role="presentation"><a data-l10n-id="hidden" style="text-decoration:none;padding-right:5px;" role="menuitem" tabindex="-1" href="#"><i style="margin-right:5px;" class="fa fa-eye-slash"></i> Hidden</a><i class="fa fa-check"></i></li>
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_hidden'].submit();" role="presentation"><a data-l10n-id="hidden" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i style="margin-right:5px;" class="fa fa-eye-slash"></i> Hidden</a><i class="fa fa-check"></i></li>
 			        </form>
 			      {% else %}
 			        <form id="{{ListName.slug}}__hidden2" action="{% url 'sopler:SetItHidden' ListName.slug %}" method="post" >
@@ -357,13 +357,13 @@
 				<form id="{{ListName.slug}}_authonly" action="{% url 'sopler:SetAuthOnly' ListName.slug %}" method="post" >
 				  {% csrf_token %}
 				  <input type="hidden" name="slug" value="{{ ListName.slug }}" />
-			          <li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_authonly'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-group fa-fw"></i>Authenticated users only</a><i class="fa fa-check"></i></li>
+			          <li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_authonly'].submit();" role="presentation"><a data-l10n-id="authenticated-users-only" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-group fa-fw"></i>Authenticated users only</a><i class="fa fa-check"></i></li>
 				</form>
 			      {% else %}
 				  <form id="{{ListName.slug}}_authonly2" action="{% url 'sopler:SetAuthOnly' ListName.slug %}" method="post" >
 				  {% csrf_token %}
 				  <input type="hidden" name="slug" value="{{ ListName.slug }}" />
-				  <li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_authonly2'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-group fa-fw"></i>Authenticated users only</a></li>
+				  <li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_authonly2'].submit();" role="presentation"><a data-l10n-id="authenticated-users-only" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-group fa-fw"></i>Authenticated users only</a></li>
 
 				</form>
 			      {% endif %}
@@ -375,13 +375,13 @@
 			        <form id="{{ListName.slug}}_privacy" action="{% url 'sopler:SetItPrivate' ListName.slug %}" method="post" >
 				{% csrf_token %}
 				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
-				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_privacy'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-ban fa-fw"></i>Private</a><i class="fa fa-check"></i></li>
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_privacy'].submit();" role="presentation"><a data-l10n-id="private" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-ban fa-fw"></i>Private</a><i class="fa fa-check"></i></li>
 			        </form>
 			      {% else %}
 			        <form id="{{ListName.slug}}_privacy2" action="{% url 'sopler:SetItPrivate' ListName.slug %}" method="post" >
 				{% csrf_token %}
 				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
-				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_privacy2'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-ban fa-fw"></i>Private</a></li>
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_privacy2'].submit();" role="presentation"><a data-l10n-id="private" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-ban fa-fw"></i>Private</a></li>
 			        </form>
 			     {% endif %}
 			     <!----------------------->
@@ -392,13 +392,13 @@
 			        <form id="{{ListName.slug}}_hidden" action="{% url 'sopler:SetItHidden' ListName.slug %}" method="post" >
 				{% csrf_token %}
 				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
-				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_hidden'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-eye-slash"></i> Hidden</a><i class="fa fa-check"></i></li>
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}_hidden'].submit();" role="presentation"><a <a data-l10n-id="hidden" style="text-decoration:none;padding-right:5px;" role="menuitem" tabindex="-1" href="#"><i style="margin-right:5px;" class="fa fa-eye-slash"></i> Hidden</a></li>
 			        </form>
 			      {% else %}
 			        <form id="{{ListName.slug}}__hidden2" action="{% url 'sopler:SetItHidden' ListName.slug %}" method="post" >
 				{% csrf_token %}
 				<input type="hidden" name="slug" value="{{ ListName.slug }}" />
-				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}__hidden2'].submit();" role="presentation"><a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-eye-slash"></i> Hidden</a></li>
+				<li class="coglist" onclick="javascript:document.forms['{{ListName.slug}}__hidden2'].submit();" role="presentation"><a data-l10n-id="hidden" style="text-decoration:none;padding-right:5px;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-eye-slash"></i> Hidden</a></li>
 			        </form>
 			     {% endif %}
 			     <!----------------------->
@@ -406,7 +406,7 @@
 			     <li role="presentation" class="divider"></li>
 			     <form id="{{ListName.slug}}_listdelete" action="{% url 'sopler:DeletePreviousList' ListName.slug %}" method="post">
 			      {% csrf_token %}
-			      <li class="coglist"  onclick="javascript:document.forms['{{ListName.slug}}_listdelete'].submit();" role="presentation"> <a style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-trash-o fa-fw"></i>Delete</a></i></li>
+			      <li class="coglist"  onclick="javascript:document.forms['{{ListName.slug}}_listdelete'].submit();" role="presentation"> <a data-l10n-id="howto28" style="text-decoration:none;" role="menuitem" tabindex="-1" href="#"><i class="fa fa-trash-o fa-fw"></i>Delete</a></i></li>
 			     </form>
 			     </ul>
 			     </div>
