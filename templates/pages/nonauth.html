@@ -37,11 +37,11 @@
 				{% if item.ItemOwnerPrvdr == "facebook" or item.ItemOwnerPrvdr == "twitter" %}
 				  {% for user in users %}
 				    {% if j.grouper|lower|stringformat:"s" == user|lower|stringformat:"s" %}
-					<a href={{item.ItemOwnerLink}}><b>&nbsp; {{user.get_full_name | truncatechars:'40'}}</b></a>
+					<a target="_blank"  href={{item.ItemOwnerLink}}><b>&nbsp; {{user.get_full_name | truncatechars:'40'}}</b></a>
 				    {% endif %} 
 				  {% endfor %}
 				{% else %}
-				  <a href={{item.ItemOwnerLink}}><b>&nbsp; {{j.grouper | truncatechars:'40'}}</b></a>
+				  <a target="_blank"  href={{item.ItemOwnerLink}}><b>&nbsp; {{j.grouper | truncatechars:'40'}}</b></a>
 				{% endif %}
 				{%else%}
 				  <b>&nbsp; {{j.grouper}}</b></br>
