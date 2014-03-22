@@ -372,7 +372,7 @@ def AddNewItem(request, slug):
                   ItemOwnerLN = ""
                   ItemOwnerLink = "https://plus.google.com/" + account.extra_data['id'] 
 		  ItemOwnerState = "confirmed"
-		  ItemOwnerAvtr = "https://plus.google.com/s2/photos/profile/" + account.extra_data['id'] + "?sz=100"
+		  ItemOwnerAvtr = account.extra_data['picture']
 		  
 	  elif ItemOwnerPrvdr == "persona":
 	    	  ItemOwner = account.user

@@ -24,7 +24,7 @@
 
 		  {% for j in ItemOwner %}
 		    <li class="cmmnt">
-		    {% for item in j.list|slice:":1" %}
+		    {% for item in j.list|dictsort:"ItemOwnerAvtr"|slice:":1" %}
 			  <div class="avatar">
 			      <!-- Item Owner Avatar -->
 			      {% if item.ItemOwnerAvtr == ""  %}
