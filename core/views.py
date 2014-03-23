@@ -160,17 +160,32 @@ def AddList(request):
 
     req = request.POST['ListName'].encode('utf-8')
     
+    # Allow authenticated users only
     ListAuthOnly = request.POST.get('ListAuthOnly')
     if ListAuthOnly: 
         ListAuthOnly = True
+        ListIsPrivate = False
+        ListIsHidden = False
     else:
         ListAuthOnly = False
         
+    #Set this list as private
     ListIsPrivate = request.POST.get('ListIsPrivate') 
     if ListIsPrivate: 
         ListIsPrivate = True
+        ListAuthOnly = False
+        ListIsHidden = False
     else:
         ListIsPrivate = False
+        
+    # Set this list as hidden
+    ListIsHidden = request.POST.get('ListIsHidden') 
+    if ListIsHidden: 
+        ListIsHidden = True
+        ListAuthOnly = False
+        ListIsPrivate = False
+    else:
+        ListIsHidden = False
         
     now = time.time()
     sha256 = hashlib.sha256()
@@ -191,6 +206,7 @@ def AddList(request):
 	slug = slugify(CryptLink), 
 	ListAuthOnly = ListAuthOnly, 
 	ListIsPrivate = ListIsPrivate,
+	ListIsHidden = ListIsHidden,
 	ListOwner = ListOwner, 
         ListOwnerFN = ListOwnerFN,  
         ListOwnerLN = ListOwnerLN,
@@ -216,6 +232,8 @@ def SetItPrivate(request, slug):
       p.ListIsPrivate = False
     else:
       p.ListIsPrivate = True
+      p.ListAuthOnly = False
+      p.ListIsHidden = False
     p.save()
     
     return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
@@ -230,6 +248,8 @@ def SetItHidden(request, slug):
       p.ListIsHidden = False
     else:
       p.ListIsHidden = True
+      p.ListAuthOnly = False
+      p.ListIsPrivate = False
     p.save()
     
     return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
@@ -244,6 +264,8 @@ def SetAuthOnly(request, slug):
       p.ListAuthOnly = False
     else:
       p.ListAuthOnly = True
+      p.ListIsHidden = False
+      p.ListIsPrivate = False
     p.save()
     
     return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
