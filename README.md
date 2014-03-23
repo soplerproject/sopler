@@ -23,7 +23,7 @@ Follow these steps to download and run Sopler :
   
   `$ cd sopler`
   
-  `$ pip install -r requirements.txt`
+  `$ su -c "pip install -r requirements.txt"`
   
   ### Create your [SECRET_KEY][SECRET_KEY] in your ``settings.py`` file. ###
   [SECRET_KEY]: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
