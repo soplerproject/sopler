@@ -76,9 +76,8 @@
         		      $("#how_to_video").fitVids();  
 		       });
 	       </script>
-	 
-
-	      <!-- Count comments -->
+	      
+	     <!-- Count comments -->
 	      <script type="text/javascript">
 	      var time = 100; // Change this if you want
 		$(window).load(function (){
@@ -232,7 +231,22 @@
 	      </script> 
 	      
 	      
-               {% if user.is_authenticated %}
+         {% if user.is_authenticated %}
+
+		 <!---Checkboxes Extra Options ----->
+	      <script type="text/javascript">
+			$(window).load(function (){
+			 $("input:checkbox").click(function() {
+				if ($(this).is(":checked")) {
+					var group = "input:checkbox[id='" + $(this).attr("id") + "']";
+					$(group).prop("checked", false);
+					$(this).prop("checked", true);
+				} else {
+					$(this).prop("checked", false);
+				}
+			 });
+			});
+	      </script>
 
 		<!-- Count previous lists-->
 		<script type="text/javascript">
