@@ -772,6 +772,11 @@ padding: 3px 6px;
 	  position: static;
 
 }
+
+.nobackground{
+background-color: #FFFFFF;
+border-radius: 0;
+}
 .about-box .popover .popover-title {
 	  font-weight: 600;
 	  border: 20 none;

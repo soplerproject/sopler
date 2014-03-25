@@ -22,16 +22,16 @@
 	      {% for account in user.socialaccount_set.all %}
 	      <!-- Facebook -->
 	      {% if account.provider == "facebook" %}
-		<img style="border-radius: 45px;-moz-border-radius: 45px;-khtml-border-radius: 45px;-webkit-border-radius: 45px;" src=https://graph.facebook.com/{{user.socialaccount_set.all.0.uid}}/picture?type=large width="95" height="95"/>
+		<img class="img-circle" src=https://graph.facebook.com/{{user.socialaccount_set.all.0.uid}}/picture?type=large width="95" height="95"/>
 		<!-- Twitter -->
 		{% elif account.provider == "twitter" %}
-		<img style="border-radius: 45px;-moz-border-radius: 45px;-khtml-border-radius: 45px;-webkit-border-radius: 45px;" src={{account.extra_data.profile_image_url_https|replace:'/_normal/'}} width="95" height="95"/>
+		<img class="img-circle" src={{account.extra_data.profile_image_url_https|replace:'/_normal/'}} width="95" height="95"/>
 		<!-- Google -->
 		{% elif account.provider == "google" %}
-		<img style="border-radius: 45px;-moz-border-radius: 45px;-khtml-border-radius: 45px;-webkit-border-radius: 45px;" src={{user.socialaccount_set.all.0.get_avatar_url}} width="95" height="95"/>
+		<img class="img-circle" src={{user.socialaccount_set.all.0.get_avatar_url}} width="95" height="95"/>
 		<!-- Mozilla Persona -->
 		{% else %}
-		<img style="border-radius: 45px;-moz-border-radius: 45px;-khtml-border-radius: 45px;-webkit-border-radius: 45px;" src=/static/buttons/Persona.png width="95" height="95"/>
+		<img class="img-circle" src=/static/buttons/Persona.png width="95" height="95"/>
 		{% endif %}
 
 		</div>
