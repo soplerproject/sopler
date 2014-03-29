@@ -182,7 +182,7 @@ INSTALLED_APPS = (
     # Extra Security Features
     'djangosecure',
     # Uncomment for data migration 
-    'south',
+    #'south',
     'favit',
     'tastypie',
     # Fetches your friends from different social-networks.
