@@ -175,18 +175,14 @@
                   	  if(!onoff){
                   		$("#realtime_button").css("background-color","#7AA948");
                   		refreshId = setInterval(function(){
-		                     console.log("Reloading..." + reloads++);
                   		     $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
                   		     $("#comref").load('{{ request.build_absolute_uri }} #comref');
                   		}, sync_timeout);
                   		 onoff=true;
-		                console.log("Syncing comences!")
                   	   }else{
                   	  	clearInterval(refreshId);
                                   $("#realtime_button").css("background-color","#FFFFFF");
                   	        onoff=false;
-		                console.log("Syncing ceices!")
-
                   	   }
                   };
                </script>
