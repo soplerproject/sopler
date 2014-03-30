@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}{{list.ListName }}{% endblock %}
+{% block content %}
+{% autoescape on %}
+<br />
+<div class="row" style="text-align:justify;">
+   <div class="col-lg-10">
+      <h2>Privacy Policy<span class="logocolor">.</span></h2>
+      <h3>1. Introduction</h3>
+      <p>Sopler respects your privacy and the security of your personal
+       information, and we want to do as much as we can to protect it. 
+       Because of this, we have created this Privacy Policy to govern
+       how we deal with your personal information. Since our Service is
+       using content that you provide, including shared
+       information from third party sites, it is important that you
+       read and understand their information sharing policies as
+       well.</p>
+   </div>
+</div>
+<br>
+<div class="row" style="text-align:justify;">
+   <div class="col-lg-10">
+      <h3>2. Personal information we collect</h3>
+      <p>We utilize third party API’s like Facebook Connect,
+       Twitter OAuth, and other API’s that allow you to transfer
+       your profile information from those Sites to ours depending
+       on your settings on those Sites. We are not responsible
+       for any information that does not transfer or if any
+        information is inaccurate.</p>
+   </div>
+</div>
+<br>
+<div class="row" style="text-align:justify;">
+   <div class="col-lg-10">
+      <h3>3. Cookies</h3>
+      <p>We don't use tracking cookies! We use CSRF token cookie as a
+       defense, against <a href="https://docs.djangoproject.com/en/dev/ref/contrib/csrf/">
+       CSRF attacks</a>.
+       Your use of the Service may require that you have cookies
+       turned on, depending on your login preferences.</p>
+   </div>
+</div>
+<br>
+<div class="row" style="text-align:justify;">
+   <div class="col-lg-10">
+      <h3>4. Third party sites</h3>
+      <p>Since our Service lets you share content, you can be
+       sure that you will encounter links to third party sites or
+       content that is being displayed from a third party site.
+       Anytime you encounter a link to a website outside of Sopler,
+       you should know that we have no control over that website or
+       Service. We recommend that you consult those websites' privacy policies,
+       terms of service, and other similar documents when using them.</p>
+	  <p>You may also have the ability to interface, through the use 
+	  of APIs, with third party websites such as social websites like
+	  Facebook and Twitter. Be advised that we cannot be responsible
+	  for any breaches of privacy that may arise from the use of these
+	  third party websites.</p>
+   </div>
+</div>
+<br>
+<div class="row" style="text-align:justify;">
+   <div class="col-lg-10">
+      <h3>5. HTTPS (SSL)</h3>
+      <p>By default the Sopler.net servers have been configured to work
+      with HTTPS. They convert any regular HTTP request to an HTTPS
+      request because it works over secure and encrypted Secure Socket 
+      Layer (SSL) connections and thus better protects the privacy of 
+      our users. SSL is an encryption protocol that is available in 
+      almost all browsers. It establishes a secure connection between 
+      your browser and Sopler.net's servers. Sopler.net recommends 
+      using SSL to hide your search terms from anyone who might be 
+      monitoring traffic between your browser and Sopler.net's servers. 
+      (The only drawback of using SSL is a slightly longer processing 
+      time.) If you prefer to use HTTP instead, you can change this in 
+      your browser's settings by disabling SSL.</p>
+   </div>
+</div>
+{% endautoescape %}
+{% endblock %}

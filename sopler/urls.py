@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     url(r'^team/$', TemplateView.as_view(template_name='pages/about/team.html')),
     url(r'^terms/$', TemplateView.as_view(template_name='pages/about/terms.html')),
     url(r'^howto/$', TemplateView.as_view(template_name='pages/about/howto.html')),
+    url(r'^privacy/$', TemplateView.as_view(template_name='pages/about/privacy.html')),
     # API
     url(r'^api/', include(v1_api.urls)),
 )
