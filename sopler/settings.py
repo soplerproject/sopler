@@ -173,7 +173,13 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # Available Social Account Providers
+    'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.persona',
+    'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
+     #'allauth.socialaccount.providers.openid',
+    'core',
     # Extra Security Features.
     'djangosecure',
     # Data migration.
