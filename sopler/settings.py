@@ -174,16 +174,13 @@ INSTALLED_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.twitter',
-    'allauth.socialaccount.providers.persona',
-    #'allauth.socialaccount.providers.openid',
-    'core',
-    # Extra Security Features
+    # Extra Security Features.
     'djangosecure',
-    # Uncomment for data migration 
-    #'south',
+    # Data migration.
+    'south',
+    # Faving and unfaving lists.
     'favit',
+    # Webservice API framework for Django.
     'tastypie',
     # Fetches your friends from different social-networks.
     'social_friends_finder',
