@@ -49,26 +49,26 @@
                <script type="text/javascript">
                   $(function ()
                     {
-						$("#besync_popover").popover();
+			$("#besync_popover").popover();
 
                     });
 
-					        </script>
+	       </script>
 
-					<!----- Hide popovers when clicking outside of them---->
-			   <script type="text/javascript">
-				 $(document).ready(function(){
-					$('body').on('click', function (e) {
-						$('[data-toggle="popover"]').each(function () {
-							//the 'is' for buttons that trigger popups
-							//the 'has' for icons within a button that triggers a popup
-							if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-								$(this).popover('hide');
-							}
-						});
-					});
-				 });
-               </script>
+	       <!----- Hide popovers when clicking outside of them---->
+	       <script type="text/javascript">
+		    $(document).ready(function(){
+			  $('body').on('click', function (e) {
+				  $('[data-toggle="popover"]').each(function () {
+					  //the 'is' for buttons that trigger popups
+					  //the 'has' for icons within a button that triggers a popup
+					  if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+						  $(this).popover('hide');
+					  }
+				  });
+			  });
+		    });
+                </script>
 
                <!---Apply fitvids.js on the video of the How-top page--->
                <script type="text/javascript">
@@ -77,19 +77,19 @@
 		       });
 	       </script>
 
-	     <!-- Count comments -->
+	      <!-- Count comments -->
 	      <script type="text/javascript">
 	      var cmd_count_timeout = 100; // Change this if you want
-		$(window).load(function (){
-		  setInterval(function(){
-		    var comcount = $('div[id*="commentcount"]').length;
-		    if (comcount > 0){
-			$('#comments_counter').html(" ("+comcount+")");
-		      }else{
-			$('#comments_counter').html(" ");}
-		      },cmt_count_timeout);
-		    })
-	      </script>
+		  $(window).load(function (){
+		    setInterval(function(){
+		      var comcount = $('div[id*="commentcount"]').length;
+		      if (comcount > 0){
+			  $('#comments_counter').html(" ("+comcount+")");
+			}else{
+			  $('#comments_counter').html(" ");}
+			},cmd_count_timeout);
+		      })
+	       </script>
 
                <!-- Navigation Bar fix & relative -->
 	       <script type="text/javascript">
