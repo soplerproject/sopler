@@ -1,15 +1,15 @@
 {% load url from future %}
 <!DOCTYPE html>
-<!--[if lt IE 7]>      
+<!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7">
    <![endif]-->
-   <!--[if IE 7]>         
+   <!--[if IE 7]>
    <html class="no-js lt-ie9 lt-ie8">
       <![endif]-->
-      <!--[if IE 8]>         
+      <!--[if IE 8]>
       <html class="no-js lt-ie9">
          <![endif]-->
-         <!--[if gt IE 8]><!--> 
+         <!--[if gt IE 8]><!-->
          <html class="no-js">
             <!--<![endif]-->
             <title>{% block head_title %} Sopler - Think. Create. Share. {% endblock %}</title>
@@ -46,18 +46,18 @@
                <script type="text/javascript" src="{% static "js/jquery-ui.js" %}"></script>
                <script type="text/javascript" defer src="{% static "js/l10n.js" %}" charset="utf-8"></script>
 
-               <script type="text/javascript">  
-                  $(function ()  
-                    { 
-						$("#besync_popover").popover();  
+               <script type="text/javascript">
+                  $(function ()
+                    {
+						$("#besync_popover").popover();
 
-                    });  
-                    
+                    });
+
 					        </script>
-					        
+
 					<!----- Hide popovers when clicking outside of them---->
-			   <script type="text/javascript">  
-				 $(document).ready(function(){ 
+			   <script type="text/javascript">
+				 $(document).ready(function(){
 					$('body').on('click', function (e) {
 						$('[data-toggle="popover"]').each(function () {
 							//the 'is' for buttons that trigger popups
@@ -69,28 +69,28 @@
 					});
 				 });
                </script>
-               
+
                <!---Apply fitvids.js on the video of the How-top page--->
                <script type="text/javascript">
-		      $(document).ready(function(){  
-        		      $("#how_to_video").fitVids();  
+		      $(document).ready(function(){
+        		      $("#how_to_video").fitVids();
 		       });
 	       </script>
-	      
+
 	     <!-- Count comments -->
 	      <script type="text/javascript">
-	      var time = 100; // Change this if you want
+	      var cmd_count_timeout = 100; // Change this if you want
 		$(window).load(function (){
 		  setInterval(function(){
 		    var comcount = $('div[id*="commentcount"]').length;
 		    if (comcount > 0){
-			$('#comments_counter').html(" ("+comcount+")"); 
+			$('#comments_counter').html(" ("+comcount+")");
 		      }else{
 			$('#comments_counter').html(" ");}
-		      },time);
+		      },cmt_count_timeout);
 		    })
 	      </script>
-	      
+
                <!-- Navigation Bar fix & relative -->
 	       <script type="text/javascript">
 		      $(document).ready(function(){
@@ -101,15 +101,15 @@
 			      $('html,body').animate({ scrollTop: 0 }, 'normal');
 			      }else{
 			      $('.navbar-fixed-top').css('position','fixed');
-  
+
 			      }
 			      isopen=!isopen;
 		      });
 		      $('#nobutton').click(function(){
-				
+
 			      $('.navbar-fixed-top').css('position','fixed');
 			      isopen=!isopen;
-	  
+
 		      });
 	       });
 	       </script>
@@ -119,7 +119,7 @@
                   $(document).ready(function(){
                     $('#backtotop').on("click",function(){
                       $('html,body').animate({ scrollTop: 0 }, 'slow');
-                    }); 
+                    });
                   });
                </script>
 
@@ -136,59 +136,60 @@
                </script>
 
                <!-- Do submitions without reload refresh page -->
-               <script type="text/javascript"> 
+               <script type="text/javascript">
                   function doSubmit(){
-                     $(document).ready(function(){ 
+                     $(document).ready(function(){
                         $('form.Form').ajaxForm(function() {
                            $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
                            $("#appendedInputButton").val("");
-                        }); 
-                     }); 
+                        });
+                     });
                             var value = document.getElementById('username').value
                             $(".whodone").val(value);
                   }
                   function doAuthSubmit(){
-                     $(document).ready(function(){ 
+                     $(document).ready(function(){
                         $('form.Form').ajaxForm(function() {
                            $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
                            $("#appendedInputButton").val("");
-                        }); 
-                     }); 
+                        });
+                     });
                   }
                   function doComSubmit(){
-                     $(document).ready(function(){ 
+                     $(document).ready(function(){
                         $('form.Form').ajaxForm(function() {
                            $("#comref").load('{{ request.build_absolute_uri }} #comref');
                            $("#textarea").val("");
-                        }); 
-                     }); 
+                        });
+                     });
                   }
                </script>
 
                <!-- Do sync, on every five sec -->
                <script type="text/javascript">
                   var onoff= false;
-                  var time = 5000; // Change this if you want
+                  var sync_timeout = 5000; // Change this if you want
                   var refreshId;
+		  var reloads = 0;
                   function RT() {
                   	  if(!onoff){
                   		$("#realtime_button").css("background-color","#7AA948");
                   		refreshId = setInterval(function(){
                   		     $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
                   		     $("#comref").load('{{ request.build_absolute_uri }} #comref');
-                  		}, time);	
-                  		 onoff=!onoff;
+                  		}, sync_timeout);
+                  		 onoff=true;
                   	   }else{
                   	  	clearInterval(refreshId);
                                   $("#realtime_button").css("background-color","#FFFFFF");
-                  	        onoff=!onoff;
+                  	        onoff=false;
                   	   }
                   };
                </script>
-               
+
 	      <!-- Progress Bar -->
 	      <script type="text/javascript">
-	          var time = 100; // Change this if you want
+	          var progbar_timeout = 100; // Change this if you want
 		  var progressBar;
 		  $(window).load(function(){
                       setInterval(function(){
@@ -198,7 +199,7 @@
 		        var progress = ((CountItemDone * 100)/CountItems)
 			var percentDone = progress.toString() + "%";
 			var percentNotDone = (100-progress).toString() + "%";
-			$( "#progressbar" ).css("width", percentDone ); 
+			$( "#progressbar" ).css("width", percentDone );
 			$( "#progressbar2" ).css("width", percentNotDone );
  			if(CountItems > 0){
 				$( "div.progress-bar.progress-bar-success" ).show();
@@ -217,7 +218,7 @@
 							});
 						}
 				}else{
-					
+
 					  $( "div.progress-bar.progress-bar-info" ).html(function() {
 					  	return " ";
 					   });
@@ -226,11 +227,11 @@
 				  $( "div.progress-bar.progress-bar-info" ).hide();
 				  $( "div.progress-bar.progress-bar-success" ).hide();
 		      }
-		      },time);
+		      },progbar_timeout);
 		  });
-	      </script> 
-	      
-	      
+	      </script>
+
+
          {% if user.is_authenticated %}
 
 		 <!---Checkboxes Extra Options ----->
@@ -250,7 +251,7 @@
 
 		<!-- Count previous lists-->
 		<script type="text/javascript">
-		    var time = 100; // Change this if you want
+		    var lst_count_timeout = 100; // Change this if you want
 		    $(window).load(function (){
 			setInterval(function(){
 			  var yrlstcount = $('div[id*="yrlistcount"]').length;
@@ -261,7 +262,7 @@
 			    $('#yourlist_counter').html("0");
 			    $('#yourlist_counter_responsive').html("0");
 			    }
-			},time);
+			},lst_count_timeout);
 		    });
 		    $(window).load(function (){
 			setInterval(function(){
@@ -273,8 +274,8 @@
 			    $('#favlist_counter').html("0");
 			    $('#favlist_counter_reponsive').html("0");
 			    }
-			},time);
-		    });	    
+			},lst_count_timeout);
+		    });
 		    $(window).load(function (){
 			setInterval(function(){
 			  var frndcount = $('div[id*="frndcount"]').length;
@@ -285,11 +286,11 @@
 			    $('#friend_counter').html("0");
 			    $('#friend_counter_reponsive').html("0");
 			    }
-			},time);
-		    });	
+			},lst_count_timeout);
+		    });
 		</script>
                {% endif %}
-               
+
             </head>
             <body>
                <div id="wrap">
@@ -322,7 +323,7 @@
 				    <li><p class="navbar-text hello hidden-xs ">Hi, <a href="/home">{{user.first_name | truncatechars:'18' }} {{ user.last_name | slice:'1' }}</a></p></li>
 				    <!-------Visible on mobile only--------->
 				    <li><p class="navbar-text hello visible-xs ">Hi, <a href="/home"> {{user.first_name | truncatechars:'11' }} {{ user.last_name | slice:'1' }}</a></p></li>
-				    <li class="hello" ><img class="hidden-xs " src=https://graph.facebook.com/{{user.socialaccount_set.all.0.uid}}/picture width="30" height="30"></li>  
+				    <li class="hello" ><img class="hidden-xs " src=https://graph.facebook.com/{{user.socialaccount_set.all.0.uid}}/picture width="30" height="30"></li>
 				  <!-- Twitter -->
 				  {% elif account.provider == "twitter" %}
 				    <li><p class="navbar-text hello hidden-xs ">Hi, <a href="/home">{{ user.username | truncatechars:'20' }}</a></p></li>
@@ -347,7 +348,7 @@
                            {% else %}
                              <div class="accordion-heading">
                              </div>
-                             <button data-l10n-id="signin" style="margin-right:-1.5em;margin-top: 15px;"type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign in</button>     
+                             <button data-l10n-id="signin" style="margin-right:-1.5em;margin-top: 15px;"type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign in</button>
                            {% endif %}
                            </ul>
                            {% if user.is_authenticated %}
@@ -362,7 +363,7 @@
 
                      <!-- Jumbotron -->
                      <div class="jumbotron">
-                        {% block content %} 
+                        {% block content %}
                         {% endblock content%}
                         <br>
                         <br>
