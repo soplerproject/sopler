@@ -94,6 +94,7 @@ input {
 
 .sign-up-input {
 	width: 100%;
+	max-width:25em;
 	height: 50px;
 	margin-bottom: 25px;
 	padding: 0 15px 2px;
@@ -220,9 +221,11 @@ padding-right:0px;
 	    margin-top: 20px;
 }
 .navbar-brand{
-	padding: 13px 7px;
+	padding: 13px 7px 7px;
 }
-
+.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+    margin: 0 0 7px -15px;
+}
 /****Footer tweak for mobile*****/
 .dl-horizontal dt {
 	text-align:left;
@@ -246,6 +249,25 @@ padding-right:0px;
 	-moz-border-radius: 10px;
 	-khtml-border-radius: 10px;
 	-webkit-border-radius: 10px;
+}
+
+.sign-in-button {
+	  position: relative;
+	  vertical-align: top;
+	  width: 100%;
+	  height: 54px;
+	  padding: 0;
+	  font-size: 24px;
+	  color: white;
+	  text-align: center;
+	  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+	  background: #428BCA;
+	  border: 0;
+	  border-bottom: 2px solid #2A76B7;
+	  border-radius: 5px;
+	  cursor: pointer;
+	  -webkit-box-shadow: inset 0 -2px #2A76B7;
+	  box-shadow: inset 0 -2px #2A76B7;
 }
 
 .sign-up-button {
@@ -943,3 +965,4 @@ border-radius: 0;
 	margin-left:5px;
 	margin-right:95px;
 }
+
