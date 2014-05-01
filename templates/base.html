@@ -123,6 +123,15 @@
                   });
                </script>
 
+               <!-- Go Mobile -->
+               <script type="text/javascript">
+                  $(document).ready(function(){
+                    $('#gomobile').on("click",function(){
+                      $('html,body').animate({ scrollTop: 1200 }, 'slow');
+                    });
+                  });
+               </script>
+
                <!-- Characters counter -->
                <script type="text/javascript">
                   $(document).ready(function() {
@@ -313,9 +322,9 @@
 
                   <!-- Wrap all page content to push down footer -->
                   <!-- Fixed navbar -->
-                  <div id="navb" class="navbar navbar-default navbar-fixed-top" style="background-color:transparent;">
+                  <div id="navb" class="navbar navbar-default navbar-fixed-top" style="background-color:transparent;" >
                      <div class="container">
-                        <ul  class="nav navbar-nav list-inline" style="float:right; margin-right: 2em;">
+                        <ul  class="nav navbar-nav list-inline" style="float:right; margin-right: 2em;" >
                            {% if user.is_authenticated %}
 			    {% for account in user.socialaccount_set.all %}
 			          <!-- Facebook -->
@@ -346,10 +355,14 @@
 				  <button data-l10n-id="signout" type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign out</button>
 			    {% endfor %}
                            {% else %}
-                             <div class="accordion-heading">
-                             </div>
-                             <button data-l10n-id="signin" style="margin-right:-1.5em;margin-top: 15px;"type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign in</button>
-                           {% endif %}
+			      <!-- Hide top Sign-Up button from the main page-->
+			      {% if request.get_full_path != "/home" %}
+				  <div class="accordion-heading">
+				  </div>
+				  <button data-l10n-id="signin" style="margin-right:-1.5em;margin-top: 15px;" type="button" id="signin" class="btn btn-primary btn-primary navbar-btn signin" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign in</button>
+			      {% endif %}
+			   {% endif %}
+
                            </ul>
                            {% if user.is_authenticated %}
                              <a  class="navbar-brand hidden-xs" href="../../"> <img class="img-responsive" alt="Sopler" src="{% static "img/logo.png" %}""/> </a>
@@ -425,7 +438,7 @@
                         </div>
                         <div class="col-sm-3 col-md-2  " >
                            <ul class="list-unstyled">
-                              <li style="opacity:0.7;">
+                              <li style="opacity:0.7;" >
                                  <h3><b><i class="icon-cc"></i>
                                     <i class="icon-cc-nc"></i>
                                     <i class="icon-cc-by" ></i>
@@ -447,7 +460,7 @@
 	                        </dl>
 	                        <dl class="dl-horizontal">
 	                           <dt data-l10n-id="social" >Social</dt>
-	                           <dd style="font-size:28px;">
+	                           <dd style="font-size:28px;" >
 	                              <a  href="https://www.facebook.com/Sopler" target="_blank">
 	                                 <i class="fa fa-facebook"></i>
 	                              </a>	&nbsp;
@@ -474,7 +487,7 @@
 	                           <dd><a data-l10n-id="terms" href="../../terms/">Terms</a> | <a data-l10n-id="privacy" href="../../privacy/">Privacy</a></dd>
 	                        </dl>
 	                        <ul class="list-unstyled">
-	                           <li style="opacity:0.7;">
+	                           <li style="opacity:0.7;" >
 	                              <h3><b><i class="icon-cc"></i>
 	                                 <i class="icon-cc-nc"></i>
 	                                 <i class="icon-cc-by" ></i>

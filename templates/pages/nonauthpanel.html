@@ -1,67 +1,119 @@
-<br>
-<div align="center" style="width:100%;">
-<!------------------Index page Box----------------------->
+<div align="center" style="width:100%;" >
+
+   <!------------------Index page Box----------------------->
    <div class="about-box">
       <div id="boxes" class="popover bottom roundall">
          <div class="popover-title title-main">
-            <h2 data-l10n-id="create-a-list" style="text-shadow:none;">Create a list<span style="font-size:1.75em;" class="dot">.</span></h2>
+            <h2 data-l10n-id="create-a-list" style="text-shadow:none;" >Create a list<span style="font-size:1.75em;" class="dot">.</span></h2>
          </div>
          <div class="popover-content">
-	      <form class="validate-form" action="{% url 'sopler:AddList' %}" method="post">
-	      {% csrf_token %}
-		  <input data-l10n-id="who-owns-the-list" type="text" class="sign-up-input" name="ListOwnerName" required="required" placeholder="Who owns the list?">
-	      <input data-l10n-id="give-it-a-name" type="text" class="sign-up-input" name="ListName" required="required" placeholder="Give it a name!">
-	      <input data-l10n-id="start" type="submit" value="Start!" class="sign-up-button">
-            </form>
-            </div>
+	      <button data-l10n-id="signin" style="margin-right:-1.5em;margin-top: 15px;" type="button" id="signin" class="sign-in-button" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sign in</button>
+	      <br><br>
+	      <div align="center">or stay <a style="cursor:pointer;" data-toggle="modal" data-target="#CreateList_Modal"> Anonymous</a></div>
          </div>
          <span id="error"></span>
       </div>
-   </div>
-   <!------------------Text/Icons area----------------------->
-   <div class="jumbotron" style=" padding-top:0; margin-top:60px;" align="center">
-	<a target="_blank" href="https://marketplace.firefox.com/app/sopler">
-	  <img src="/static/buttons/firefoxmarketplace.png"/>
-	 </a>
-		<br/><br/>
-      <h2  data-l10n-id="list-everything"class="hidden-xs">List everything on <span class="logocolor spaces">/.</span><span class="changefont">Sopler</span></h2>
-      <h3 data-l10n-id="list-everything" class="visible-xs">List everything on <span class="logocolor spaces">/.</span><span class="changefont">Sopler</span></h3>
-      <h4 data-l10n-id="index-info" class="hidden-xs">A free/open source, social and collaborative web application that helps you make to-do lists.<br/> <span data-l10n-id="index-info2">Create and share them with others easily in real time!</span></h4>
-      <h4 data-l10n-id="index-info-xs" class="visible-xs">A web application that helps you make to-do lists.</h4>
-   <div style="clear:both;"></div>
-   <br />
-   <div style="text-shadow: 5px 5px 5px #dddddd; text-align:center;" class="row hidden-xs">
+      <div class="modal fade" id="CreateList_Modal" tabindex="-1" role="dialog" aria-labelledby="myfavModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	<div class="modal-content">
+	<div style="padding:0;border-bottom: 0" class="modal-header">
+	  <div class="modal-title">
+	    <h2 data-l10n-id="create-a-list" style="text-shadow:none;" ><img style="margin-bottom:-10px;" class="img-responsive" alt="Sopler" src="/static/img/icon-60.png"/>Create a list<span style="font-size:1.75em;" class="dot">.</span></h2>
+	  </div>
+	</div>
+	<form class="validate-form" action="{% url 'sopler:AddList' %}" method="post">
+	  <div class="modal-body">		   
+	      {% csrf_token %}
+	      <input data-l10n-id="who-owns-the-list" type="text" class="sign-up-input" name="ListOwnerName" required="required" placeholder="Who owns the list?">
+	      <input data-l10n-id="give-it-a-name" type="text" class="sign-up-input" name="ListName" required="required" placeholder="Give it a name!">
+	      <span id="error"></span>
+	  </div>
+	  <div class="modal-footer" style="background-color:#f7f7f7">
+	    <button type="button" class="btn btn-default pull-left " data-dismiss="modal">Close</button>
+	    <input data-l10n-id="start" type="submit" value="Start" class="btn btn-default">
+	  </div>
+	  </div>
+	</form>
+      </div>
+    </div>
+
+  <!------------------Text/Icons area----------------------->
+  <div id="gomobile" class="gomobile" style=" padding-top:0; margin-top:60px;" align="center">
+    <a class="btn btn-lg btn-success">
+      <i class="fa fa-download fa-2x pull-left"></i>Go mobile
+    </a>
+    <br/><br/>
+  </div>
+
+  <h2  data-l10n-id="list-everything" class="hidden-xs">List everything on <span class="logocolor spaces">/.</span><span class="changefont">Sopler</span></h2>
+  <h3 data-l10n-id="list-everything" class="visible-xs">List everything on <span class="logocolor spaces">/.</span><span class="changefont">Sopler</span></h3>
+  <h4 data-l10n-id="index-info" class="hidden-xs">A free/open source, social and collaborative web application that helps you make to-do lists.<br/> <span data-l10n-id="index-info2">Create and share them with others easily in real time!</span></h4>
+  <h4 data-l10n-id="index-info-xs" class="visible-xs">A web application that helps you make to-do lists.</h4>
+  <div style="clear:both;" ></div>
+  <br />
+
+  <div style="text-shadow: 5px 5px 5px #dddddd; text-align:center;" class="row hidden-xs">
       <div class="col-sm-4">
          <h1 style="border: 1px solid #b74f41;" id="main_icons"><i style="color:#b74f41; text-shadow: none;" class="fa fa-lightbulb-o"></i></h1>
-         <h2 data-l10n-id="think">Think<span style="color:#b74f41;"class="dot">.</span></h2>
+         <h2 data-l10n-id="think">Think<span style="color:#b74f41;" class="dot">.</span></h2>
          <h5 data-l10n-id="think-info">Think of things you want in a to-do list! Organize a party, go shopping...endless possibilities.</h5>
       </div>
+
       <div class="col-sm-4">
-         <h1 style="border: 1px solid #7aa948;"id="main_icons"><i style="color:#7aa948;text-shadow: none; font-size:0.9em;" class="fa fa-list-ul"></i></h1>
+         <h1 style="border: 1px solid #7aa948;" id="main_icons"><i style="color:#7aa948;text-shadow: none; font-size:0.9em;" class="fa fa-list-ul"></i></h1>
          <h2 data-l10n-id="create" >Create<span style="color:#7aa948;" class="dot">.</span></h2>
          <h5 data-l10n-id="create-info"> Quickly create or easily modify a to-do list of items you will need. Many options to choose.</h5 >
       </div>
+
       <div class="col-sm-4">
          <h1  style="border: 1px solid #5294c9;" id="main_icons"><i style="color:#5294c9;text-shadow:none;font-size:1.1em; margin-right:3px;" class="icon-share-simple"></i></h1>
          <h2 data-l10n-id="share" >Share<span class="dot">.</span></h2>
          <h5 data-l10n-id="share-info">Share your to-do lists with your friends and collaborate with them as you wish.</h5 >
       </div>
-   </div>
-    <div style="text-shadow: 5px 5px 5px #dddddd; text-align:center;" class="row visible-xs">
+  </div>
+
+  <div style="text-shadow: 5px 5px 5px #dddddd; text-align:center;" class="row visible-xs">
       <div class="col-sm-4">
          <h1 style="border: 1px solid #b74f41;" id="main_icons"><i style="color:#b74f41; text-shadow: none;" class="fa fa-lightbulb-o"></i></h1>
-         <h2 data-l10n-id="think" style="margin-top:0px;" >Think<span style="color:#b74f41;"class="dot">.</span></h2>
+         <h2 data-l10n-id="think" style="margin-top:0px;" >Think<span style="color:#b74f41;" class="dot">.</span></h2>
          <h5 data-l10n-id="think-info-xs">Think of things you want in a to-do list!</h5>
       </div>
+
       <div class="col-sm-4">
-         <h1 style="margin-top:30px;border: 1px solid #7aa948;"id="main_icons"><i style="color:#7aa948;text-shadow: none; font-size:0.9em;" class="fa fa-list-ul"></i></h1>
+         <h1 style="margin-top:30px;border: 1px solid #7aa948;" id="main_icons"><i style="color:#7aa948;text-shadow: none; font-size:0.9em;" class="fa fa-list-ul"></i></h1>
          <h2 data-l10n-id="create" style="margin-top:0px;" >Create<span style="color:#7aa948;" class="dot">.</span></h2>
          <h5 data-l10n-id="create-info-xs" >Quickly create or easily modify a to-do list of items you will need.</h5>
       </div>
+
       <div class="col-sm-4">
          <h1  style="margin-top:30px;border: 1px solid #5294c9;" id="main_icons"><i style="color:#5294c9;text-shadow:none;font-size:1.1em; margin-right:3px;" class="icon-share-simple"></i></h1>
          <h2 data-l10n-id="share" style="margin-top:0px;" >Share<span class="dot">.</span></h2>
          <h5 data-l10n-id="share-info-xs">Share your to-do lists with your friends and collaborate with them.</h5 >
       </div>
-   </div>
+  </div>
+
+  <div style="margin-top:5em;" class="row">
+
+      <!--Google Play store-->
+      <div class="col-sm-4 col-md-push-1">
+         <a id="download" target="_blank" href="https://play.google.com/store/apps/details?id=ttech.sopler">
+	  <img style="margin-bottom:5px;" class="img-responsive" src="/static/buttons/googleplay.png"/>
+	 </a>
+      </div>
+
+      <!--Firefox Marketplace-->
+      <div class="col-sm-4">
+	 <a id="download" target="_blank" href="https://marketplace.firefox.com/app/sopler">
+	  <img style="margin-bottom:5px;" class="img-responsive" src="/static/buttons/firefoxmarketplace.png"/>
+	 </a>
+      </div>
+
+      <!--blackberry Store-->
+      <div class="col-sm-4 col-md-pull-1">
+	 <a id="download" target="_blank" href="http://appworld.blackberry.com/webstore/content/51424888/">
+	 <img class="img-responsive" src="/static/buttons/blackberry.png"/>
+	 </a>
+      </div>
+  </div>  
 </div>
+
