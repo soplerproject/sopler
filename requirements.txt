@@ -1,5 +1,5 @@
 django==1.5.4
-django-allauth
+django-allauth==0.16.1
 south
 django-secure
 django-tastypie
