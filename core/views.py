@@ -480,6 +480,33 @@ def UnCheckItem(request, slug):
     
     p.ItemDone = False
     p.WhoDone = ""
+    p.ItemDueDate = None
+    p.save()
+    
+    return HttpResponseRedirect(reverse('sopler:list', args=(list.slug,)))
+
+#################################################
+# Edit an item
+#################################################
+
+def EditItem(request, slug):
+    list = get_object_or_404(List, slug=slug)
+    p = get_object_or_404(Item, pk=int(request.POST['item_pk']))
+    
+    p.content = request.POST['EditContents']
+    p.save()
+    
+    return HttpResponseRedirect(reverse('sopler:list', args=(list.slug,)))
+
+#################################################
+# Set Due Date to item
+#################################################
+
+def SetItemDueDate(request, slug):
+    list = get_object_or_404(List, slug=slug)
+    p = get_object_or_404(Item, pk=int(request.POST['item_pk']))
+    
+    p.ItemDueDate = request.POST['SetDueDate']
     p.save()
     
     return HttpResponseRedirect(reverse('sopler:list', args=(list.slug,)))
@@ -540,66 +567,81 @@ def MarkItem(request, slug):
     list = get_object_or_404(List, slug=slug)
 			  
     if request.user.is_authenticated():
-      for account in request.user.socialaccount_set.all():
-	ItemOwnerPrvdr = account.provider
-	
-	if ItemOwnerPrvdr == "facebook": 
-	  if p.ItemOwner == account.extra_data['username'] or list.ListOwner == account.extra_data['username'] :
-	    if p.ItemLocked == False :
-	      if p.ItemMarked == True : 
-		  p.ItemMarked = False 
-	      else:
-		  p.ItemMarked = True 
-	    else:
-	      if p.ItemMarked == True :
-		  pass
-	      else:
-		  pass
-	    p.save()
-	    
-	elif ItemOwnerPrvdr == "twitter":
-	  if p.ItemOwner == account.extra_data['screen_name'] or list.ListOwner == account.extra_data['screen_name']:
-	    if p.ItemLocked == False :
-	      if p.ItemMarked == True : 
-		  p.ItemMarked = False 
-	      else:
-		  p.ItemMarked = True 
-	    else:
-	      if p.ItemMarked == True :
-		  pass
-	      else:
-		  pass
-	    p.save()
-	    
-	elif ItemOwnerPrvdr == "google":
-	  if p.ItemOwner == account.extra_data['name'] or list.ListOwner == account.extra_data['name']:
-	    if p.ItemLocked == False : 
-	      if p.ItemMarked == True : 
-		  p.ItemMarked = False 
-	      else:
-		  p.ItemMarked = True 
-	    else:
-	      if p.ItemMarked == True :
-		  pass
-	      else:
-		  pass
-	    p.save()
-	    
-	elif ItemOwnerPrvdr == "persona":
-	  if p.ItemOwner == account.user.username or list.ListOwner == account.user.username:
-	    if p.ItemLocked == False :
-	      if p.ItemMarked == True : 
-		  p.ItemMarked = False 
-	      else:
-		  p.ItemMarked = True 
-	    else:
-	      if p.ItemMarked == True :
-		  pass
-	      else:
-		  pass
-	    p.save()
+      
+      if p.ItemOwnerState == "non-confirmed":
+	if p.ItemLocked == False :
+	  if p.ItemMarked == True : 
+	      p.ItemMarked = False 
+	  else:
+	      p.ItemMarked = True 
 	else:
-	  pass
+	  if p.ItemMarked == True :
+	      pass
+	  else:
+	      pass
+	p.save()
+
+      else:
+	for account in request.user.socialaccount_set.all():
+	  ItemOwnerPrvdr = account.provider
+	  
+	  if ItemOwnerPrvdr == "facebook": 
+	    if p.ItemOwner == account.extra_data['username'] or list.ListOwner == account.extra_data['username'] :
+	      if p.ItemLocked == False :
+		if p.ItemMarked == True : 
+		    p.ItemMarked = False 
+		else:
+		    p.ItemMarked = True 
+	      else:
+		if p.ItemMarked == True :
+		    pass
+		else:
+		    pass
+	      p.save()
+	      
+	  elif ItemOwnerPrvdr == "twitter":
+	    if p.ItemOwner == account.extra_data['screen_name'] or list.ListOwner == account.extra_data['screen_name']:
+	      if p.ItemLocked == False :
+		if p.ItemMarked == True : 
+		    p.ItemMarked = False 
+		else:
+		    p.ItemMarked = True 
+	      else:
+		if p.ItemMarked == True :
+		    pass
+		else:
+		    pass
+	      p.save()
+	      
+	  elif ItemOwnerPrvdr == "google":
+	    if p.ItemOwner == account.extra_data['name'] or list.ListOwner == account.extra_data['name']:
+	      if p.ItemLocked == False : 
+		if p.ItemMarked == True : 
+		    p.ItemMarked = False 
+		else:
+		    p.ItemMarked = True 
+	      else:
+		if p.ItemMarked == True :
+		    pass
+		else:
+		    pass
+	      p.save()
+	      
+	  elif ItemOwnerPrvdr == "persona":
+	    if p.ItemOwner == account.user.username or list.ListOwner == account.user.username:
+	      if p.ItemLocked == False :
+		if p.ItemMarked == True : 
+		    p.ItemMarked = False 
+		else:
+		    p.ItemMarked = True 
+	      else:
+		if p.ItemMarked == True :
+		    pass
+		else:
+		    pass
+	      p.save()
+	  else:
+	    pass
     else:
       if p.ItemOwnerState == "non-confirmed":
 	if p.ItemLocked == False :
@@ -627,42 +669,49 @@ def LockItem(request, slug):
     p = get_object_or_404(Item, pk=int(request.POST['item_pk']))
     
     if request.user.is_authenticated():
-      for account in request.user.socialaccount_set.all():
-	ItemOwnerPrvdr = account.provider
-	
-	if ItemOwnerPrvdr == "facebook": 
-	  if p.ItemOwner == account.extra_data['username'] or list.ListOwner == account.extra_data['username'] :
-	    if p.ItemLocked == True :
-	      p.ItemLocked  = False
-	    else:
-	      p.ItemLocked  = True
-	    p.save()
-	    
-	elif ItemOwnerPrvdr == "twitter":
-	  if p.ItemOwner == account.extra_data['screen_name'] or list.ListOwner == account.extra_data['screen_name']:
-	    if p.ItemLocked == True :
-	      p.ItemLocked  = False
-	    else:
-	      p.ItemLocked  = True
-	    p.save()
-	    
-	elif ItemOwnerPrvdr == "google":
-	  if p.ItemOwner == account.extra_data['name'] or list.ListOwner == account.extra_data['name']:
-	    if p.ItemLocked == True :
-	      p.ItemLocked  = False
-	    else:
-	      p.ItemLocked  = True
-	    p.save()
-	    
-	elif ItemOwnerPrvdr == "persona":
-	  if p.ItemOwner == account.user.username or list.ListOwner == account.user.username:
-	    if p.ItemLocked == True :
-	      p.ItemLocked  = False
-	    else:
-	      p.ItemLocked  = True
-	    p.save()
+      if p.ItemOwnerState == "non-confirmed":
+	if p.ItemLocked == True :
+	  p.ItemLocked  = False
 	else:
-	  pass
+	  p.ItemLocked  = True
+	p.save()
+      else:
+	for account in request.user.socialaccount_set.all():
+	  ItemOwnerPrvdr = account.provider
+	  
+	  if ItemOwnerPrvdr == "facebook":
+	    if p.ItemOwner == account.extra_data['username'] or list.ListOwner == account.extra_data['username'] :
+	      if p.ItemLocked == True :
+		p.ItemLocked  = False
+	      else:
+		p.ItemLocked  = True
+	      p.save()
+	      
+	  elif ItemOwnerPrvdr == "twitter":
+	    if p.ItemOwner == account.extra_data['screen_name'] or list.ListOwner == account.extra_data['screen_name']:
+	      if p.ItemLocked == True :
+		p.ItemLocked  = False
+	      else:
+		p.ItemLocked  = True
+	      p.save()
+	      
+	  elif ItemOwnerPrvdr == "google":
+	    if p.ItemOwner == account.extra_data['name'] or list.ListOwner == account.extra_data['name']:
+	      if p.ItemLocked == True :
+		p.ItemLocked  = False
+	      else:
+		p.ItemLocked  = True
+	      p.save()
+	      
+	  elif ItemOwnerPrvdr == "persona":
+	    if p.ItemOwner == account.user.username or list.ListOwner == account.user.username:
+	      if p.ItemLocked == True :
+		p.ItemLocked  = False
+	      else:
+		p.ItemLocked  = True
+	      p.save()
+	  else:
+	    pass
     else:
       if p.ItemOwnerState == "non-confirmed":
 	if p.ItemLocked == True :

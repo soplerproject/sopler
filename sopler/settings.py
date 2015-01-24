@@ -4,7 +4,7 @@
 import os.path
 PROJECT_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 SESSION_SAVE_EVERY_REQUEST = True
 #Set "True" if all non-SSL requests should be permanently redirected to SSL.
@@ -126,6 +126,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
     #"allauth.account.context_processors.account",
     "allauth.socialaccount.context_processors.socialaccount",
+    'django.core.context_processors.request',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -187,9 +188,10 @@ INSTALLED_APPS = (
     # Faving and unfaving lists.
     'favit',
     # Webservice API framework for Django.
-    'tastypie',
+    #'tastypie',
     # Fetches your friends from different social-networks.
     'social_friends_finder',
+    'embed_video',
 )
 
 # A sample logging configuration. The only tangible logging

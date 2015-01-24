@@ -1,209 +1,595 @@
+{% load embed_video_tags %}
+{% load core_tags %}
 <div class="col-md-8">
    <div class="listbox">
       <br>
-      
       <!--  Progress Bar -->
       <div class="progress">
-	<div class="progress-bar progress-bar-success"  id="progressbar" >
-	</div>
-	<div class="progress-bar progress-bar-info"  id="progressbar2" >
-	</div>
+         <div class="progress-bar progress-bar-success"  id="progressbar" >
+         </div>
+         <div class="progress-bar progress-bar-info"  id="progressbar2" >
+         </div>
       </div>
-      
       <div id="refresh">
-         <ul id="comments">
+         <ul class="list-group" id="comments">
             {% regroup list.item_set.all by ItemOwnerState as ItemOwnerState %}
+
+	      <!--Check if list is empty-->
 	      {% if not ItemOwnerState %}
 		<div data-l10n-id="empty-list" class="empty_list">
-		<div><i class="fa fa-info-circle"></i></div>
-		Your list is empty. <br><span data-l10n-id="dont-waste-time">Don't waste any more time, add an item!</span><br>
+		  <div><i class="fa fa-info-circle"></i></div>Your list is empty. 
+		  <br><span data-l10n-id="dont-waste-time">Don't waste any more time, add an item!</span><br>
 		</div>
 	      {% endif %}
+
 	      {% for i in ItemOwnerState %} 
 		{% regroup i.list by ItemOwner as ItemOwner %}
 
 		  {% for j in ItemOwner %}
-		    <li class="cmmnt">
 		    {% for item in j.list|dictsort:"ItemOwnerAvtr"|slice:":1" %}
-			  <div class="avatar">
-			      <!-- Item Owner Avatar -->
-			      {% if item.ItemOwnerAvtr == ""  %}
-				<img src="/static/buttons/User-Role-Guest-icon.png" width="48" height="48" style="border: 0px solid black; border-radius: 10px;-moz-border-radius: 10px;-khtml-border-radius: 10px;-webkit-border-radius: 10px;">
-			      {% else %}
-				<img src={{item.ItemOwnerAvtr}} width="48" height="48" style="border: 0px solid black; border-radius: 10px;-moz-border-radius: 10px;-khtml-border-radius: 10px;-webkit-border-radius: 10px;">
-			      {% endif %} 
-			      <!-- Item Owner Link -->
-			      {% if item.ItemOwnerLink != ""  %}
-				{% if item.ItemOwnerPrvdr == "facebook" or item.ItemOwnerPrvdr == "twitter" %}
-				  {% for user in users %}
-				    {% if j.grouper|lower|stringformat:"s" == user|lower|stringformat:"s" %}
-					<a target="_blank"  href={{item.ItemOwnerLink}}><b>&nbsp; {{user.get_full_name | truncatechars:'40'}}</b></a>
-				    {% endif %} 
-				  {% endfor %}
-				{% else %}
-				  <a target="_blank"  href={{item.ItemOwnerLink}}><b>&nbsp; {{j.grouper | truncatechars:'40'}}</b></a>
-				{% endif %}
-				{%else%}
-				  <b>&nbsp; {{j.grouper}}</b></br>
-			      {% endif %} 
-			  </div>
-		     {% endfor %}
-
-		{% for item in j.list %}
-		  {% if not item.ItemDone %}
-		  <div id="ItemNotDone"></div>
-		    <div class="clear entry">
-			<!-- ========================================================================================= -->
-			<form  class="Form" action="{% url 'sopler:CheckItem' list.slug %}" method="post"  onclick="doSubmit(this)" >
-			  {% csrf_token %}
-			  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			  <input type="hidden" class="whodone" name="ItemOwner" />		
-			  <button type="submit" class="btn-item_undone"><div class="button_limit">{{ item.content | slice:'57' }}</div></button>
-			</form>
-
-			<!-- ========================================================================================= -->
-			<!-- Non-Authenticated user, can (un)lock/(un)mark/delete,  Non-Authenticated user's items     -->
-			<!-- ========================================================================================= -->
-
-			{% if item.ItemOwnerState == "non-confirmed" %}
-			  <form class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doSubmit(this)">
-			    {% csrf_token %}
-			    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			    <button type="submit" style="margin: -48px 7px;" class= "close fa fa-trash-o"></button>
-			  </form>
-			  <form class="Form" action="{% url 'sopler:MarkItem' list.slug %}" method="post" onclick="doSubmit(this)">
-			    {% csrf_token %}
-			    {% if item.ItemMarked %}
-			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			      <button type="submit"  style="margin: -48px 63px; color: #d6a708;  opacity:0.6;" class= "close fa fa-star" ></button>
-			    {% else %}
-			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			      <button type="submit"  style="margin: -48px 63px;" class= "close fa fa-star-o" ></button>
-			    {% endif %}
-			  </form>
-			  <form class="Form" action="{% url 'sopler:LockItem' list.slug %}" method="post" onclick="doSubmit(this)">
-			    {% csrf_token %}
-			    {% if item.ItemLocked %}
-			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			      <button type="submit" style="margin: -47px 35px; color: red;" class= "close fa fa-lock" ></button>
-			    {% else %}
-			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			      <button type="submit"  style="margin: -47px 35px;"  class= "close fa fa-unlock-o" ></button>
-			    {% endif %}
-			  </form>
-		       {% else %}
-			{% if item.ItemMarked %}
-			  <button type="submit"  style="margin: -47px 63px; color: #d6a708; opacity:0.6;" class= "close fa fa-star" ></button>
-			{% endif %}
-			{% if item.ItemLocked %}
-			  <button type="submit" style="margin: -46px 35px; color: red;" class= "close fa fa-lock" ></button>
-			{% endif %}
+		      <div style="margin-top:30px;" class="list-group-item" class="avatar">
+		      <!-- Item Owner Avatar -->
+		      {% if item.ItemOwnerAvtr == ""  %}
+			<img src="/static/buttons/User-Role-Guest-icon.png" width="40" height="40" style="margin-top: -40px; border: 2px solid #ffffff; border-radius: 10px;-moz-border-radius: 10px;-khtml-border-radius: 10px;-webkit-border-radius: 10px;">
+		      {% else %}
+			<img src={{item.ItemOwnerAvtr}} width="40" height="40" style="margin-top: -40px; border: 2px solid #ffffff; border-radius: 10px;-moz-border-radius: 10px;-khtml-border-radius: 10px;-webkit-border-radius: 10px;">
 		      {% endif %}
-		     {% endif %}
 
-		     {% if item.ItemDone %}
-		      <div id="ItemDone"></div>
-			<!-- =============  Details ====================== -->
-			<div class="clear entry">
-			  <form class="Form" style="text-align: left;" action="{% url 'sopler:UnCheckItem' list.slug %}" method="post" onclick="doSubmit(this)">
-			      {% csrf_token %}
-			      <input type="hidden" name="item_pk" value="{{ item.pk }}" />
-			      <button type="submit" class="btn-item_done"><div class="button_limit">{{ item.content | slice:'57' }}</div></button>
-			  </form>
+		      <!-- Item Owner Link -->
+		      {% if item.ItemOwnerLink != ""  %}
+			{% if item.ItemOwnerPrvdr == "facebook" or item.ItemOwnerPrvdr == "twitter" %}
+			  {% for user in users %}
+			    {% if j.grouper|lower|stringformat:"s" == user.username|lower|stringformat:"s" %}
+			      <a target="_blank"  href={{item.ItemOwnerLink}}><b>{{user.get_full_name | truncatechars:'40'}}</b></a>
+			    {% endif %} 
+			  {% endfor %}
+			{% else %}
+			  <a target="_blank"  href={{item.ItemOwnerLink}}><b>{{j.grouper | truncatechars:'40'}}</b></a>
+			{% endif %}
+		      {% else %}
+			<b>{{j.grouper}}</b>
+		      {% endif %} 
+		      </div>
+		    {% endfor %}
 
-			  <!-- ========================================================================================= -->
-			  <!-- Non-Authenticated user, can /delete,  Non-Authenticated user's checked items              -->
-			  <!-- ========================================================================================= -->
-			  {% if item.ItemOwnerState == "non-confirmed" %}
-			    <form class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doSubmit(this)"> 
+		    {% for item in j.list %}
+			{% if not item.ItemDone %}
+			  <!--Due Date Results-->
+			  {% if item.ItemDueDate|DueDateCalc == "Today" %}
+			    <span class="label label-danger dates"><small>Today</small></span>
+			  {% elif item.ItemDueDate|DueDateCalc == "Upcoming" %}
+			    <span class="label label-warning dates"><small>Upcoming ({{item.ItemDueDate}})</small></span>
+			  {% elif item.ItemDueDate|DueDateCalc == "Overdue" %}
+			    <span class="label label-info dates"><small>Overdue (since {{item.ItemDueDate}})</small></span>
+			  {% else %}
+			    <!--Do nothing-->
+			  {% endif %} 
+
+			  <div id="ItemNotDone"></div>
+			  <li class="list-group-item" class="cmmnt">
+			    <form class="Form" action="{% url 'sopler:CheckItem' list.slug %}" method="post" onclick="doSubmit(this);" >
 				{% csrf_token %}
 				<input type="hidden" name="item_pk" value="{{ item.pk }}" />
-				<button type="submit" style="margin: -48px 7px;" class= "close fa fa-trash-o"></button>
+				<input type="hidden" class="whodone" name="ItemOwner" />
+			     <div class="check-button">
+				<button type="submit" class="close fa fa-circle-o pull-left" style="margin-top:-9px;">
+			     </div>
 			    </form>
-			    {% else %}
-			    <form class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doSubmit(this)">
+			    </button>
+
+			    <!-- Item contents -->
+			    {{ item.content|slice:'57'|urlize|safe }}
+			    {% if item.ItemOwnerState == "non-confirmed" %}
+			    <span style="margin-top:0px;" class= "close fa fa-gears pull-right" data-toggle="modal" data-target="#toolsModal-{{ item.pk }}">
+			    </span>
+			    {% endif %}
+
+			    {% if item.ItemLocked %}
+			    <span class="item_signs lock_sign fa fa-lock fa-border pull-right">
+			    </span>
+			    {% endif %}
+			    {% if item.ItemMarked %}
+			    <span class="item_signs star_sign fa fa-star fa-border pull-right">
+			    </span>
+			    {% endif %}
+			    <!--Embed Video (Youtube / Vimeo / SoundCloud)-->
+			    {% video item.content as my_video %}
+			    <!--Embed Video (Youtube / Vimeo / SoundCloud)-->
+			    <div class="embed-responsive embed-responsive-16by9">
+			    {% video my_video "tiny" %}
+			    </div>
+			    <!-- -->
+			    {% endvideo %}
+			    <!-- -->
+			  </li>
+			  <!-- Modal -->
+			  
+			  <div class="modal fade" id="toolsModal-{{ item.pk }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			    <div class="modal-dialog">
+				<div class="modal-content">
+				  <div class="modal-header">
+				      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+				      &times;
+				      </button>
+				      <h4 class="modal-title" id="myModalLabel">
+					Tools
+				      </h4>
+				  </div>
+				  <div class="modal-body">
+				      <center>
+					<!-- ========================================================================================= -->
+					<!-- Non-Authenticated user, can (un)lock/(un)mark/delete,  Non-Authenticated user's items     -->
+					<!-- ========================================================================================= -->
+					<div class="row hidden-xs">
+					    <div id="priority-unchecked-{{ item.pk }}" class="col-sm-4">
+					      {% if item.ItemOwnerState == "non-confirmed" %}
+					      <form name="Priority_{{ item.pk }}" class="Form" action="{% url 'sopler:MarkItem' list.slug %}" method="post" onclick="doSubmit(this);$('#toolsModal-{{ item.pk }}').modal('hide');">
+						  {% csrf_token %}
+						  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+						  <button style="padding:1.5em 2em; color:white;" type="submit" class="btn btn-tools priority">
+						    <span style="font-size:3em;" class= "fa fa-star" >
+						    </span>
+						    <div>
+								Priority
+						    </div>
+						  </button>
+					      </form>
+					    </div>
+					    <div id="lock-unchecked-{{ item.pk }}" class="col-sm-4">
+					      <form name="Lock_{{ item.pk }}" class="Form" action="{% url 'sopler:LockItem' list.slug %}" method="post" onclick="doSubmit(this);$('#toolsModal-{{ item.pk }}').modal('hide');">
+						  {% csrf_token %}
+						  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+						  <button style="padding:1.5em 2.8em; color:white;" type="submit" class="btn btn-tools lock">
+						    <span style="font-size:3em;" class= "fa fa-lock" >
+						    </span>
+						    <div>
+							Lock
+						    </div>
+						  </button>
+					      </form>
+					    </div>
+					    <div id="edit-unchecked-{{ item.pk }}" class="col-sm-4">
+					      <div aria-expanded="false" onclick="itemoptions_effects(0,0,'edit','{{ item.pk }}')">
+						  <button style="padding:1.5em 2.6em; color:white;" type="submit" class="btn btn-tools edit">
+						    <span style="font-size:3em;" class= "fa fa-pencil" >
+						    </span>
+						    <div>
+							Edit
+						    </div>
+						  </button>
+					      </div>
+					    </div>
+					</div>
+					<div class="row hidden-xs">
+					    <div id="duedate-unchecked-{{ item.pk }}" class="col-sm-6 col-sm-push-1">
+					     <div aria-expanded="false" onclick="itemoptions_effects(0,0,'duedate','{{ item.pk }}')">
+						  <button style="padding:1.5em 1.6em; color:white;" type="submit" class="btn btn-tools duedate">
+						    <span style="font-size:3em;" class= "fa fa fa-calendar" >
+						    </span>
+						    <div>
+							Due Date
+						    </div>
+						  </button>
+					      </div>
+					    </div>
+					    <div id="delete-unchecked-{{ item.pk }}" class="col-sm-6 col-sm-pull-1">
+					      <form name="Delete_{{ item.pk }}" class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doSubmit(this);$('#toolsModal-{{ item.pk }}').modal('hide');">
+						  {% csrf_token %}
+						  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+						  <button style="padding:1.5em 2.3em; color:white;" type="submit" class="btn btn-tools delete">
+						    <span style="font-size:3em;" class= "fa fa-trash-o" >
+						    </span>
+						    <div>
+							Delete
+						    </div>
+						  </button>
+					      </form>
+					    </div>
+					    {% else %}
+					    {% if item.ItemMarked %}
+					    <div class="col-lg-4">
+					      <button type="submit"  style="color: #d6a708; opacity:0.6;" class= "close fa fa-star" >
+					      </button>
+					    </div>
+					    {% endif %}
+					    {% if item.ItemLocked %}
+					    <div class="col-lg-4">
+					      <button type="submit" style="color: red;" class= "close fa fa-lock" >
+					      </button>
+					    </div>
+					    {% endif %}
+					    {% endif %}
+					</div>
+
+				<!---Item options menu for mobile/unchecked--->
+				<div class="visible-xs-block">
+				<div style="color:white;" class="list-group" id="accordion" role="tablist" aria-multiselectable="true">
+				  {% csrf_token %}
+				  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+				  <div id="priority-unchecked-{{ item.pk }}-mob" onClick="document.forms.Priority_{{ item.pk }}.submit()" class="list-group-item mobile-menu-btns priority">
+					<span class= "fa fa-star" > </span> Priority</div>
+ 				  {% csrf_token %}
+				  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+				  <div id="lock-unchecked-{{ item.pk }}-mob" onClick="document.forms.Lock_{{ item.pk }}.submit()"  class="list-group-item mobile-menu-btns lock">
+					<span class= "fa fa-lock" > </span> Lock</div>
+				  <div id="edit-unchecked-{{ item.pk }}-mob" onclick="itemoptions_effects(0,1,'edit','{{ item.pk }}')">
+				  <div  class="list-group-item mobile-menu-btns edit">
+					<span class= "fa fa-pencil"> Edit</div>
+				 </div>
+				  <div id="duedate-unchecked-{{ item.pk }}-mob"  onclick="itemoptions_effects(0,1,'duedate','{{ item.pk }}')">
+				  <div  class="list-group-item mobile-menu-btns duedate">
+					<span class= "fa fa fa-calendar" > Due Date</div>
+				</div>
+				  {% csrf_token %}
+				  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+				  <div id="delete-unchecked-{{ item.pk }}-mob" onClick="document.forms.Delete_{{ item.pk }}.submit()"  class="list-group-item mobile-menu-btns delete">
+					<span class= "fa fa-trash-o" > Delete</div>
+				</div>
+				</div>
+				<!---End of item options menu for mobile/unchecked--->
+					<!----All accordions are here---->
+					<form class="Form" action="{% url 'sopler:EditItem' list.slug %}" method="post" onclick="doSubmit(this);">
+					    {% csrf_token %}
+					    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+					    <div id="collapse-edit_unchecked-{{ item.pk }}" class="pannel-collapse collapse out">
+					      <div align="center" style="margin-left:10px;" class="pannel-body">
+						  <div class="row">
+						    <div class="col-sm-9">
+							<!---Do not leave spaces between <textarea></textarea>!!!--->
+							<textarea name="EditContents" style="max-width:25em;" class="form-control" rows="2">{{ item.content|urlize|safe }}</textarea>
+						    </div>
+						    <div class="col-sm-2">
+							<button class="btn btn-info" type="submit" data-l10n-id="send" onclick="$('#toolsModal-{{ item.pk }}').modal('hide');">Save!
+							</button>
+						    </div>
+						  </div>
+					      </div>
+					    </div>
+					</form>
+					<form class="Form" action="{% url 'sopler:SetItemDueDate' list.slug %}" method="post" onclick="doSubmit(this)">
+					    {% csrf_token %}
+					    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+					    <div id="collapse-duedate_unchecked-{{ item.pk }}" class="panel-collapse collapse out">
+					      <div align="center" style="margin-left:10px;" class="pannel-body">
+						  <div class="form-group row">
+						    <div class="col-xs-6 col-xs-push-3">
+							<label class="control-label">
+							Pick a date
+							</label>
+							<div class="input-group date two" id="dp3" data-date="{% now "Y-m-d" %}" data-date-format="yyyy-mm-dd" onclick="DatePicker(this)">
+							<input name="SetDueDate" class="form-control" type="text" value="{% now "Y-m-d" %}" readonly ">
+							<span class="input-group-addon">
+							<i class="fa fa-calendar">
+							</i>
+							</span>
+						   	</div>
+						     </div>
+						   </div>
+						  <div>
+						  <button class="btn btn-info" type="submit" data-l10n-id="send" onclick="$('#toolsModal-{{ item.pk }}').modal('hide');">
+						    Save!
+						  </button>
+						</div>
+					    </div>
+					</form>
+					<!----end of accordions--->
+
+				      </center>
+				  </div>
+				  <div class="modal-footer">
+				      <button type="button" class="btn btn-default" data-dismiss="modal">
+				      Close
+				      </button>
+				  </div>
+				</div>
+			    </div>
+
+			  </div>
+			{% endif %}
+
+
+			<!-- If item is "Done" -->
+			{% if item.ItemDone %}
+
+			  <div id="ItemDone"></div>
+			  <!--List Body-->
+			  <li class="list-group-item" class="cmmnt">
+			    <form class="Form" action="{% url 'sopler:UnCheckItem' list.slug %}" method="post" onclick="doSubmit(this)" >
 				{% csrf_token %}
 				<input type="hidden" name="item_pk" value="{{ item.pk }}" />
+				<input type="hidden" class="whodone" name="ItemOwner" />
+				<button type="submit" class="close fa fa-check-circle-o pull-left" style="margin-top:-9px; color:#4daf8d; opacity:1;">
+				</button>
 			    </form>
-			    {% endif %}  
+	
+			    <!-- Item contents -->
+			    <strike style="opacity:0.7;">
+			    {{ item.content|slice:'57'|urlize|safe }}
+			    </strike>
+			    
+			    {% if item.ItemOwnerState == "non-confirmed" %}
+			    <div style="margin-top:0px;" class= "close fa fa-gears pull-right" data-toggle="modal" data-target="#toolsModal-{{ item.pk }}"></div>
+			    {% endif %}
+			    
+			    <!--Embed Video (Youtube / Vimeo / SoundCloud)-->
+			    {% video item.content as my_video %}
+			    <!--Embed Video (Youtube / Vimeo / SoundCloud)-->
+			    <div class="embed-responsive embed-responsive-16by9">
+			    {% video my_video "tiny" %}
+			    </div>
+			    <!-- -->
+			    {% endvideo %}
 
-			    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ item.pk }}">
-			    <button style="margin: -47px 35px;"  class= "close fa fa-info"></button>
-			    </a>
-			    <div id="collapse{{ item.pk }}" class="accordion-body collapse out">
-				<div align="justify" style="margin-left:10px;" class="accordion-inner">
-				  <small><i class="fa fa-check"></i> Checked by <b>{{ item.WhoDone | truncatechars:'30'}}</b> on {{ item.TimeDone }}</small>
+			    <!--If item is locked-->
+			    {% if item.ItemLocked %}
+			      <span class="item_signs lock_sign fa fa-lock fa-border pull-right"></span>
+			    {% endif %}
+
+			    <!--If item is Marked (Priority)-->
+			    {% if item.ItemMarked %}
+			      <span class="item_signs star_sign fa fa-star fa-border pull-right"></span>
+			    {% endif %}
+			  </li>
+
+			  <div class="modal fade" id="toolsModal-{{ item.pk }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+			    <div class="modal-dialog">
+				<div class="modal-content">
+				  <div class="modal-header">
+				      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+				      &times;
+				      </button>
+				      <h4 class="modal-title" id="myModalLabel">
+					Options
+				      </h4>
+				  </div>
+				  <div class="modal-body">
+				      <center>
+					<!-- ========================================================================================= -->
+					<!-- Non-Authenticated user, can (un)lock/(un)mark/delete,  Non-Authenticated user's items     -->
+					<!-- ========================================================================================= -->
+					<div class="row hidden-xs">
+					    <div id="priority-{{ item.pk }}" class="col-sm-4">
+					      {% if item.ItemOwnerState == "non-confirmed" %}
+						<form name="Priority_checked_{{ item.pk }}" class="Form" action="{% url 'sopler:MarkItem' list.slug %}" method="post" onclick="doSubmit(this);$('#toolsModal-{{ item.pk }}').modal('hide');">
+						    {% csrf_token %}
+						    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+						    <button style="padding:1.5em 2em;color:white;" type="submit" class="btn btn-tools priority">
+						      <span style="font-size:3em;" class= "fa fa-star" >
+						      </span>
+						      <div>
+							  Priority
+						      </div>
+						    </button>
+						</form>
+					      </div>
+					      <div id="lock-{{ item.pk }}" class="col-sm-4">
+						<form name="Lock_checked_{{ item.pk }}" class="Form" action="{% url 'sopler:LockItem' list.slug %}" method="post" onclick="doSubmit(this);$('#toolsModal-{{ item.pk }}').modal('hide');">
+						    {% csrf_token %}
+						    <button style="padding:1.5em 2.75em;color:white;" type="submit" class="btn btn-tools lock">
+						      <span style="font-size:3em;" class= "fa fa-lock" >
+						      </span>
+						      <div> Lock </div>
+						    </button>
+						</form>
+					      </div>
+					      <div id="edit-{{ item.pk }}" class="col-sm-4">
+					      <div aria-expanded="false" onclick="itemoptions_effects(itemoptions_effects(1,0,'edit','{{ item.pk }}'))">
+						    <button style="padding:1.5em 2.6em;color:white;" type="submit" class="btn btn-tools edit">
+						      <span style="font-size:3em;" class= "fa fa-pencil" >
+						      </span>
+						      <div> Edit </div>
+						    </button>
+						</a>
+					      </div>
+					  </div>
+					  <div class="row hidden-xs">
+					      <div id="info-{{ item.pk }}" class="col-sm-6 col-sm-push-1">
+					      	<div aria-expanded="false" onclick="itemoptions_effects(itemoptions_effects(1,0,'info','{{ item.pk }}'))">
+						    <button style="padding:1.5em 2.8em;color:white;" type="submit" class="btn btn-tools infos">
+						      <span style="font-size:3em;" class= "fa fa-info" >
+						      </span>
+						      <div> Info </div>
+						    </button>
+						</div>
+					      </div>
+					      <div id="delete-{{ item.pk }}" class="col-sm-6 col-sm-pull-1">
+						<form name="Delete_checked_{{ item.pk }}" class="Form" action="{% url 'sopler:DeleteItem' list.slug %}" method="post" onclick="doSubmit(this);$('#toolsModal-{{ item.pk }}').modal('hide');">
+						    {% csrf_token %}
+						    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+						    <button style="padding:1.5em 2.3em;color:white;" type="submit" class="btn btn-tools delete">
+						      <span style="font-size:3em;" class= "fa fa-trash-o" >
+						      </span>
+						      <div> Delete </div>
+						    </button>
+						</form>
+					      </div>
+					  </div>
+					<!--If user is "confirmed"-->
+					{% else %}
+					  <!--If item is locked-->
+					  {% if item.ItemLocked %}
+					    <span class="item_signs lock_sign fa fa-lock fa-border pull-right"></span>
+					  {% endif %}
+
+					  <!--If item is Marked (Priority)-->
+					  {% if item.ItemMarked %}
+					    <span class="item_signs star_sign fa fa-star fa-border pull-right"></span>
+					  {% endif %}
+
+					{% endif %}
+				  </div>
+
+				<!---Item options menu for mobile/checked--->
+				<div class="visible-xs-block">
+				<div style="color:white;" class="list-group" id="accordion" role="tablist" aria-multiselectable="true">
+				  {% csrf_token %}
+				  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+				  <div id="priority-{{ item.pk }}-mob" onclick="document.forms.Priority_checked_{{ item.pk }}.submit()" class="list-group-item priority">
+					<span class= "fa fa-star" > </span> Priority</div>
+ 				  {% csrf_token %}
+				  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+				  <div id="lock-{{ item.pk }}-mob" onclick="document.forms.Lock_checked_{{ item.pk }}.submit()"  class="list-group-item lock">
+					<span class= "fa fa-lock" > </span> Lock</div>
+				  <div id="edit-{{ item.pk }}-mob" onClick="itemoptions_effects(1,1,'edit','{{ item.pk }}')">
+				  <div  class="list-group-item edit">
+					<span class= "fa fa-pencil"> Edit</div>
+				 </div>
+				  <div id="info-{{ item.pk }}-mob"  onclick="itemoptions_effects(1,1,'info','{{ item.pk }}')">
+				  <div  class="list-group-item infos">
+					<span class= "fa fa fa-info" > Info</div>
+				</div>
+				  {% csrf_token %}
+				  <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+				  <div id="delete-{{ item.pk }}-mob" onclick="document.forms.Delete_checked_{{ item.pk }}.submit()"  class="list-group-item delete">
+					<span class= "fa fa-trash-o" > Delete</div>
+				</div>
+				</div>
+				<!---End of item options menu for mobile/unchecked--->
+
+				  <!----All accordions are here---->
+				  <div id="collapse-info-{{ item.pk }}" class="accordion-body collapse out">
+				    <div align="center" style="margin-left:10px;" class="accordion-inner">
+					<i class="fa fa-check">
+					</i>
+					Checked by 
+					<b>
+					  {{ item.WhoDone | truncatechars:'30' }} 
+					</b>
+					on {{ item.TimeDone }} 
+				    </div>
+				  </div>
+
+				  <form class="Form" action="{% url 'sopler:EditItem' list.slug %}" method="post" onsubmit="doSubmit(this);$('#toolsModal-{{ item.pk }}').modal('hide');">
+				    {% csrf_token %}
+				    <input type="hidden" name="item_pk" value="{{ item.pk }}" />
+				    <div id="collapse-edit-{{ item.pk }}" class="accordion-body collapse out">
+				      <div align="center" style="margin-left:10px;" class="accordion-inner">
+					<div class="row">
+					  <div class="col-sm-9">
+					    <!---Do not leave spaces between <textarea></textarea>!!!--->
+					    <textarea name="EditContents" style="max-width:25em; " class="form-control" rows="2">{{ item.content|urlize|safe }}</textarea>
+					  </div>
+					  <div class="col-sm-2">
+					    <button class="btn btn-info" type="submit" data-l10n-id="send">
+					      Save!
+					    </button>
+					  </div>
+					</div>
+				      </div>
+				    </div>
+				  </form>
+
+				  <div id="collapse-duedate-{{ item.pk }}" class="accordion-body collapse out">
+				    <div align="center" style="margin-left:10px;" class="accordion-inner">
+				      <div class="form-group row">
+					<div class="col-xs-6 col-xs-push-3">
+					  <label class="control-label">
+					    Pick a date
+					  </label>
+					  <div class="input-group date" id="dp3" data-date="12-02-2012" data-date-format="mm-dd-yyyy">
+					    <input class="form-control" type="text" readonly="" value="12-02-2012">
+					    <span class="input-group-addon">
+					      <i class="fa fa-calendar">
+					      </i>
+					    </span>
+					  </div>
+					</div>
+				      </div>
+				    </div>
+				    <!----end of accordions--->
+
+				  </center>
+				  </div>
+				  <div class="modal-footer">
+				      <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
+				  </div>
 				</div>
 			    </div>
 			  </div>
-                          <!-- ============  End of details ====================== -->
-		      {% endif %}
+			{% endif %}
 		  {% endfor %}
-		  <br>
-	      </li>
+		{% endfor %}
 	      {% endfor %}
-	  {% endfor %}
          </ul>
-         </div> <!--end refresh-->
       </div>
+      <!--end refresh-->
    </div>
+</div>
 </div>
 <br class="clear" />
 <br>
 <!-- =============  Comments ====================== -->
 <div class="accordion" id="accordion2">
-   <div  class="about-box">
-      <div id="list_boxes" class="popover bottom roundall">
-         <div class="accordion-group">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#comments_collapse">
-               <div class="accordion-heading popover-title list_box">
-                  <h5 style="color: #484848; margin: 0 0 5px 10px;font-size:1.3em; text-shadow:none;">
-                     <i class="fa fa-comments"></i><span data-l10n-id="comments" style="margin-left:5px;">Comments</span><span id="comments_counter"></span>
-                     <button class="btn btn-default box_button" >
-                        <i class="fa fa-chevron-down"></i>
-                  </h5>
-               </div>
-            </a>
-            <div id="comments_collapse" class="accordion-body collapse">
-            <div class="accordion-inner list_box_collapse" >
-            <div id="comref">
-            {% regroup list.comment_set.all by ComOwner as ComOwner %}
-            {% for i in ComOwner %}
-	      {% for comment in i.list %}
-		<div id="commentcount"><small>[{{comment.ComPubDate}}] </small><a href=></a><b>{{i.grouper | truncatechars:'20'}}</b> : {{comment.ComContent | slice:'100' }}</div>
-		<!--Non-auth user can delete all non-auth comments-->
-		{% if comment.ComOwnerState != "confirmed" %}
-		  <form class="Form" action="{% url 'sopler:DeleteComment' list.slug %}" method="post" onclick="doComSubmit();">
-		    {% csrf_token %}
-		    <input type="hidden" name="comment_pk" value="{{ comment.pk }}" />
-		    <button style="margin-right: 5px; margin-top:-41px;" class= "close fa fa-trash-o"></button>
-		  </form>
-		{% endif %}
-	      {% endfor %}
-            {% endfor %}
-            </div>
-            <br>
-            <form class="Form" action="{% url 'sopler:AddNewComment' list.slug %}" method="post" onclick="doComSubmit();">
-	      {% csrf_token %}
-	      <input id="comment" type="hidden" class="form-control" name="ItemOwner" required="required" placeholder="Enter username"/>	
-	      <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
-	      <div class="row">
-	      <div class="col-md-11">
-	      <textarea data-l10n-id="comment" id="textarea" class="form-control" type="text" name="comment" autofocus="autofocus" maxlength="99" required="required" placeholder="Save comment!"></textarea>
-	      </div>
-	      <div class="col-md-1 ">
-	      <button data-l10n-id="send" type="submit" class="btn btn-info pull-right">Save!</button>
-	      <div id="textarea_feedback"></div>
-	      </div>
-	      </div>
-            </form>
-            </div>
-            </div>
+<div  class="about-box">
+<div id="list_boxes" class="popover bottom roundall">
+   <div class="accordion-group">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#comments_collapse">
+         <div class="accordion-heading popover-title list_box">
+            <h5 style="color: #484848; margin: 0 0 5px 10px;font-size:1.3em; text-shadow:none;">
+               <i class="fa fa-comments">
+               </i>
+               <span data-l10n-id="comments" style="margin-left:5px;">
+               Comments
+               </span>
+               <span id="comments_counter">
+               </span>
+               <button class="btn btn-default box_button" >
+                  <i class="fa fa-chevron-down">
+                  </i>
+            </h5>
          </div>
+      </a>
+      <div id="comments_collapse" class="accordion-body collapse">
+      <div class="accordion-inner list_box_collapse" >
+      <div id="comref">
+      {% regroup list.comment_set.all by ComOwner as ComOwner %}
+	{% for i in ComOwner %}
+	  {% for comment in i.list %}
+	    <div id="commentcount">
+	    <small>[{{comment.ComPubDate}}]</small>
+	    <a href= ></a><b> {{i.grouper | truncatechars:'20' }} </b> : {{comment.ComContent | slice:'100' }}
+	    </div>
+
+	    <!--Non-auth user can delete all non-auth comments-->
+	    {% if comment.ComOwnerState != "confirmed" %}
+	      <form class="Form" action="{% url 'sopler:DeleteComment' list.slug %}" method="post" onclick="doComSubmit();">
+	      {% csrf_token %}
+	      <input type="hidden" name="comment_pk" value="{{ comment.pk }}" />
+	      <button style="margin-right: 5px; margin-top:-41px;" class= "close fa fa-trash-o">
+	      </button>
+	      </form>
+	    {% endif %}
+	  {% endfor %}
+	{% endfor %}
       </div>
-      <!-- ============= End of Comments ====================== -->
-    </div><!--end of Title box --->
-      {% load staticfiles %}
-      <script type="text/javascript" src="{% static "js/keepname.js" %}"></script>
+      <br>
+      <form class="Form" action="{% url 'sopler:AddNewComment' list.slug %}" method="post" onclick="doComSubmit();">
+      {% csrf_token %}
+      <input id="comment" type="hidden" class="form-control" name="ItemOwner" required="required" placeholder="Enter username"/>
+      <input type="hidden" name="ItemOwnerLink" value= {{user.socialaccount_set.all.0.extra_data.link}} />
+      <div class="row">
+      <div class="col-md-11">
+      <textarea data-l10n-id="comment" id="textarea" class="form-control" type="text" name="comment" autofocus="autofocus" maxlength="99" required="required" placeholder="Save comment!">
+      </textarea>
+      </div>
+      <div class="col-md-1 ">
+      <button data-l10n-id="send" type="submit" class="btn btn-info pull-right">
+      Save!
+      </button>
+      <div id="textarea_feedback">
+      </div>
+      </div>
+      </div>
+      </form>
+      </div>
+      </div>
    </div>
+</div>
+<!-- ============= End of Comments ====================== -->
+   </div>
+   <!--end of Title box --->
+   {% load staticfiles %}
+   <script type="text/javascript" src="{% static "js/keepname.js" %}">
+   </script>
+</div>
 </div>

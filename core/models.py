@@ -52,7 +52,7 @@ class Item(models.Model):
     
     ItemMarked = models.BooleanField()
     ItemLocked = models.BooleanField()
-    #ItemPubDate = models.DateTimeField("Date Item Published")
+    ItemDueDate = models.DateField("Item Due Date",null=True)
     
     ## Item Done infos
     ItemDone = models.BooleanField()
@@ -67,7 +67,7 @@ class Item(models.Model):
     ItemOwnerPrvdr = models.CharField("Owner's Provider",max_length=100)
     ItemOwnerAvtr = models.CharField("Owner's Provider Avatar",max_length=150)
     ItemOwnerLink = models.CharField("Owner's Provider Link",max_length=150)
-    
+
     class Meta:
         ordering = ["ItemOwner","ItemOwnerState","-ItemMarked","ItemDone"]
 
