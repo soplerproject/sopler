@@ -42,7 +42,7 @@ a:hover {
 
 /* Set the fixed height of the footer here */
 #footer {
-	background-color:rgba(0, 0, 0, 0.08);
+	background-color:rgba(0, 0, 0, 0.06);
 	border-top: 1px solid rgba(0, 0, 0, 0.04);
 	padding: 2em 0 2em;
 	position: relative;
@@ -338,8 +338,7 @@ padding-right:0px;
 	min-width:15em;
 	display: block; 
 	width: 100%; 
-	background-color: rgba(0, 0, 0, 0.08);
-	border: 1px solid rgba(0, 0, 0, 0.04);
+	background-color: rgba(0, 0, 0, 0.06);
 	margin-top: 2.2em;
 	padding: 5px 20px; 
 	-moz-border-radius:15px; /* Firefox */
@@ -356,7 +355,30 @@ padding-right:0px;
 	text-align:center;
 }
 
+
 /******* List items (not comments - tbfixed ) ******/
+
+.list-group-item:first-child {
+    border-radius: 8px;
+}
+
+.list-group-item{
+background: #feffff; /* Old browsers */
+background: -moz-linear-gradient(top, #feffff 0%, #f2f2f2 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#feffff), color-stop(100%,#f2f2f2)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #feffff 0%,#f2f2f2 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #feffff 0%,#f2f2f2 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #feffff 0%,#f2f2f2 100%); /* IE10+ */
+background: linear-gradient(to bottom, #feffff 0%,#f2f2f2 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffff', endColorstr='#f2f2f2',GradientType=0 ); /* IE6-9 */
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.02);
+border-radius: 8px;
+}
+
+.list-group-item {
+    margin-bottom: 4px;
+}
+
 #comments { display: block; }
 #comments .cmmnt, ul .cmmnt, ul ul .cmmnt { margin-left: -40px; display: block; position: relative; padding-top:5px }
 #comments .cmmnt .avatar  {margin-bottom:10px; }
@@ -374,7 +396,6 @@ padding-right:0px;
   -o-transition: all 0.4s linear;
   transition: all 0.4s linear;
 }
-
 
 
 
@@ -542,10 +563,121 @@ img.logo{
 	cursor: pointer;
 	z-index: 1;
 }
+.modal_icon{
+font-size:2.5em;
+}
+
+/* List item sign & modal buttons */
+.item_signs{
+	cursor: default;
+	border: 1px solid #dddddd;
+	margin-top:-11px;
+	color:white;
+}
+
+.item_signs.lock_sign{
+	font-size:19px;
+    padding: 0.57em 0.32em !important;
+	border: 1px solid #cfcfcf;
+	background-color:#eba400;
+}
+
+.item_signs.star_sign{
+	font-size: 17px;
+	padding: 0.70em 0.25em !important;
+	border:1px solid #cfcfcf;
+	background-color:#c0392b;
+}
+
+.mobile-menu-btns{
+
+	cursor:pointer;
+        font-size:13px;
+}
+
+.btn-tools{
+	cursor:pointer;
+	font-size:13px;
+	color: #FFFFFF;
+	border-radius:15px; 
+	margin: 15px;
+}
+.priority {
+    background:none;
+    background-color: #c45146;
+    color:#FFFFFF;
+}
+
+.priority:hover{
+	background-color: #b9473d;
+}
+
+.lock {
+    background:none;
+    background-color: #eca400;
+    color:#FFFFFF;
+}
+
+.lock:hover{
+	background-color: #df9b00;
+}
+
+.delete {
+    background:none;
+    background-color: #34495e;
+    color:#FFFFFF;
+}
+
+.delete:hover{
+	background-color: #2d4052;
+}
+
+.duedate {
+    background:none;
+    background-color: #14947c;
+    color:#FFFFFF;
+}
+
+.duedate:hover{
+	background-color: #128671;
+}
+
+.edit {
+    background:none;
+    background-color: #1a94d1;
+    color:#FFFFFF;
+}
+
+.edit:hover{
+	background-color: #188ac4;
+}
+
+.infos {
+    background:none;
+    background-color: #a86d53;
+    color:#FFFFFF;
+}
+
+.infos:hover{
+	background-color: #96614a;
+}
+
+.dates{
+	margin-left: 0.7em;
+}
+
+/*** Change check icon on hover***/
+
+.check-button:hover .fa-circle-o:before{
+    content:"\f05d";
+}
+
+/**** class close is also used in list icons****/
 .close {
+	opacity:0.35;
     font-size:1.5em;
     display:block;
-    width: 40px;
+    width: 30px;
     height: 40px;
     font-weight: bold;
 	cursor: pointer;
@@ -559,8 +691,7 @@ img.logo{
 .close:hover {
 	color: #000000;
 	text-decoration: none;
-	opacity: 0.65;
-	filter: alpha(opacity=85);
+
 	cursor: pointer;
 }
 
@@ -965,4 +1096,3 @@ border-radius: 0;
 	margin-left:5px;
 	margin-right:95px;
 }
-

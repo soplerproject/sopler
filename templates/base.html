@@ -16,288 +16,299 @@
             {% block extra_head %}
             {% endblock %}
             {% load staticfiles %}
+
             <head>
-               <meta charset="utf-8">
-               <meta name="description" content="A free/open source, social and collaborative web application. It helps you make to-do lists!">
-               <meta name="keywords" content="Sopler,lists,collaboration,tasks,to-do,openweb,real-time,privacy,open-source,organize,free">
-               <meta name="author" content="Sopler">
-               <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-               <meta property="og:image" content="{% static "img/fb_sopler.jpeg" %}"/>
-               <meta property="og:title" content="Sopler - Think. Create. Share."/>
+              <meta charset="utf-8">
+              <meta name="description" content="A free/open source, social and collaborative web application. It helps you make to-do lists!">
+              <meta name="keywords" content="Sopler,lists,collaboration,tasks,to-do,openweb,real-time,privacy,open-source,organize,free">
+              <meta name="author" content="Sopler">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+              <meta property="og:image" content="{% static "img/fb_sopler.jpeg" %}"/>
+              <meta property="og:title" content="Sopler - Think. Create. Share."/>
 
-               <!-- Bootstrap core CSS -->
-               <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+              <!-- Bootstrap core CSS -->
+              <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
 
-               <!-- Favicon -->
-               <link rel="shortcut icon" href="{% static "buttons/favicon.ico" %}">
+              <!-- Favicon -->
+              <link rel="shortcut icon" href="{% static "buttons/favicon.ico" %}">
 
-               <!-- Custom styles for this template -->
-               <link rel="stylesheet" type="text/css" href="{% static "css/custom.css" %}">
-               <link rel="stylesheet" type="text/css" href="{% static "css/font-awesome.min.css" %}">
-               <link rel="stylesheet" type="text/css" href="{% static "css/openwebicons-bootstrap.css" %}">
-	       <link rel="resource" type="application/l10n" href="{% static "locales/locales.ini" %}">
+              <!-- Custom styles for this template -->
+              <link rel="stylesheet" type="text/css" href="{% static "css/custom.css" %}">
+              <link rel="stylesheet" type="text/css" href="{% static "css/font-awesome.min.css" %}">
+              <link rel="stylesheet" type="text/css" href="{% static "css/openwebicons-bootstrap.css" %}">
+	      <link rel="stylesheet" type="text/css" href="{% static "css/datepicker.css" %}">
+	      <link rel="resource" type="application/l10n" href="{% static "locales/locales.ini" %}">
 
-               <!-- Javascript-->
-               <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
-               <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
-               <script type="text/javascript" src="{% static "js/bootstrap.input-clear.js" %}"></script>
-               <script type="text/javascript" src="{% static "js/jquery.form.js" %}"></script>
-               <script type="text/javascript" src="{% static "js/jquery.fitvids.js" %}"></script>
-               <script type="text/javascript" src="{% static "js/jquery-ui.js" %}"></script>
-               <script type="text/javascript" defer src="{% static "js/l10n.js" %}" charset="utf-8"></script>
+              <!-- Javascript-->
+              <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+              <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+              <script type="text/javascript" src="{% static "js/bootstrap.input-clear.js" %}"></script>
+              <script type="text/javascript" src="{% static "js/jquery.form.js" %}"></script>
+              <script type="text/javascript" src="{% static "js/jquery-ui.js" %}"></script>
+	      <script type="text/javascript" src="{% static "js/bootstrap-datepicker.js" %}"></script>
+              <script type="text/javascript" defer src="{% static "js/l10n.js" %}" charset="utf-8"></script>
+	      <script type="text/javascript" src="{% static "js/item-menu.js" %}"></script>
 
-               <script type="text/javascript">
-                  $(function ()
-                    {
-			$("#besync_popover").popover();
+	      <script type="text/javascript">
+		  $(function () {
+		      $("#besync_popover").popover();
+		  });
+	      </script>
 
-                    });
-
-	       </script>
-
-	       <!----- Hide popovers when clicking outside of them---->
-	       <script type="text/javascript">
-		    $(document).ready(function(){
-			  $('body').on('click', function (e) {
-				  $('[data-toggle="popover"]').each(function () {
-					  //the 'is' for buttons that trigger popups
-					  //the 'has' for icons within a button that triggers a popup
-					  if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-						  $(this).popover('hide');
-					  }
-				  });
+	      <script type="text/javascript">
+		  function DatePicker() {
+		      $(".input-group.date").datepicker({
+			  autoclose: true,
+			  todayHighlight: true
+		      });
+		  }
+	      </script>
+	      <!----- Hide popovers when clicking outside of them ---->
+	      <script type="text/javascript">
+		  $(document).ready(function () {
+		      $('body').on('click', function (e) {
+			  $('[data-toggle="popover"]').each(function () {
+			      //the 'is' for buttons that trigger popups
+			      //the 'has' for icons within a button that triggers a popup
+			      if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+				  $(this).popover('hide');
+			      }
 			  });
-		    });
-                </script>
-
-               <!---Apply fitvids.js on the video of the How-top page--->
-               <script type="text/javascript">
-		      $(document).ready(function(){
-        		      $("#how_to_video").fitVids();
-		       });
-	       </script>
+		      });
+		  });
+	      </script>
 
 	      <!-- Count comments -->
 	      <script type="text/javascript">
-	      var cmd_count_timeout = 100; // Change this if you want
-		  $(window).load(function (){
-		    setInterval(function(){
-		      var comcount = $('div[id*="commentcount"]').length;
-		      if (comcount > 0){
-			  $('#comments_counter').html(" ("+comcount+")");
-			}else{
-			  $('#comments_counter').html(" ");}
-			},cmd_count_timeout);
-		      })
-	       </script>
+		  var cmd_count_timeout = 100; // Change this if you want
+		  $(window).load(function () {
+		      setInterval(function () {
+			  var comcount = $('div[id*="commentcount"]').length;
+			  if (comcount > 0) {
+			      $('#comments_counter').html(" (" + comcount + ")");
+			  } else {
+			      $('#comments_counter').html(" ");
+			  }
+		      }, cmd_count_timeout);
+		  })
+	      </script>
 
-               <!-- Navigation Bar fix & relative -->
-	       <script type="text/javascript">
-		      $(document).ready(function(){
-		      var isopen="";
-		      $('#signin').click(function(){
-			      if (!isopen){
-			      $('.navbar-fixed-top').css('position','relative');
-			      $('html,body').animate({ scrollTop: 0 }, 'normal');
-			      }else{
-			      $('.navbar-fixed-top').css('position','fixed');
+	      <!-- Navigation Bar fix & relative -->
+	      <script type="text/javascript">
+		  $(document).ready(function () {
+		      var isopen = "";
+		      $('#signin').click(function () {
+			  if (!isopen) {
+			      $('.navbar-fixed-top').css('position', 'relative');
+			      $('html,body').animate({
+				  scrollTop: 0
+			      }, 'normal');
+			  } else {
+			      $('.navbar-fixed-top').css('position', 'fixed');
 
-			      }
-			      isopen=!isopen;
+			  }
+			  isopen = !isopen;
 		      });
-		      $('#nobutton').click(function(){
+		      $('#nobutton').click(function () {
 
-			      $('.navbar-fixed-top').css('position','fixed');
-			      isopen=!isopen;
+			  $('.navbar-fixed-top').css('position', 'fixed');
+			  isopen = !isopen;
 
 		      });
-	       });
-	       </script>
+		  });
+	      </script>
 
-               <!-- Back to TOP -->
-               <script type="text/javascript">
-                  $(document).ready(function(){
-                    $('#backtotop').on("click",function(){
-                      $('html,body').animate({ scrollTop: 0 }, 'slow');
-                    });
-                  });
-               </script>
+	      <!-- Back to TOP -->
+	      <script type="text/javascript">
+		  $(document).ready(function () {
+		      $('#backtotop').on("click", function () {
+			  $('html,body').animate({
+			      scrollTop: 0
+			  }, 'slow');
+		      });
+		  });
+	      </script>
 
-               <!-- Go Mobile -->
-               <script type="text/javascript">
-                  $(document).ready(function(){
-                    $('#gomobile').on("click",function(){
-                      $('html,body').animate({ scrollTop: 1200 }, 'slow');
-                    });
-                  });
-               </script>
+	      <!-- Go Mobile -->
+	      <script type="text/javascript">
+		  $(document).ready(function () {
+		      $('#gomobile').on("click", function () {
+			  $('html,body').animate({
+			      scrollTop: 1200
+			  }, 'slow');
+		      });
+		  });
+	      </script>
 
-               <!-- Characters counter -->
-               <script type="text/javascript">
-                  $(document).ready(function() {
-                      var text_max = 99;
-                      $('#textarea').keyup(function() {
-                          var text_length = $('#textarea').val().length;
-                          var text_remaining = text_max - text_length;
-                          $('#textarea_feedback').html(text_remaining + '/99');
-                      });
-                  });
-               </script>
+	      <!-- Characters counter -->
+	      <script type="text/javascript">
+		  $(document).ready(function () {
+		      var text_max = 99;
+		      $('#textarea').keyup(function () {
+			  var text_length = $('#textarea').val().length;
+			  var text_remaining = text_max - text_length;
+			  $('#textarea_feedback').html(text_remaining + '/99');
+		      });
+		  });
+	      </script>
 
-               <!-- Do submitions without reload refresh page -->
-               <script type="text/javascript">
-                  function doSubmit(){
-                     $(document).ready(function(){
-                        $('form.Form').ajaxForm(function() {
-                           $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
-                           $("#appendedInputButton").val("");
-                        });
-                     });
-                            var value = document.getElementById('username').value
-                            $(".whodone").val(value);
-                  }
-                  function doAuthSubmit(){
-                     $(document).ready(function(){
-                        $('form.Form').ajaxForm(function() {
-                           $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
-                           $("#appendedInputButton").val("");
-                        });
-                     });
-                  }
-                  function doComSubmit(){
-                     $(document).ready(function(){
-                        $('form.Form').ajaxForm(function() {
-                           $("#comref").load('{{ request.build_absolute_uri }} #comref');
-                           $("#textarea").val("");
-                        });
-                     });
-                  }
-               </script>
+	      <!-- Do submitions without reload refresh page -->
+	      <script type="text/javascript">
+		  function doSubmit() {
+		      $(document).ready(function () {
+			  $('form.Form').ajaxForm(function () {
+			      $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
+			      $("#appendedInputButton").val("");
+			  });
+		      });
+		      var value = document.getElementById('username').value
+		      $(".whodone").val(value);
+		  }
 
-               <!-- Do sync, on every five sec -->
-               <script type="text/javascript">
-                  var onoff= false;
-                  var sync_timeout = 5000; // Change this if you want
-                  var refreshId;
+		  function doAuthSubmit() {
+		      $(document).ready(function () {
+			  $('form.Form').ajaxForm(function () {
+			      $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
+			      $("#appendedInputButton").val("");
+			  });
+		      });
+		  }
+
+		  function doComSubmit() {
+		      $(document).ready(function () {
+			  $('form.Form').ajaxForm(function () {
+			      $("#comref").load('{{ request.build_absolute_uri }} #comref');
+			      $("#textarea").val("");
+			  });
+		      });
+		  }
+	      </script>
+
+	      <!-- Do sync, on every five sec -->
+	      <script type="text/javascript">
+		  var onoff = false;
+		  var sync_timeout = 5000; // Change this if you want
+		  var refreshId;
 		  var reloads = 0;
-                  function RT() {
-                  	  if(!onoff){
-                  		$("#realtime_button").css("background-color","#7AA948");
-                  		refreshId = setInterval(function(){
-                  		     $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
-                  		     $("#comref").load('{{ request.build_absolute_uri }} #comref');
-                  		}, sync_timeout);
-                  		 onoff=true;
-                  	   }else{
-                  	  	clearInterval(refreshId);
-                                  $("#realtime_button").css("background-color","#FFFFFF");
-                  	        onoff=false;
-                  	   }
-                  };
-               </script>
+
+		  function RT() {
+		      if (!onoff) {
+			  $("#realtime_button").css("background-color", "#7AA948");
+			  refreshId = setInterval(function () {
+			      $("#refresh").load('{{ request.build_absolute_uri }} #refresh');
+			      $("#comref").load('{{ request.build_absolute_uri }} #comref');
+			  }, sync_timeout);
+			  onoff = true;
+		      } else {
+			  clearInterval(refreshId);
+			  $("#realtime_button").css("background-color", "#FFFFFF");
+			  onoff = false;
+		      }
+		  };
+	      </script>
 
 	      <!-- Progress Bar -->
 	      <script type="text/javascript">
-	          var progbar_timeout = 100; // Change this if you want
+		  var progbar_timeout = 100; // Change this if you want
 		  var progressBar;
-		  $(window).load(function(){
-                      setInterval(function(){
-			var CountItemDone = $('div[id*="ItemDone"]').size();
-			var CountItemNotDone = $('div[id*="ItemNotDone"]').size();
-			var CountItems = CountItemDone + CountItemNotDone
-		        var progress = ((CountItemDone * 100)/CountItems)
-			var percentDone = progress.toString() + "%";
-			var percentNotDone = (100-progress).toString() + "%";
-			$( "#progressbar" ).css("width", percentDone );
-			$( "#progressbar2" ).css("width", percentNotDone );
- 			if(CountItems > 0){
-				$( "div.progress-bar.progress-bar-success" ).show();
-				$( "div.progress-bar.progress-bar-success" ).html(function() {
-				   return CountItemDone + "/" + CountItems + " Done";
-				});
-				if( CountItemDone == 0){
-					 $( "div.progress-bar.progress-bar-info" ).show();
-						if (CountItems > 1){
-							 $( "div.progress-bar.progress-bar-info" ).html(function() {
-							   return "Total: " + CountItems + " Items";
-							});
-						}else{
-							$( "div.progress-bar.progress-bar-info" ).html(function() {
-							   return "Total: " + CountItems + " Item";
-							});
-						}
-				}else{
+		  $(window).load(function () {
+		      setInterval(function () {
+			  var CountItemDone = $('div[id*="ItemDone"]').size();
+			  var CountItemNotDone = $('div[id*="ItemNotDone"]').size();
+			  var CountItems = CountItemDone + CountItemNotDone
+			  var progress = ((CountItemDone * 100) / CountItems)
+			  var percentDone = progress.toString() + "%";
+			  var percentNotDone = (100 - progress).toString() + "%";
+			  $("#progressbar").css("width", percentDone);
+			  $("#progressbar2").css("width", percentNotDone);
+			  if (CountItems > 0) {
+			      $("div.progress-bar.progress-bar-success").show();
+			      $("div.progress-bar.progress-bar-success").html(function () {
+				  return CountItemDone + "/" + CountItems + " Done";
+			      });
+			      if (CountItemDone == 0) {
+				  $("div.progress-bar.progress-bar-info").show();
+				  if (CountItems > 1) {
+				      $("div.progress-bar.progress-bar-info").html(function () {
+					  return "Total: " + CountItems + " Items";
+				      });
+				  } else {
+				      $("div.progress-bar.progress-bar-info").html(function () {
+					  return "Total: " + CountItems + " Item";
+				      });
+				  }
+			      } else {
 
-					  $( "div.progress-bar.progress-bar-info" ).html(function() {
-					  	return " ";
-					   });
-				}
-		      }else{
-				  $( "div.progress-bar.progress-bar-info" ).hide();
-				  $( "div.progress-bar.progress-bar-success" ).hide();
-		      }
-		      },progbar_timeout);
+				  $("div.progress-bar.progress-bar-info").html(function () {
+				      return " ";
+				  });
+			      }
+			  } else {
+			      $("div.progress-bar.progress-bar-info").hide();
+			      $("div.progress-bar.progress-bar-success").hide();
+			  }
+		      }, progbar_timeout);
 		  });
 	      </script>
 
 
-         {% if user.is_authenticated %}
+	      {% if user.is_authenticated %}
 
-		 <!---Checkboxes Extra Options ----->
+	      <!---Checkboxes Extra Options ----->
 	      <script type="text/javascript">
-			$(window).load(function (){
-			 $("input:checkbox").click(function() {
-				if ($(this).is(":checked")) {
-					var group = "input:checkbox[id='" + $(this).attr("id") + "']";
-					$(group).prop("checked", false);
-					$(this).prop("checked", true);
-				} else {
-					$(this).prop("checked", false);
-				}
-			 });
-			});
+		  $(window).load(function () {
+		      $("input:checkbox").click(function () {
+			  if ($(this).is(":checked")) {
+			      var group = "input:checkbox[id='" + $(this).attr("id") + "']";
+			      $(group).prop("checked", false);
+			      $(this).prop("checked", true);
+			  } else {
+			      $(this).prop("checked", false);
+			  }
+		      });
+		  });
 	      </script>
 
-		<!-- Count previous lists-->
-		<script type="text/javascript">
-		    var lst_count_timeout = 100; // Change this if you want
-		    $(window).load(function (){
-			setInterval(function(){
+	      <!-- Count previous lists-->
+	      <script type="text/javascript">
+		  var lst_count_timeout = 100; // Change this if you want
+		  $(window).load(function () {
+		      setInterval(function () {
 			  var yrlstcount = $('div[id*="yrlistcount"]').length;
-			  if (yrlstcount > 0){
-			   $('#yourlist_counter').html(yrlstcount);
-			   $('#yourlist_counter_responsive').html(yrlstcount);
-			  }else{
-			    $('#yourlist_counter').html("0");
-			    $('#yourlist_counter_responsive').html("0");
-			    }
-			},lst_count_timeout);
-		    });
-		    $(window).load(function (){
-			setInterval(function(){
+			  if (yrlstcount > 0) {
+			      $('#yourlist_counter').html(yrlstcount);
+			      $('#yourlist_counter_responsive').html(yrlstcount);
+			  } else {
+			      $('#yourlist_counter').html("0");
+			      $('#yourlist_counter_responsive').html("0");
+			  }
+		      }, lst_count_timeout);
+		  });
+		  $(window).load(function () {
+		      setInterval(function () {
 			  var fvlstcount = $('div[id*="fvlistcount"]').length;
-			  if (fvlstcount > 0){
-			    $('#favlist_counter').html(fvlstcount);
-			     $('#favlist_counter_reponsive').html(fvlstcount);
-			  }else{
-			    $('#favlist_counter').html("0");
-			    $('#favlist_counter_reponsive').html("0");
-			    }
-			},lst_count_timeout);
-		    });
-		    $(window).load(function (){
-			setInterval(function(){
+			  if (fvlstcount > 0) {
+			      $('#favlist_counter').html(fvlstcount);
+			      $('#favlist_counter_reponsive').html(fvlstcount);
+			  } else {
+			      $('#favlist_counter').html("0");
+			      $('#favlist_counter_reponsive').html("0");
+			  }
+		      }, lst_count_timeout);
+		  });
+		  $(window).load(function () {
+		      setInterval(function () {
 			  var frndcount = $('div[id*="frndcount"]').length;
-			  if (frndcount > 0){
-			    $('#friend_counter').html(frndcount);
-			    $('#friend_counter_reponsive').html(frndcount);
-			  }else{
-			    $('#friend_counter').html("0");
-			    $('#friend_counter_reponsive').html("0");
-			    }
-			},lst_count_timeout);
-		    });
-		</script>
+			  if (frndcount > 0) {
+			      $('#friend_counter').html(frndcount);
+			      $('#friend_counter_reponsive').html(frndcount);
+			  } else {
+			      $('#friend_counter').html("0");
+			      $('#friend_counter_reponsive').html("0");
+			  }
+		      }, lst_count_timeout);
+		  });
+	      </script>
                {% endif %}
 
             </head>
@@ -396,8 +407,7 @@
                            <ul class="list-unstyled">
                               <li>Sopler</li>
                               <li><a data-l10n-id="about" href="../../about/">About</a></li>
-                              <li><a data-l10n-id="team" href="../../team/">Team</a></li>
-                              <li><a href="../../blog/">Blog</a></li>
+                              <li><a data-l10n-id="credits" href="../../team/">Credits</a></li>
                            </ul>
                         </div>
                         <div class="col-sm-2 col-md-2" >
@@ -456,7 +466,7 @@
 	                     <div class=" col-xs-12 ">
 	                        <dl class="dl-horizontal">
 	                           <dt>Sopler</dt>
-	                           <dd> <a data-l10n-id="about" href="../../about/">About</a> | <a data-l10n-id="team" href="../../team/">Team</a> | <a data-l10n-id="blog" href="../../blog/">Blog</a></dd>
+	                           <dd> <a data-l10n-id="about" href="../../about/">About</a> | <a data-l10n-id="credits" href="../../team/">Credits</a></dd>
 	                        </dl>
 	                        <dl class="dl-horizontal">
 	                           <dt data-l10n-id="social" >Social</dt>
