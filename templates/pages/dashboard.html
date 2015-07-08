@@ -152,9 +152,9 @@
 			      <ul style="padding-right:10px;" class="list-unstyled">
 			      <li>
 			      <small>
-			      <div id="yrlistcount"><dt><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></dt></div>
+			      <div id="yrlistcount"><dt><a href="/lists/{{ListName.slug}}"><b>{{ListName|truncatechars:20 }} </b></a></dt></div>
 			      <dd id="info-dd-nonmobile">
-			     <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i> &nbsp; 
+			      <dt><i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i> &nbsp; 
 			      {% if ListName|favorites_count >= 1 %}
 				<i data-toggle="modal" data-target="#{{ListName.slug}}_favModal" class="fa fa-heart favhover">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
 			      {% else %}
@@ -289,9 +289,9 @@
 			      <ul style="padding-right:10px;" class="list-unstyled">
 			      <li>
 			      <small>
-			      <div id="yrlistcount"><dt><a href="/lists/{{ListName.slug}}" target="_blank"> <b>&nbsp;{{ListName|truncatechars:20 }} </b></a></dt></div>
+			      <div id="yrlistcount"><dt><a href="/lists/{{ListName.slug}}" target="_blank"><b>{{ListName|truncatechars:20 }} </b></a></dt></div>
 			      <dd id="info-dd-nonmobile">
-			      <dt>&nbsp;&nbsp;<i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i> &nbsp; 
+			      <dt><i class="fa fa-clock-o">&nbsp;&nbsp;&nbsp;{{ListName.ListPubDate|date:"M. d, Y"}}</i> &nbsp; 
 			      {% if ListName|favorites_count >= 1 %}
 				<i data-toggle="modal" data-target="#{{ListName.slug}}_favModal" class="fa fa-heart favhover">&nbsp;&nbsp;&nbsp;{{ListName|favorites_count}}</i></dt><dd></dd>
 			      {% else %}
